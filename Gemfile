@@ -22,11 +22,6 @@ end
 
 gem 'jquery-rails'
 
-# Nested set for recursive relationships
-
-gem 'awesome-nested-set', '2.1.3'
-
-
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
