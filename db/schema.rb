@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120811181840) do
+ActiveRecord::Schema.define(:version => 20120812001406) do
+
+  create_table "item_hierarchies", :id => false, :force => true do |t|
+    t.integer "ancestor_id",   :null => false
+    t.integer "descendant_id", :null => false
+    t.integer "generations",   :null => false
+  end
+
+  add_index "item_hierarchies", ["ancestor_id", "descendant_id"], :name => "index_item_hierarchies_on_ancestor_id_and_descendant_id", :unique => true
+  add_index "item_hierarchies", ["descendant_id"], :name => "index_item_hierarchies_on_descendant_id"
 
   create_table "items", :force => true do |t|
     t.string   "name"
