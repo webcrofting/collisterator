@@ -22,7 +22,7 @@
 
   <!-- MY EDIT  -->
   <div class="field">
-	  <%= f.label :status %>
+	  <%= f.label :status %><br />
 	  <%= f.text_field :status %>
   </div>
 

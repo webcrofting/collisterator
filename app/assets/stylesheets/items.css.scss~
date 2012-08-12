@@ -4,5 +4,5 @@
 
 body {
 	color : #000;
-	background-color : #b9d1bb;
+	background : #b9d1bb;
 }
