@@ -1,27 +1,24 @@
-<h1>Listing items</h1>
+<h1>Collisterator!</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Data</th>
-    <th>Status</th>
-    <th>Parent</th>
-    <th></th>
-    <th></th>
-  </tr>
+<div id="collisterator_tree">
 
-<% @items.each do |item| %>
-  <tr>
-    <td><%= item.name %></td>
-    <td><%= item.data %></td>
-    <td><%= item.status %></td>
-    <td><%= item.parent_id %></td>
-    <td><%= link_to 'Edit', edit_item_path(item) %></td>
-    <td><%= link_to 'Destroy', item, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+
+</div>
+
+
 
 <br />
 
 <%= link_to 'New Item', new_item_path %>
+
+<script type="text/javascript">
+
+$.getJSON(
+    '.',
+    function(data) {
+        $('#collisterator_tree').tree({
+            data: data
+        });
+    }
+);
+</script>

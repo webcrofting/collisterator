@@ -52,6 +52,9 @@ GEM
     hike (1.2.1)
     i18n (0.6.0)
     journey (1.0.4)
+    jqtree-rails (0.1.0)
+      railties (>= 3.2.0, < 5.0)
+      thor (~> 0.14)
     jquery-rails (2.0.2)
       railties (>= 3.2.0, < 5.0)
       thor (~> 0.14)
@@ -122,6 +125,7 @@ DEPENDENCIES
   capistrano
   closure_tree
   coffee-rails (~> 3.2.1)
+  jqtree-rails
   jquery-rails
   rails (= 3.2.1)
   sass-rails (~> 3.2.3)

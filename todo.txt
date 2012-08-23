@@ -1,0 +1,19 @@
+To Do:
+* Watch http://railscasts.com/episodes/162-tree-based-navigation
+* Write pseudocode for controller actions new_child ? maybe just write the damn code. See note below.
+
+* parameters - hidden fields or params in URLS!!!
+* look into deploying to heroku
+	- do I need to change the database?
+
+controller:
+	Change "new" to set the parent_id, and child_id if parent_id != null
+
+
+	Change "destroy" to recursively destroy the nodes
+
+to do
+
+* change item.rb - def as_json to recursively render the tree
+* find better js tree
+	- customizable
