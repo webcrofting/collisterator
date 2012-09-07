@@ -12,5 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jsTree/jquery.jstree
 //= require tree.jquery
 //= require_tree .
