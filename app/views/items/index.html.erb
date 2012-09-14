@@ -1,9 +1,6 @@
 <h1>Collisterator!</h1>
 
-<div id="collisterator_tree">
-
-
-</div>
+<div id="collisterator_tree"></div>
 
 
 
@@ -12,13 +9,29 @@
 <%= link_to 'New Item', new_item_path %>
 
 <script type="text/javascript">
-
-$.getJSON(
-    '.',
-    function(data) {
-        $('#collisterator_tree').tree({
-			data: data
-		});
-    }
-);
+	$(document).ready(function(){
+		$("#collisterator_tree").jstree({
+				core : { "animation" : 100 },
+				themes : { "theme" : "classic", "icons" : true, "dots" : false },
+				"json_data" : {
+					"ajax" : { 
+						"url" : "jstree.json",
+						"data" : function(m) { 
+							return { id : m.attr ? m.attr("id") : 0 };
+						}
+					}
+				},
+				plugins : ["themes", "json_data", "ui" ]
+	}).bind("select_node.jstree", function(e, data) {
+		if(jQuery.data(data.rslt.obj[0], "href")) 
+		{
+			window.location=jQuery.data(data.rslt.obj[0], "href");
+		}
+		else 
+		{
+			alert("No href defined for this element.");
+		}
+	
+	})
+	});
 </script>

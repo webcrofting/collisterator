@@ -10,7 +10,8 @@ class Item < ActiveRecord::Base
 	def recursively_render_items_as_json(node)
 
 		result = {}
-		result[:label] = node.label
+		result[:data] = node.data
+		result[:id] = node.id
 		
 		children = []
 		
@@ -22,16 +23,14 @@ class Item < ActiveRecord::Base
 			}
 		end 
 		
-		result[:children] = children	
+		unless children.empty? 
+			result[:children] = children	
+		end
 		
 		result
 		
 	end
 	
-	
-	def label
-		self.data
-	end
 	
 	def has_children?
 		if self.children.empty?

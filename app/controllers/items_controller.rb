@@ -1,13 +1,24 @@
 class ItemsController < ApplicationController
-  # GET /items
-  # GET /items.json
+  
+  # GET /jstree
+	def jstree
+		@items = Item.roots
+	
+		respond_to do |format|
+			format.json # jstree.json.erb?
+		end
+	
+	end
+ 
+ # GET /items
+ # GET /items.json 
   def index
     @items = Item.roots
 
     respond_to do |format|
       format.html # index.html.erb
 	  #format.html { render json: @items } # for debugging json
-      format.json { render json: @items }
+      #format.json { render json: @items }
     end
   end
 
