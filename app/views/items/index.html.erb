@@ -1,5 +1,6 @@
 <h1>Collisterator!</h1>
 
+
 <div id="collisterator_tree"></div>
 
 
@@ -12,10 +13,10 @@
 	$(document).ready(function(){
 		$("#collisterator_tree").jstree({
 				core : { "animation" : 100 },
-				themes : { "theme" : "classic", "icons" : true, "dots" : false },
+				themes : { "theme" : "classic", "icons" : false, "dots" : true },
 				"json_data" : {
 					"ajax" : { 
-						"url" : "jstree.json",
+						"url" : "/jstree.json",
 						"data" : function(m) { 
 							return { id : m.attr ? m.attr("id") : 0 };
 						}

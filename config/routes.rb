@@ -4,6 +4,7 @@ Collisterator::Application.routes.draw do
 
   get "home/index"
   
+  match '/jstree', :to => 'items#jstree', :as => 'jstree'
   
   root :to => "items#index" 
 

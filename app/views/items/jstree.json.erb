@@ -1,1 +1,8 @@
-<%= yield %>
+<%
+	params = {}
+	params = get_children_for_roots()
+
+%>
+<%= 
+	params.to_json.html_safe
+%>
