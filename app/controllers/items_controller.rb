@@ -28,8 +28,8 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @item }
+      #format.html # show.html.erb
+      format.json { item_to_json_hash(@item).to_json }
     end
   end
 
