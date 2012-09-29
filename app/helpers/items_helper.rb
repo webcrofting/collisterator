@@ -1,5 +1,5 @@
 module ItemsHelper
-	def get_children_for_roots()
+	def item_to_json_hash()
 		all_roots = Item.roots
 		item_arr = []
 		
@@ -11,7 +11,7 @@ module ItemsHelper
 				item_arr << add_children(item.id, nil)
 			end
 		end
-		
+			
 		return item_arr
 		
 	end
@@ -24,8 +24,8 @@ module ItemsHelper
 		children = []
 		
 		unless all_children.nil?
-		
-			all_children.each_with_index do |item, index|
+			
+				all_children.each_with_index do |item, index|
 				if (item.has_children?)
 					c = item.children
 					children << add_children(item.id, c)
