@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
 		@items = Item.roots
 	
 		respond_to do |format|
-			format.json # jstree.json.erb?
+			format.json { item_to_json_hash(@item).to_json_html_safe} # jstree.json.erb?
 		end
 	
 	end
@@ -28,8 +28,8 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
 
     respond_to do |format|
-      #format.html # show.html.erb
-      format.json { item_to_json_hash(@item).to_json }
+      format.html # show.html.erb
+      format.json {item_to_json_hash(@item).to_json_html_safe}
     end
   end
 
