@@ -15,7 +15,7 @@ module ItemsHelper
 			data[:children] = children
 		end	
 		
-		
+		return data
 	end
 	
 	
