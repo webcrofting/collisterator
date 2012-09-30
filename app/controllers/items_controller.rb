@@ -1,14 +1,5 @@
 class ItemsController < ApplicationController
   
-  # GET /jstree
-	def jstree
-		@items = Item.roots
-	
-		respond_to do |format|
-			format.json { item_to_json_hash(@item).to_json_html_safe} # jstree.json.erb?
-		end
-	
-	end
  
  # GET /items
  # GET /items.json 
@@ -18,7 +9,7 @@ class ItemsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
 	  #format.html { render json: @items } # for debugging json
-      #format.json { render json: @items }
+      format.json { render json: @items }
     end
   end
 
@@ -29,7 +20,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json {item_to_json_hash(@item).to_json_html_safe}
+      format.json {render json: @item}
     end
   end
 
