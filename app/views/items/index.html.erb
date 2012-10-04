@@ -12,27 +12,18 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#collisterator_tree").jstree({
-				core : { "animation" : 100 },
-				themes : { "theme" : "classic", "icons" : false, "dots" : true },
+				core : { "html_titles" : true},
+				themes : { "theme" : "classic" },
 				"json_data" : {
 					"ajax" : { 
 						"url" : "/items.json",
-						"data" : function(m) { 
-							return { id : m.attr ? m.attr("id") : 0 };
-						}
+						"data" : function(m) {
+								var html_data = m.attr								
+								return { id : html_data ? m.attr("id") : 0 };
+							}
 					}
 				},
-				plugins : ["themes", "json_data", "ui" ]
-	}).bind("select_node.jstree", function(e, data) {
-		if(jQuery.data(data.rslt.obj[0], "href")) 
-		{
-			window.location=jQuery.data(data.rslt.obj[0], "href");
-		}
-		else 
-		{
-			alert("No href defined for this element.");
-		}
-	
+				plugins : ["themes", "json_data"]
 	})
 	});
 </script>
