@@ -1,0 +1,31 @@
+= form_for @item do |f|
+	- if (@item.errors.any?)
+		.error_explanation
+			%h2 
+				- pluralize(@item.errors.count, "error")
+				prohibited this item from being saved:
+		
+			%ul
+				- @item.errors.full_messages.each do |msg|
+					%li= msg
+
+					
+	= f.hidden_field :parent_id, { :value => params[:parent_id]}
+  
+	.field
+		= f.label :name 
+		%br/
+		= f.text_field :name
+	
+	.field
+		= f.label :data 
+		%br/
+		= f.text_field :data
+		
+	.field
+		= f.label :status 
+		%br/
+		= f.text_field :status
+ 
+	.actions
+		= f.submit
