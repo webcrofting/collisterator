@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require jquery.jstree
 //= require tree.jquery
+//= require_buildJSTree
 //= require_tree .
