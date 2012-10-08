@@ -23,12 +23,27 @@
 
 .collisterator_tree
 
-:javascript
-	$('.collisterator_tree').ready(function() {
-		var test = "Ok let's test this."
-		return test;
-	});
-	
+/ 
+	the following isn't working:
+	- id_number = @item.id
+
+	:javascript
+		$(document).ready(function(){
+			$("#collisterator_tree").jstree({
+				core : { "html_titles" : true},
+				themes : { "theme" : "classic" },
+				"json_data" : {
+					"ajax" : { 
+						"url" : "/items/" + #{id_number} + ".json",
+						"data" : function(m) {
+								var html_data = m.attr								
+								return { id : html_data ? m.attr("id") : 0 };
+							}
+					}
+				},
+				plugins : ["themes", "json_data"]
+			})
+		});
 
 = link_to 'Edit', edit_item_path(@item) 
 = link_to 'Back', items_path
