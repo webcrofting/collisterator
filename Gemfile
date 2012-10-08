@@ -19,16 +19,21 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+# To use Jbuilder templates for JSON
+# gem 'jbuilder'
+
 gem 'jquery-rails'
 gem 'jqtree-rails'
 
+# Do I still need this? Using jstree
 gem 'closure_tree'
+
+# To use haml for the views
+gem 'haml', '3.1.7'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
 
 # Use unicorn as the web server
 # gem 'unicorn'
