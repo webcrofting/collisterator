@@ -21,10 +21,8 @@
 	%b Status: 
 	= @item.status
 
-.collisterator_tree
+#collisterator_tree
 
-/ 
-	the following isn't working:
 	- id_number = @item.id
 
 	:javascript
@@ -34,7 +32,7 @@
 				themes : { "theme" : "classic" },
 				"json_data" : {
 					"ajax" : { 
-						"url" : "/items/" + #{id_number} + ".json",
+						"url" : "/items/#{id_number}.json",
 						"data" : function(m) {
 								var html_data = m.attr								
 								return { id : html_data ? m.attr("id") : 0 };
