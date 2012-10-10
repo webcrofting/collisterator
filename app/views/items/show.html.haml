@@ -4,7 +4,7 @@
 %p
 	%b PARENT ID: 
 	= @item.parent_id
-
+	
 %p
 	%b Name:
 	= @item.name
@@ -22,26 +22,10 @@
 	= @item.status
 
 #collisterator_tree
+	- item_id = @item.id
 
-	- id_number = @item.id
-
-	:javascript
-		$(document).ready(function(){
-			$("#collisterator_tree").jstree({
-				core : { "html_titles" : true},
-				themes : { "theme" : "classic" },
-				"json_data" : {
-					"ajax" : { 
-						"url" : "/items/#{id_number}.json",
-						"data" : function(m) {
-								var html_data = m.attr								
-								return { id : html_data ? m.attr("id") : 0 };
-							}
-					}
-				},
-				plugins : ["themes", "json_data"]
-			})
-		});
+:javascript
+	buildJSTree(#{item_id});
 
 = link_to 'Edit', edit_item_path(@item) 
 = link_to 'Back', items_path
