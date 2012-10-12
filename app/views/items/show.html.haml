@@ -25,7 +25,7 @@
 	- item_id = @item.id
 
 :javascript
-	buildJSTree(#{item_id});
+	Collisterator.buildTree(#{item_id});
 
 = link_to 'Edit', edit_item_path(@item) 
 = link_to 'Back', items_path
