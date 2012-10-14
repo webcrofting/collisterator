@@ -17,7 +17,7 @@ class Item < ActiveRecord::Base
 
 	def item_to_json_hash(item)
 		
-		data = {:item_id => item.id, :data => html_for_item_data(item)}
+		data = {:item_id => item.id, :data => item.data }
 		
 		children = []
 		
@@ -32,10 +32,6 @@ class Item < ActiveRecord::Base
 		
 		return data
 	end
-	
-	def html_for_item_data(item)
-		return %Q|<table style='display: inline-block'><tr><td>#{item.data}</td><td><a href="/items/new?parent_id=#{item.id}">New Child of Item</a></td></tr></table>|
-	end
-	
+		
 
 end

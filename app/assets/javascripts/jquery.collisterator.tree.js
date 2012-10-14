@@ -30,7 +30,9 @@ Collisterator =
 		},
 		renderNodeContent: function(node)
 		{
-			return node.data;
+			var table_string = "<table style='display: inline-block'><tr><td>" + node.item_id + "</td><td>" + node.data + "</td></tr></table>";
+			
+			return table_string;
 		},
 		renderTree: function($parent, nodes)
 		{
@@ -47,7 +49,8 @@ Collisterator =
 					$listItem.append(Collisterator.renderNodeContent(node));
 					Collisterator.renderTree($list, node.children);
 				}
-			}	
+			}
+				
 		}
 	
 	}
