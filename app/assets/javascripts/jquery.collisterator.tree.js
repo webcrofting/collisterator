@@ -30,7 +30,8 @@ Collisterator =
 		},
 		renderNodeContent: function(node)
 		{
-			var table_string = "<table style='display: inline-block'><tr><td>" + node.item_id + "</td><td>" + node.data + "</td></tr></table>";
+			var new_child_of_node_link = '<a href="/items/new?parent_id=' + node.item_id  + '">New Child of Item</a>';
+			var table_string = "<table style='display: inline-block'><tr><td>" + node.item_id + "</td><td>" + node.data + "</td><td>" + new_child_of_node_link + "</td></tr></table>";
 			
 			return table_string;
 		},
