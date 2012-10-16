@@ -25,7 +25,8 @@ end
 gem 'jquery-rails'
 gem 'jqtree-rails'
 
-# Do I still need this? Using jstree
+gem 'jeditable-rails'
+
 gem 'closure_tree'
 
 # To use haml for the views
