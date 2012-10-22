@@ -1,6 +1,7 @@
 $(document).ready(function() {
-	$('.editable').editable('/items/1/update', {
+	$('.editable').editable('/items/1', {
 			method: "PUT",
-			submit: 'OK'
+			submit: 'OK',
+			name: 'item[data]'
 	});
 });
