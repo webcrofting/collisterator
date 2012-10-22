@@ -59,17 +59,20 @@ class ItemsController < ApplicationController
   # PUT /items/1
   # PUT /items/1.json
   def update
-    @item = Item.find(params[:id])
-	@item.update_attributes!(params[:id])
+	@item = Item.find(params[:id])
+	@item.data = params[:value]
+	#@item.update_attributes!(params[:item])
+	
+	logger.debug "Item data is #{@item.data}"
 	
 	format.html {
 		if request.xhr?
-			render :text => params[:id].values.first
+			render :text => params[:item].values.first
 		else
 			redirect_to(@item, :notice => 'Item was successfully updated.')
 		end
 	}
-
+	
   end
 
   # DELETE /items/1

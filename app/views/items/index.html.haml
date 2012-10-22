@@ -1,4 +1,16 @@
+= @item = Item.find(1)
+
 %h1 Collisterator!
+
+
+%table{:style => 'display: inline-block'}
+	%tr
+		%td
+			= @item.id
+		%td.editable{:id => 1}
+			= @item.data
+
+	
 
 #collisterator_tree
 

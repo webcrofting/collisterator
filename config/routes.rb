@@ -1,12 +1,11 @@
 Collisterator::Application.routes.draw do
 
   resources :items
-
+	
   get "home/index"
   
   match '/jstree', :to => 'items#jstree', :as => 'jstree'
   
-  match '/items/update', :to =>'items#update', :as => :update, :via => :put
   
   root :to => "items#index" 
 
