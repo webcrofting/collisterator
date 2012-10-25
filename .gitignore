@@ -7,6 +7,10 @@
 # Ignore bundler config
 /.bundle
 
+#Ignore console.txt and todo.txt
+console.txt
+todo.txt
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
