@@ -30,10 +30,8 @@ Collisterator =
 		},
 		renderNodeContent: function(node)
 		{
-			var new_child_of_node_link = '<a href="/items/new?parent_id=' + node.item_id  + '">New Child of Item</a>';
-			var delete_node = "<form class='button_to' method='post' action='/items/" + node.item_id + "' data-remote='true' onsubmit='window.location.reload()'><div><input name='_method' value='delete' type='hidden' /><input value='Destroy' type='submit' disable_with='loading...' data-confirm='Are you sure?' /></div></form>"
-			var table_string = "<table style='display: inline-block'><tr><td>" + node.item_id + "</td><td class='edit'>" + node.data + "</td><td>" + new_child_of_node_link + "</td><td>" + delete_node +"</td></tr></table>";
-			
+			var table_string = "<table style='display: inline-block'><tr><td>" + node.item_id + "</td><td class='editable'>" + node.data + "</td><td>" + Helper.getNewNode(node.item_id) + "</td><td>" + Helper.getDeleteNode(node.item_id) +"</td></tr></table>";
+			Helper.loadEditable(node.item_id);
 			return table_string;
 		},
 		renderTree: function($parent, nodes)
@@ -51,6 +49,7 @@ Collisterator =
 					$listItem.append(Collisterator.renderNodeContent(node));
 					Collisterator.renderTree($list, node.children);
 				}
+				
 			}
 				
 		}
