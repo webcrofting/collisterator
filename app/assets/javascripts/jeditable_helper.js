@@ -7,19 +7,30 @@ Helper =
 	{
 		getNewNode : function(node_id) 
 			{
-				return '<a href="/items/new?parent_id=' + node_id + '">New Child of Item</a>';
+				return '<a class="add_item" href="#">New Child of Item</a>';
 			},
 		getDeleteNode: function(node_id)
 			{
 				return "<form class='button_to' method='post' action='/items/" + node_id + "' data-remote='true' onsubmit='window.location.reload()'><div><input name='_method' value='delete' type='hidden' /><input value='Destroy' type='submit' disable_with='loading...' data-confirm='Are you sure?' /></div></form>";
 			},
-		loadEditable : function(node_id) 
+		loadEditable : function($element, node_id) 
 			{
 				var urlForJeditable = '/items/' + node_id;
-				$('.editable').editable(urlForJeditable, {
+				$element.editable(urlForJeditable, {
 						method: 'PUT',
 						submit: 'OK',
 						name: 'item[data]'
+				});
+			},
+		bindNewItem : function()
+			{
+    		                $('.add_item').live("click", function(){
+				    var $listItem = $(this).closest("li");
+				    var parentId = $listItem.attr("id");
+				    $.post("/items.json", {'item[parent_id]': parentId, 'item[data]': 'change me ...'}, function(data){
+					Collisterator.renderTree($listItem, [data]);
+				    });
+			
 				});
 			},
 	}

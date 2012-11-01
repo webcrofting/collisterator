@@ -15,8 +15,11 @@ Collisterator =
 					}
 					$parent = $("#collisterator_tree");
 					Collisterator.renderTree($parent, nodes);
+					Helper.bindNewItem();
+
 				}			
 			);
+
 		},
 		createJsonUrl: function(itemId)
 		{
@@ -30,28 +33,47 @@ Collisterator =
 		},
 		renderNodeContent: function(node)
 		{
-			var table_string = "<table style='display: inline-block'><tr><td>" + node.item_id + "</td><td class='editable'>" + node.data + "</td><td>" + Helper.getNewNode(node.item_id) + "</td><td>" + Helper.getDeleteNode(node.item_id) +"</td></tr></table>";
-			Helper.loadEditable(node.item_id);
+			var table_string = 
+			  "<table style='display: inline-block'>" + 
+			    "<tr>" +
+			      "<td>" + 
+				node.item_id + 
+                              "</td>" + 
+                              "<td class='editable'>" + 
+                                node.data + 
+                              "</td>" +
+                              "<td>" + 
+                                Helper.getNewNode(node.item_id) + 
+                              "</td>" +
+                              "<td>" + 
+                                Helper.getDeleteNode(node.item_id) +
+                              "</td>" +
+                             "</tr>" + 
+                           "</table>";
 			return table_string;
 		},
 		renderTree: function($parent, nodes)
 		{
-			var $list = $('<ul id="list"/>');
-			$parent.append($list);
-			
-			if(! (typeof nodes == 'undefined'))
-			{
-				for(var i = 0; i < nodes.length; i++)
-				{
-					var node = nodes[i];
-					var $listItem = $('<li id=' + node.item_id + '/>');
-					$list.append($listItem);
-					$listItem.append(Collisterator.renderNodeContent(node));
-					Collisterator.renderTree($list, node.children);
-				}
-				
-			}
-				
+		    var $list = $parent.children("ul");
+		    if($list.length == 0){ 
+		      $list = $('<ul class="list"/>');
+		      $parent.append($list);
+		    }
+		    
+		    if(! (typeof nodes == 'undefined'))
+		    {
+		        for(var i = 0; i < nodes.length; i++)
+		        {
+		            var node = nodes[i];
+		            var $listItem = $('<li id=' + node.item_id + '/>');
+		            $list.append($listItem);
+		            $listItem.append(Collisterator.renderNodeContent(node));
+			    Helper.loadEditable($listItem.find(".editable"), node.item_id);
+			    Collisterator.renderTree($listItem, node.children);
+		        }
+		        
+		    }
+
 		}
 	
 	}
