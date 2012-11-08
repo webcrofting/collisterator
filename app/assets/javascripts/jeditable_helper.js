@@ -11,7 +11,7 @@ Helper =
 			},
 		getDeleteNode: function(node_id)
 			{
-				return "<form class='button_to' method='post' action='/items/" + node_id + "' data-remote='true' onsubmit='window.location.reload()'><div><input name='_method' value='delete' type='hidden' /><input value='Destroy' type='submit' disable_with='loading...' data-confirm='Are you sure?' /></div></form>";
+				return "<input type='button' onclick='Collisterator.destroy(this, " + node_id + ")' />";
 			},
 		loadEditable : function($element, node_id) 
 			{

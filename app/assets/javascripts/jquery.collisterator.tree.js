@@ -31,6 +31,22 @@ Collisterator =
 			}
 			return jsonUrl; // One function exit point is debug friendlier
 		},
+		destroy: function(destroyItem, itemId)
+		{
+
+			var itemURL = "/items/" + itemId;
+			$.post(itemURL, function(data) {
+				_method: "DELETE";
+				alert("Data Loaded: " + data);
+			});
+			
+			if $(destroyItem).is("li:first") {
+				window.location.replace("/items");	
+			} else {
+				$(destroyItem).closest('li').remove();
+			}
+			
+		},
 		renderNodeContent: function(node)
 		{
 			var table_string = 
