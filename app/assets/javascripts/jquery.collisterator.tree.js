@@ -35,12 +35,11 @@ Collisterator =
 		{
 
 			var itemURL = "/items/" + itemId;
-			$.post(itemURL, function(data) {
-				_method: "DELETE";
+			$.post(itemURL, {_method: "DELETE"}, function(data) {
 				alert("Data Loaded: " + data);
 			});
 			
-			if $(destroyItem).is("li:first") {
+			if($(destroyItem).is("li:first")) {
 				window.location.replace("/items");	
 			} else {
 				$(destroyItem).closest('li').remove();
