@@ -87,5 +87,8 @@ class ItemsController < ApplicationController
 
     @item.destroy
 
+	respond_to do |format|
+      format.js { render :json => @item, :callback => params[:callback]}
+    end
   end
 end

@@ -11,7 +11,7 @@ Helper =
 			},
 		getDeleteNode: function(node_id)
 			{
-				return "<input type='button' onclick='Collisterator.destroy(this, " + node_id + ")' />";
+				return "<input type='button' value='Destroy' onclick='Collisterator.destroy(this, " + node_id + ")' />";
 			},
 		loadEditable : function($element, node_id) 
 			{

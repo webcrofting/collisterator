@@ -37,14 +37,15 @@ Collisterator =
 			var itemURL = "/items/" + itemId;
 			$.post(itemURL, {_method: "DELETE"}, function(data) {
 				alert("Data Loaded: " + data);
-			});
-			
-			if($(destroyItem).is("li:first")) {
-				window.location.replace("/items");	
-			} else {
 				$(destroyItem).closest('li').remove();
-			}
-			
+				/*
+				if($(destroyItem).closest("ul").parent().is("li")) {
+					$(destroyItem).closest('li').remove();
+				} else {
+					window.location.replace("/items");
+				}	*/
+			});
+						
 		},
 		renderNodeContent: function(node)
 		{
