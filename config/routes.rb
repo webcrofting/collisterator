@@ -1,5 +1,7 @@
 Collisterator::Application.routes.draw do
 
+  resources :list_types
+
   resources :items
 	
   get "home/index"
