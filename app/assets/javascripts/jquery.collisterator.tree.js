@@ -49,24 +49,33 @@ Collisterator =
 		},
 		renderNodeContent: function(node)
 		{
+			var view = {
+				id: node.item_id,
+				data: node.data,
+				new_node: Helper.getNewNode(node.item_id),
+				delete_node: Helper.getDeleteNode(node.item_id)
+			};
 			var table_string = 
-			  "<table style='display: inline-block'>" + 
+				"<table style='display: inline-block'>" + 
 			    "<tr>" +
 			      "<td>" + 
-				node.item_id + 
+					"{{id}}" +
                               "</td>" + 
                               "<td class='editable'>" + 
-                                node.data + 
+                                "{{data}}" + 
                               "</td>" +
                               "<td>" + 
-                                Helper.getNewNode(node.item_id) + 
+                              "{{{new_node}}}" + 
                               "</td>" +
                               "<td>" + 
-                                Helper.getDeleteNode(node.item_id) +
+								"{{{delete_node}}}"
                               "</td>" +
                              "</tr>" + 
                            "</table>";
-			return table_string;
+						   
+			var output = Mustache.render(table_string, view);
+			return output;
+
 		},
 		renderTree: function($parent, nodes)
 		{
