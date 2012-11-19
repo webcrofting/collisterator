@@ -5,14 +5,6 @@ $('.editable').editable('/items/1', {
 });
 Helper = 
 	{
-		getNewNode : function(node_id) 
-			{
-				return '<a class="add_item" href="#">New Child of Item</a>';
-			},
-		getDeleteNode: function(node_id)
-			{
-				return "<input type='button' value='Destroy' onclick='Collisterator.destroy(this, " + node_id + ")' />";
-			},
 		loadEditable : function($element, node_id) 
 			{
 				var urlForJeditable = '/items/' + node_id;

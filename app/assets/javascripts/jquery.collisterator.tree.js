@@ -49,33 +49,25 @@ Collisterator =
 		},
 		renderNodeContent: function(node)
 		{
-			var view = {
-				id: node.item_id,
-				data: node.data,
-				new_node: Helper.getNewNode(node.item_id),
-				delete_node: Helper.getDeleteNode(node.item_id)
-			};
 			var table_string = 
 				"<table style='display: inline-block'>" + 
 			    "<tr>" +
-			      "<td>" + 
-					"{{id}}" +
-                              "</td>" + 
-                              "<td class='editable'>" + 
-                                "{{data}}" + 
-                              "</td>" +
-                              "<td>" + 
-                              "{{{new_node}}}" + 
-                              "</td>" +
-                              "<td>" + 
-								"{{{delete_node}}}"
-                              "</td>" +
-                             "</tr>" + 
-                           "</table>";
-						   
-			var output = Mustache.render(table_string, view);
+						"<td>" + 
+							"{{node.item_id}}" +
+                        "</td>" + 
+                        "<td class='editable'>" + 
+                                "{{node.data}}" + 
+                         "</td>" +
+                         "<td>" + 
+							"<a class='add_item' href='#'>New Child of Item</a>" + 
+                         "</td>" +
+                         "<td>" + 
+								"<input type='button' value='Destroy' onclick='Collisterator.destroy(this, {{node.item_id}})' />" +
+                        "</td>" +
+                 "</tr>" + 
+                           "</table>";						   
+			var output = Mustache.render(table_string, node);
 			return output;
-
 		},
 		renderTree: function($parent, nodes)
 		{
