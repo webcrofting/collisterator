@@ -1,6 +1,5 @@
 class Item < ActiveRecord::Base
 	acts_as_tree
-	has_many :list_types
 	
 	def as_json(options = nil)
 	
