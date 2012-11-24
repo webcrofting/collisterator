@@ -53,16 +53,16 @@ Collisterator =
 				"<table style='display: inline-block'>" + 
 			    "<tr>" +
 						"<td>" + 
-							"{{node.item_id}}" +
+							"{{item_id}}" +
                         "</td>" + 
                         "<td class='editable'>" + 
-                                "{{node.data}}" + 
+                                "{{data}}" + 
                          "</td>" +
                          "<td>" + 
 							"<a class='add_item' href='#'>New Child of Item</a>" + 
                          "</td>" +
                          "<td>" + 
-								"<input type='button' value='Destroy' onclick='Collisterator.destroy(this, {{node.item_id}})' />" +
+								"<input type='button' value='Destroy' onclick='Collisterator.destroy(this, {{item_id}})' />" +
                         "</td>" +
                  "</tr>" + 
                            "</table>";						   
