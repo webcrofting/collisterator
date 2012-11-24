@@ -1,5 +1,16 @@
 Collisterator = 
 	{
+		bindNewItem : function()
+		{
+				$('.add_item').live("click", function(){
+				var $listItem = $(this).closest("li");
+				var parentId = $listItem.attr("id");
+				$.post("/items.json", {'item[parent_id]': parentId, 'item[data]': 'change me ...'}, function(data){
+				Collisterator.renderTree($listItem, [data]);
+				});
+		
+			});
+		},
 		buildTree: function(id)
 		{
 			$.getJSON(Collisterator.createJsonUrl(id), function(data)
@@ -15,7 +26,7 @@ Collisterator =
 					}
 					$parent = $("#collisterator_tree");
 					Collisterator.renderTree($parent, nodes);
-					Helper.bindNewItem();
+					Collisterator.bindNewItem();
 
 				}			
 			);
@@ -46,6 +57,15 @@ Collisterator =
 			"json"
 			);
 						
+		},
+		loadEditable : function($element, node_id) 
+		{
+			var urlForJeditable = '/items/' + node_id;
+			$element.editable(urlForJeditable, {
+					method: 'PUT',
+					submit: 'OK',
+					name: 'item[data]'
+			});
 		},
 		renderNodeContent: function(node)
 		{
@@ -85,7 +105,7 @@ Collisterator =
 		            var $listItem = $('<li id=' + node.item_id + '/>');
 		            $list.append($listItem);
 		            $listItem.append(Collisterator.renderNodeContent(node));
-			    Helper.loadEditable($listItem.find(".editable"), node.item_id);
+			    Collisterator.loadEditable($listItem.find(".editable"), node.item_id);
 			    Collisterator.renderTree($listItem, node.children);
 		        }
 		        
