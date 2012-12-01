@@ -1,0 +1,16 @@
+%h1 List Types
+
+- @list_types.each do |list_type|
+	%p
+		%b=list_type.name
+		%br 
+		=list_type.template
+		%br
+		=link_to 'Show', list_type
+		=link_to 'Edit', list_type_path(list_type)
+		=link_to 'Destroy', list_type, confirm: 'Are you sure?', method: :delete
+	
+
+%br
+
+= link_to 'New List type', new_list_type_path

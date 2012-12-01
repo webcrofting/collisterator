@@ -1,0 +1,13 @@
+%p#notice 
+	= notice
+
+%p
+	%b Name:
+	= @list_type.name
+  
+%p
+	%b Template:
+	= @list_type.template
+
+= link_to 'Edit', edit_list_type_path(@list_type) 
+= link_to 'Back', list_types_path

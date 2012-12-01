@@ -1,0 +1,24 @@
+= form_for @list_type do |f|
+	- if (@list_type.errors.any?)
+		.error_explanation
+			%h2 
+				- pluralize(@list_type.errors.count, "error")
+				prohibited this list_type from being saved:
+		
+			%ul
+				- @list_type.errors.full_messages.each do |msg|
+					%li= msg
+
+					  
+	.field
+		= f.label :name 
+		%br/
+		= f.text_field :name
+	
+	.field
+		= f.label :template 
+		%br/
+		= f.text_area :template
+		 
+	.actions
+		= f.submit
