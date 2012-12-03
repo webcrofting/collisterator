@@ -2,7 +2,7 @@ module ItemsHelper
 
 	def item_to_json_hash(item)
 		
-		data = {:item_id => item.id, :data => item.data}
+		data = {:item_id => item.id, :list_type_id => item.list_type_id, :data => item.data}
 		
 		children = []
 		
