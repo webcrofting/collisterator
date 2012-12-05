@@ -1,5 +1,6 @@
 Collisterator = 
 	{
+		templates : {}, // or templates : []; ?? 
 		bindNewItem : function()
 		{
 				$('.add_item').live("click", function(){
@@ -58,6 +59,15 @@ Collisterator =
 			);
 						
 		},
+		getTemplate : function(list_type_id) 
+		{
+			// should probably write in some protection for the cases
+			// when list_type_id itself is undefined
+			var template_url = "/list_types/" + list_type_id;
+			$.getJSON(template_url, function(data) {
+				Collisterator.templates[list_type_id] = data;
+			}
+		},
 		loadEditable : function($element, node_id) 
 		{
 			var urlForJeditable = '/items/' + node_id;
@@ -67,27 +77,12 @@ Collisterator =
 					name: 'item[data]'
 			});
 		},
-		renderNodeContent: function(node)
+		renderNodeContent: function(node, template)
 		{
-			var table_string = 
-				"<table style='display: inline-block'>" + 
-			    "<tr>" +
-						"<td>" + 
-							"{{item_id}}" +
-                        "</td>" + 
-                        "<td class='editable'>" + 
-                                "{{data}}" + 
-                         "</td>" +
-                         "<td>" + 
-							"<a class='add_item' href='#'>New Child of Item</a>" + 
-                         "</td>" +
-                         "<td>" + 
-								"<input type='button' value='Destroy' onclick='Collisterator.destroy(this, {{item_id}})' />" +
-                        "</td>" +
-                 "</tr>" + 
-                           "</table>";						   
-			var output = Mustache.render(table_string, node);
+			var output = Mustache.render(template, node);
 			return output;
+			// or simply:
+			// return Mustache.render(template, node);
 		},
 		renderTree: function($parent, nodes)
 		{
@@ -102,9 +97,14 @@ Collisterator =
 		        for(var i = 0; i < nodes.length; i++)
 		        {
 		            var node = nodes[i];
+					if (templates[node.list_type_id]===undefined) {
+						getTemplate(node.list_type_id);
+					}
+			
+					var template = Collisterator.templates[node.list_type_id];
 		            var $listItem = $('<li id=' + node.item_id + '/>');
 		            $list.append($listItem);
-		            $listItem.append(Collisterator.renderNodeContent(node));
+		            $listItem.append(Collisterator.renderNodeContent(node, template));
 			    Collisterator.loadEditable($listItem.find(".editable"), node.item_id);
 			    Collisterator.renderTree($listItem, node.children);
 		        }
