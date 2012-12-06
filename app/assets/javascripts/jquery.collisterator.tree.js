@@ -1,6 +1,7 @@
 Collisterator = 
 	{
-		templates : {}, // or templates : []; ?? 
+		 // or templates : []; ?? 
+		templates : {},
 		bindNewItem : function()
 		{
 				$('.add_item').live("click", function(){
@@ -14,6 +15,7 @@ Collisterator =
 		},
 		buildTree: function(id)
 		{
+			templates = new Array();
 			$.getJSON(Collisterator.createJsonUrl(id), function(data)
 				{
 					var nodes;
@@ -59,15 +61,15 @@ Collisterator =
 			);
 						
 		},
-		getTemplate : function(list_type_id) 
-		{
-			// should probably write in some protection for the cases
-			// when list_type_id itself is undefined
-			var template_url = "/list_types/" + list_type_id;
-			$.getJSON(template_url, function(data) {
-				Collisterator.templates[list_type_id] = data;
-			}
-		},
+		// getTemplate: function(list_type_id) 
+		// {
+			// // should probably write in some protection for the cases
+			// // when list_type_id itself is undefined
+			// var template_url = "/list_types/" + list_type_id;
+			// $.getJSON(template_url, function(data) {
+				// templates[list_type_id] = data;
+			// });
+		// },
 		loadEditable : function($element, node_id) 
 		{
 			var urlForJeditable = '/items/' + node_id;
@@ -77,12 +79,20 @@ Collisterator =
 					name: 'item[data]'
 			});
 		},
-		renderNodeContent: function(node, template)
+		renderNodeContent: function(node)
 		{
-			var output = Mustache.render(template, node);
-			return output;
-			// or simply:
-			// return Mustache.render(template, node);
+			var template;
+			if (templates[node.list_type_id]===undefined) {
+				var template_url = "/list_types/" + node.list_type_id + ".json";
+				var test = $.getJSON(template_url, function(data) {
+					templates[node.list_type_id] = data.template;
+				});
+				
+			}
+			template = templates[node.list_type_id];
+			
+			return Mustache.render(template, node);
+			
 		},
 		renderTree: function($parent, nodes)
 		{
@@ -97,14 +107,10 @@ Collisterator =
 		        for(var i = 0; i < nodes.length; i++)
 		        {
 		            var node = nodes[i];
-					if (templates[node.list_type_id]===undefined) {
-						getTemplate(node.list_type_id);
-					}
-			
-					var template = Collisterator.templates[node.list_type_id];
+					
 		            var $listItem = $('<li id=' + node.item_id + '/>');
 		            $list.append($listItem);
-		            $listItem.append(Collisterator.renderNodeContent(node, template));
+		            $listItem.append(Collisterator.renderNodeContent(node));
 			    Collisterator.loadEditable($listItem.find(".editable"), node.item_id);
 			    Collisterator.renderTree($listItem, node.children);
 		        }
