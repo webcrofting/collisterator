@@ -79,21 +79,32 @@ Collisterator =
 					name: 'item[data]'
 			});
 		},
-		renderNodeContent: function(node)
+		renderNodeContent: function(node, $listItem)
 		{
-			var template;
-			if (templates[node.list_type_id]===undefined) {
+			
+			if (templates[node.list_type_id]===undefined) 
+			{
 				var template_url = "/list_types/" + node.list_type_id + ".json";
 				var test = $.getJSON(template_url, function(data) {
 					templates[node.list_type_id] = data.template;
+					Collisterator.renderNodeContentWithTemplate(node, $listItem, data.template);
 				});
 				
 			}
-			template = templates[node.list_type_id];
-			
-			return Mustache.render(template, node);
-			
+			else
+			{
+			  var template = templates[node.list_type_id];
+				Collisterator.renderNodeContentWithTemplate(node, $listItem, template);
+			} 
 		},
+		
+		renderNodeContentWithTemplate: function(node, $listItem, template)
+		{
+		  $listItem.append(Mustache.render(template, node));
+	    Collisterator.loadEditable($listItem.find(".editable"), node.item_id);
+	    Collisterator.renderTree($listItem, node.children);
+		},
+		
 		renderTree: function($parent, nodes)
 		{
 		    var $list = $parent.children("ul");
@@ -110,9 +121,7 @@ Collisterator =
 					
 		            var $listItem = $('<li id=' + node.item_id + '/>');
 		            $list.append($listItem);
-		            $listItem.append(Collisterator.renderNodeContent(node));
-			    Collisterator.loadEditable($listItem.find(".editable"), node.item_id);
-			    Collisterator.renderTree($listItem, node.children);
+		            Collisterator.renderNodeContent(node, $listItem);
 		        }
 		        
 		    }
