@@ -9,7 +9,7 @@ Collisterator::Application.routes.draw do
   match '/jstree', :to => 'items#jstree', :as => 'jstree'
   
   
-  root :to => "items#index" 
+  root :to => "list_types#index" 
 
   
   # The priority is based upon order of creation:

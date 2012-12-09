@@ -1,16 +1,17 @@
-%h1 List Types
+%h1 Collisterator
 
 - @list_types.each do |list_type|
 	%p
-		%b=list_type.name
-		%br 
-		=list_type.template
-		%br
-		=link_to 'Show', list_type
-		=link_to 'Edit', list_type_path(list_type)
+		=link_to list_type_path(list_type) do
+			= list_type.name
+		|
+		=link_to list_type_path(list_type) do
+			Edit Template
+		|
 		=link_to 'Destroy', list_type, confirm: 'Are you sure?', method: :delete
 	
 
 %br
 
 = link_to 'New List type', new_list_type_path
+
