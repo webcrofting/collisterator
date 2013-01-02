@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121201170632) do
+ActiveRecord::Schema.define(:version => 20130102175847) do
 
   create_table "item_hierarchies", :id => false, :force => true do |t|
     t.integer "ancestor_id",   :null => false
@@ -35,8 +35,11 @@ ActiveRecord::Schema.define(:version => 20121201170632) do
   create_table "list_types", :force => true do |t|
     t.string   "name"
     t.text     "template"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+    t.boolean  "can_be_root"
+    t.integer  "children_list_type_id"
+    t.integer  "default"
   end
 
 end
