@@ -1,6 +1,5 @@
 Collisterator = 
 	{
-		 // or templates : []; ?? 
 		templates : {},
 		bindNewItem : function()
 		{
@@ -8,7 +7,7 @@ Collisterator =
 				var $listItem = $(this).closest("li");
 				var parentId = $listItem.attr("id");
 				$.post("/items.json", {'item[parent_id]': parentId, 'item[data]': 'change me ...'}, function(data){
-				Collisterator.renderTree($listItem, [data]);
+					Collisterator.renderTree($listItem, [data]);
 				});
 		
 			});
@@ -61,15 +60,7 @@ Collisterator =
 			);
 						
 		},
-		// getTemplate: function(list_type_id) 
-		// {
-			// // should probably write in some protection for the cases
-			// // when list_type_id itself is undefined
-			// var template_url = "/list_types/" + list_type_id;
-			// $.getJSON(template_url, function(data) {
-				// templates[list_type_id] = data;
-			// });
-		// },
+
 		loadEditable : function($element, node_id) 
 		{
 			var urlForJeditable = '/items/' + node_id;

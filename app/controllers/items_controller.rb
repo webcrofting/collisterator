@@ -45,10 +45,8 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(params[:item])
 	@parent = Item.find(@item.parent_id)
+	@item.list_type_id = @parent.list_type_id
 	
-	unless (@parent.nil?)
-		@item.list_type_id = @parent.list_type_id
-	end
 		
     respond_to do |format|
       if @item.save
