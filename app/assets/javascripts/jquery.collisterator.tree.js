@@ -3,14 +3,21 @@ Collisterator =
 		templates : {},
 		bindNewItem : function()
 		{
-				$('.add_item').live("click", function(){
-				var $listItem = $(this).closest("li");
-				var parentId = $listItem.attr("id");
-				$.post("/items.json", {'item[parent_id]': parentId, 'item[data]': 'change me ...'}, function(data){
-					Collisterator.renderTree($listItem, [data]);
-				});
-		
-			});
+				$('.add_item').live("click", clickHandler);
+				
+				function clickHandler(click) 
+					{
+						if (click.handled !== true) 
+							{
+								var $listItem = $(this).closest("li");
+								var parentId = $listItem.attr("id");
+								$.post("/items.json", {'item[parent_id]': parentId, 'item[data]': 'change me ...'}, function(data){
+									Collisterator.renderTree($listItem, [data]);
+								});
+								click.handled=true;
+							}
+						return false;
+					}
 		},
 		buildTree: function(id)
 		{
