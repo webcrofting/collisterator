@@ -8,6 +8,10 @@
 %p
 	%b Template:
 	= @list_type.template
+	
+%p
+	%b Default Data:
+	= @list_type.default_data
 
 #collisterator_tree
 	- @items = list_by_list_type(@list_type.id)
