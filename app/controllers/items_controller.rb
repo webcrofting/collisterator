@@ -44,10 +44,23 @@ class ItemsController < ApplicationController
   # POST /items.json
   def create
     @item = Item.new(params[:item])
-	@parent = Item.find(@item.parent_id)
-	@item.list_type_id = @parent.list_type_id
 	
-		
+	#logger.debug "item's parent_id is #{@item.parent_id}"
+	
+	unless (@item.parent_id.blank?)
+		@parent = Item.find(@item.parent_id)
+		@item.list_type_id = @parent.list_type_id
+	end
+	
+	#logger.debug "item's list_type_id is #{@item.list_type_id}"
+	
+	@list_type = ListType.find(@item.list_type_id)	
+	@item.data = @list_type.default_data
+	
+	#logger.debug "list_types data is #{@list_type.default_data}"
+	
+	
+	
     respond_to do |format|
       if @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
@@ -67,7 +80,7 @@ class ItemsController < ApplicationController
 	
 	logger.debug "Item data is #{@item.data}"
 	
-        respond_to do |format|
+     respond_to do |format|
 	  format.html {
             if request.xhr?
 	      render :text => params[:item].values.first
