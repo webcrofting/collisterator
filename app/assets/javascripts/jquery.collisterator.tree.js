@@ -11,7 +11,7 @@ Collisterator =
 							{
 								var $listItem = $(this).closest("li");
 								var parentId = $listItem.attr("id");
-								$.post("/items.json", {'item[parent_id]': parentId, 'item[data]': 'change me ...'}, function(data){
+								$.post("/items.json", {'item[parent_id]': parentId}, function(data){
 									Collisterator.renderTree($listItem, [data]);
 								});
 								click.handled=true;
