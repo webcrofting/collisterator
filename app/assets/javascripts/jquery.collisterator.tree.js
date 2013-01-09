@@ -21,7 +21,7 @@ Collisterator =
 		},
 		buildTree: function(id)
 		{
-			templates = new Array();
+			Collisterator.templates = new Array();
 			$.getJSON(Collisterator.createJsonUrl(id), function(data)
 				{
 					var nodes;
@@ -80,18 +80,18 @@ Collisterator =
 		renderNodeContent: function(node, $listItem)
 		{
 			
-			if (templates[node.list_type_id]===undefined) 
+			if (Collisterator.templates[node.list_type_id]===undefined) 
 			{
 				var template_url = "/list_types/" + node.list_type_id + ".json";
 				var test = $.getJSON(template_url, function(data) {
-					templates[node.list_type_id] = data.template;
+					Collisterator.templates[node.list_type_id] = data.template;
 					Collisterator.renderNodeContentWithTemplate(node, $listItem, data.template);
 				});
 				
 			}
 			else
 			{
-			  var template = templates[node.list_type_id];
+			  var template = Collisterator.templates[node.list_type_id];
 				Collisterator.renderNodeContentWithTemplate(node, $listItem, template);
 			} 
 		},
