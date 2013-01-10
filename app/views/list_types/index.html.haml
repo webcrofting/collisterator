@@ -7,9 +7,13 @@
 		|
 		=link_to 'Edit', list_type
 		|
-		New Item
-
+		%a{ :href=> list_type_path(list_type), :class => 'new_list', :id => list_type.id}
+			New List
+			
 %br
+
+:javascript
+	Collisterator.createNewList();
 
 = link_to 'New List type', new_list_type_path
 

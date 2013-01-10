@@ -51,6 +51,20 @@ Collisterator =
 			}
 			return jsonUrl; // One function exit point is debug friendlier
 		},
+		createNewList: function()
+		{
+			$.("new_list").live("click", function(click) 
+				{			
+					if (click.handled!==true)
+						{
+							var $listType = $(this).closest("li");
+							var list_type_id = $listType.attr("id");
+							$.post("/items.json", {'item[list_type_id]': list_type_id});
+							click.handled=true;
+						}
+					return false;
+				});
+		},
 		destroy: function(destroyItem, itemId)
 		{
 

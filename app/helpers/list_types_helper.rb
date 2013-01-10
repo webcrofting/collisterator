@@ -5,4 +5,5 @@ module ListTypesHelper
 		@list_items = @items.select{ |item| item.list_type_id == list_id}
 		
 	end
+	
 end
