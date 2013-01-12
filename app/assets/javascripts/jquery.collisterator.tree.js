@@ -53,16 +53,11 @@ Collisterator =
 		},
 		createNewList: function()
 		{
-			$("new_list").live("click", function(click) 
+			$("new_list").live("click", function() 
 				{			
-					if (click.handled!==true)
-						{
-							var $listType = $(this).closest("li");
-							var list_type_id = $listType.attr("id");
-							$.post("/items.json", {'item[list_type_id]': list_type_id});
-							click.handled=true;
-						}
-					return false;
+					var $newList = $(this).closest("li");
+					var list_type_id = $newList.attr("id");
+					$.post("/items.json", {'item[list_type_id]': list_type_id});
 				});
 		},
 		destroy: function(destroyItem, itemId)

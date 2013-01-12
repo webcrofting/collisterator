@@ -1,16 +1,15 @@
 %h1 Collisterator
 
 - @list_types.each do |list_type|
-	%p
-		=link_to list_type_path(list_type) do
-			= list_type.name
-		|
-		=link_to 'Edit', list_type
-		|
-		%a{ :href=> list_type_path(list_type), :class => 'new_list', :id => list_type.id}
-			New List
-			
-%br
+	%ul	
+		%li
+			=link_to list_type_path(list_type) do
+				= list_type.name
+		%li
+			=link_to 'Edit', list_type
+		%li{:id => list_type.id}
+			%a{new_list_html_attrs(list_type.id)} 
+				New List
 
 :javascript
 	Collisterator.createNewList();
