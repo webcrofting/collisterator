@@ -53,7 +53,7 @@ Collisterator =
 		},
 		createNewList: function()
 		{
-			$.("new_list").live("click", function(click) 
+			$("new_list").live("click", function(click) 
 				{			
 					if (click.handled!==true)
 						{
