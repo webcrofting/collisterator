@@ -1,6 +1,19 @@
 Collisterator = 
 	{
 		templates : {},
+		bindCreateNewList: function()
+		{
+			$(".new_list").live("click", function() 
+				{			
+					var $newList = $(this).closest("li");
+					var list_type_id = $newList.attr("id");
+					$.post("/items.json", {'item[list_type_id]': list_type_id},
+					function(data) {
+							var url = "/items/" + data.item_id;
+							window.location = url;
+					});
+				});
+		},
 		bindNewItem : function()
 		{
 				$('.add_item').live("click", clickHandler);
@@ -50,15 +63,6 @@ Collisterator =
 				jsonUrl = "/items/" + itemId + ".json";
 			}
 			return jsonUrl; // One function exit point is debug friendlier
-		},
-		createNewList: function()
-		{
-			$("new_list").live("click", function() 
-				{			
-					var $newList = $(this).closest("li");
-					var list_type_id = $newList.attr("id");
-					$.post("/items.json", {'item[list_type_id]': list_type_id});
-				});
 		},
 		destroy: function(destroyItem, itemId)
 		{
