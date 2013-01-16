@@ -49,7 +49,15 @@ class ItemsController < ApplicationController
 	
 	unless (@item.parent_id.blank?)
 		@parent = Item.find(@item.parent_id)
-		@item.list_type_id = @parent.list_type_id
+		@parent_list_type = ListType.find(@parent.list_type_id)
+		
+		logger.debug "parent item's children_list_type_id: #{@parent_list_type.children_list_type_id}"
+		
+		if (@parent_list_type.children_list_type_id.blank?) 
+			@item.list_type_id = @parent.list_type_id
+		else
+			@item.list_type_id = @parent_list_type.children_list_type_id
+		end
 	end
 	
 	#logger.debug "item's list_type_id is #{@item.list_type_id}"
