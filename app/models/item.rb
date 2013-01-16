@@ -1,6 +1,8 @@
 class Item < ActiveRecord::Base
 	acts_as_tree
 	
+	attr_accessible :data
+	
 	def as_json(options = nil)
 	
 		item_to_json_hash(self)

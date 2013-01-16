@@ -89,15 +89,15 @@ class ItemsController < ApplicationController
 	logger.debug "Item data is #{@item.data}"
 	
      respond_to do |format|
-	  format.html {
-            if request.xhr?
-	      render :text => params[:item].values.first
-            else
-              redirect_to(@item, :notice => 'Item was successfully updated.')
-            end
-	  }
-          format.json { head :no_content }
-        end
+	     format.html {
+         if request.xhr?
+	         render :text => params[:item].values.first
+         else
+           redirect_to(@item, :notice => 'Item was successfully updated.')
+         end
+	    }
+      format.json { head :no_content }
+    end
   end
 
   # DELETE /items/1

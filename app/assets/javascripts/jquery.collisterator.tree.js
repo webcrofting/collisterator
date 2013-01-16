@@ -90,7 +90,13 @@ Collisterator =
             dataType: 'json'
           },
 			    url: urlForJeditable,
-			    pk: node_id 
+			    send: "always",
+			    params: function(params) {
+            
+            newParams = {};
+            newParams["item[" + $element.attr("data-name") + "]"] = params.value; 
+            return newParams;
+          } 
 			});
 			
 		},
