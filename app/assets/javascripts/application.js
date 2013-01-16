@@ -12,6 +12,5 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.jeditable.js
-//= require jquery.jeditable.ajaxupload.js
+//= require bootstrap-editable-inline
 //= require_tree .

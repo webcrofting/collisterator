@@ -84,11 +84,15 @@ Collisterator =
 		loadEditable : function($element, node_id) 
 		{
 			var urlForJeditable = '/items/' + node_id;
-			$element.editable(urlForJeditable, {
-					method: 'PUT',
-					submit: 'OK',
-					name: 'item[data]'
+			$element.editable({
+			    ajaxOptions: {
+            type: 'put',
+            dataType: 'json'
+          },
+			    url: urlForJeditable,
+			    pk: node_id 
 			});
+			
 		},
 		renderNodeContent: function(node, $listItem)
 		{

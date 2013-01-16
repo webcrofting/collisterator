@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.1'
+gem 'rails', '3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -29,12 +29,13 @@ end
 gem 'jquery-rails'
 gem 'jqtree-rails'
 
-gem 'jeditable-rails'
-
 gem 'closure_tree'
 
 # To use haml for the views
 gem 'haml', '3.1.7'
+
+gem "bootstrap-sass", ">= 2.0.4.0"
+gem "bootstrap-x-editable-rails", "~> 1.4.0"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

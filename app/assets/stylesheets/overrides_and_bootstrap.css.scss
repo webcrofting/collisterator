@@ -1,0 +1,23 @@
+@import "bootstrap";
+body { padding-top: 60px; }
+@import "bootstrap-responsive";
+
+body
+{
+  font-size: 0.8em;
+}
+
+.hero-unit
+{
+  background: rgba(255,255,255,0.8);
+}
+
+.inline-form
+{
+  display: inline;
+}
+
+.welcome-header-box
+{
+  text-align: center;
+}
