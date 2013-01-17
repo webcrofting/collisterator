@@ -13,13 +13,6 @@
 	%b Default Data:
 	= @list_type.default_data
 
-#collisterator_tree
-	- @items = list_by_list_type(@list_type.id)
-	
-- @items.each do |item|
-	- item_id = item.id
-	:javascript
-		Collisterator.buildTree(#{item_id})
 	
 = link_to 'Edit', edit_list_type_path(@list_type) 
 = link_to 'Back', list_types_path

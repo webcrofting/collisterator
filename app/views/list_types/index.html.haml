@@ -1,17 +1,29 @@
 %h1 Collisterator
 
-- @list_types.each do |list_type|
-	%ul	
-		%li
-			=link_to list_type_path(list_type) do
-				= list_type.name
-		%li
-			=link_to 'Edit', list_type
-		%li{:id => list_type.id}
-			%a{new_list_html_attrs(list_type.id)} 
-				New List
+%table.table.table-striped
+  %tr	
+    %th
+      Name
+    %th
+      Edit
+    %th
+      Create List
+
+  - @list_types.each do |list_type|
+    %tr	
+      %td
+        = list_type.name
+        = link_to list_type_path(list_type) do
+          %i.icon-search
+          
+      %td
+        = link_to edit_list_type_path(list_type) do
+          %i.icon-edit
+      %td
+        %a{new_list_html_attrs(list_type.id)} 
+          %i.icon-list
 
 :javascript
-	Collisterator.bindCreateNewList();
+  Collisterator.bindCreateNewList();
 
 = link_to 'New List type', new_list_type_path

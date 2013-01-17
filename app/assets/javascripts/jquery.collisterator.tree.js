@@ -5,8 +5,7 @@ Collisterator =
 		{
 			$(".new_list").live("click", function() 
 				{			
-					var $newList = $(this).closest("li");
-					var list_type_id = $newList.attr("id");
+					var list_type_id = $(this).attr("id");
 					$.post("/items.json", {'item[list_type_id]': list_type_id},
 					function(data) {
 							var url = "/items/" + data.item_id;

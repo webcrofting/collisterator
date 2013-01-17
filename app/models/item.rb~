@@ -1,9 +1,9 @@
 class Item < ActiveRecord::Base
 	acts_as_tree
 	
-	attr_accessible :data
+	attr_accessible :data, :list_itme_id
 	
-	#serialize :data, JSON
+	serialize :data, JSON
 	
 	def as_json(options = nil)
 	

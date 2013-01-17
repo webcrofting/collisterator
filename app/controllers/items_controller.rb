@@ -45,27 +45,27 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(params[:item])
 	
-	#logger.debug "item's parent_id is #{@item.parent_id}"
+	  #logger.debug "item's parent_id is #{@item.parent_id}"
 	
-	unless (@item.parent_id.blank?)
-		@parent = Item.find(@item.parent_id)
-		@parent_list_type = ListType.find(@parent.list_type_id)
+	  if @item.parent_id
+		  @parent = Item.find(@item.parent_id)
+		  @parent_list_type = ListType.find(@parent.list_type_id)
 		
-		logger.debug "parent item's children_list_type_id: #{@parent_list_type.children_list_type_id}"
+		  logger.debug "parent item's children_list_type_id: #{@parent_list_type.children_list_type_id}"
 		
-		if (@parent_list_type.children_list_type_id.blank?) 
-			@item.list_type_id = @parent.list_type_id
-		else
-			@item.list_type_id = @parent_list_type.children_list_type_id
-		end
-	end
+		  if (@parent_list_type.children_list_type_id.blank?) 
+			  @item.list_type_id = @parent.list_type_id
+		  else
+			  @item.list_type_id = @parent_list_type.children_list_type_id
+		  end
+	  end
 	
-	#logger.debug "item's list_type_id is #{@item.list_type_id}"
+	  #logger.debug "item's list_type_id is #{@item.list_type_id}"
 	
-	@list_type = ListType.find(@item.list_type_id)	
-	@item.data = @list_type.default_data
+	  @list_type = ListType.find(@item.list_type_id)	
+	  @item.data = JSON.parse @list_type.default_data
 	
-	#logger.debug "list_types data is #{@list_type.default_data}"
+	  #logger.debug "list_types data is #{@list_type.default_data}"
 	
 	
 	

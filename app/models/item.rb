@@ -1,7 +1,7 @@
 class Item < ActiveRecord::Base
 	acts_as_tree
 	
-	attr_accessible :data
+	attr_accessible :data, :list_type_id
 	
 	serialize :data, JSON
 	
