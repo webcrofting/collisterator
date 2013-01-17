@@ -84,7 +84,8 @@ class ItemsController < ApplicationController
   # PUT /items/1.json
   def update
 	@item = Item.find(params[:id])
-	@item.update_attributes(params[:item])
+	@item.data.merge! params[:item][:data]
+	@item.save
 	
 	logger.debug "Item data is #{@item.data}"
 	

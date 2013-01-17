@@ -1,6 +1,22 @@
 Collisterator = 
 	{
 		templates : {},
+		bindShowExampleListItem: function()
+		{
+			$(".example-trigger").live("blur", function() 
+				{			
+					var $container = $(".list-type-example");
+					var node = {};
+          var default_data_string = $("#list_type_default_data").val();
+          if(default_data_string)
+          {
+					  node.data = JSON.parse(default_data_string);
+					  var template = $("#list_type_template").val();
+					  $container.empty();
+            Collisterator.renderNodeContentWithTemplate(node, $container, template);
+          }
+				});
+		},
 		bindCreateNewList: function()
 		{
 			$(".new_list").live("click", function() 
@@ -121,7 +137,10 @@ Collisterator =
 		renderNodeContentWithTemplate: function(node, $listItem, template)
 		{
 		  $listItem.append(Mustache.render(template, node));
-	    Collisterator.loadEditable($listItem.find(".editable"), node.item_id);
+		  $listItem.find(".editable").each(function()
+		  {
+	      Collisterator.loadEditable($(this), node.item_id);
+	    });
 	    Collisterator.renderTree($listItem, node.children);
 		},
 		
