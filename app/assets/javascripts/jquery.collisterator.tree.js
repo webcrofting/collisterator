@@ -94,7 +94,7 @@ Collisterator =
 			    params: function(params) {
             
             newParams = {};
-            newParams["item[" + $element.attr("data-name") + "]"] = params.value; 
+            newParams["item[data][" + $element.attr("data-name") + "]"] = params.value; 
             return newParams;
           } 
 			});

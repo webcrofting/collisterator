@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130105154148) do
+ActiveRecord::Schema.define(:version => 20130117163652) do
 
   create_table "item_hierarchies", :id => false, :force => true do |t|
     t.integer "ancestor_id",   :null => false

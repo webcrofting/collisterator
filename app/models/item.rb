@@ -3,6 +3,8 @@ class Item < ActiveRecord::Base
 	
 	attr_accessible :data
 	
+	serialize :data, JSON
+	
 	def as_json(options = nil)
 	
 		item_to_json_hash(self)
@@ -18,7 +20,7 @@ class Item < ActiveRecord::Base
 
 	def item_to_json_hash(item)
 		
-		data = {:item_id => item.id, :list_type_id => item.list_type_id, :data => item.data }
+		hash = {:item_id => item.id, :list_type_id => item.list_type_id, :data => item.data }
 		
 		children = []
 		
@@ -28,10 +30,10 @@ class Item < ActiveRecord::Base
 				children << item_to_json_hash(child)
 			end
 			
-			data[:children] = children
+			hash[:children] = children
 		end	
 		
-		return data
+		return hash
 	end
 		
 
