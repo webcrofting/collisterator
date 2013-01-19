@@ -1,35 +1,50 @@
-= form_for @list_type do |f|
-  - if (@list_type.errors.any?)
-    .error_explanation
-      %h2 
-        - pluralize(@list_type.errors.count, "error")
-        prohibited this list_type from being saved:
-    
-      %ul
-        - @list_type.errors.full_messages.each do |msg|
-          %li= msg
+.row
+  = form_for @list_type do |f|
+    - if (@list_type.errors.any?)
+      .error_explanation
+        %h2 
+          - pluralize(@list_type.errors.count, "error")
+          prohibited this list_type from being saved:
+      
+        %ul
+          - @list_type.errors.full_messages.each do |msg|
+            %li= msg
 
-  .span4          
-    .field
-      = f.label :name 
-      = f.text_field :name
-    .field
-      =f.label :children_list_type_id
-      =f.text_field :children_list_type_id
-  .span4
-    .field
-      = f.label :template 
-      = f.text_area :template, :rows => 10, :class => "example-trigger"
-       
-    .field
-      = f.label :default_data
-      = f.text_area :default_data, :rows => 5, :class => "example-trigger"
-  .span4
-    %label 
-      Example
-    .list-type-example
-    .actions
-      = f.submit :class => "btn btn-primary"
-:javascript
-  Collisterator.bindShowExampleListItem();
+    .span4          
+      .field
+        = f.label :name 
+        = f.text_field :name
+      .field
+        =f.label :children_list_type_id
+        =f.text_field :children_list_type_id
+    .span4
+      .field
+        %button.btn.btn-primary{:type => "button", :data => {:target => "#add-field-button-dialog", :toggle => "modal"}}
+          %i.icon-plus.icon-white
+          Add Field For List
+        #add-field-button-dialog.modal.hide.fade{:role => "dialog"}
+          .modal-header
+            %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+            %h3 Modal header
+          .modal-body
+            %p One fine body…
+          .modal-footer
+            %a.btn{:href => "#", "data-dismiss" => "modal"} Close
+            %a.btn.btn-primary{:href => "#"} Save changes
+      .field
+        = f.label :template 
+        = f.text_area :template, :rows => 10, :class => "example-trigger"
+         
+      .field
+        = f.label :default_data
+        = f.text_area :default_data, :rows => 5, :class => "example-trigger"
+        
+    .span4
+      %label 
+        Example
+      .list-type-example
+      .actions
+        = f.submit "Save List Type", :class => "btn btn-primary"
+  :javascript
+    Collisterator.initListTypeForm();
 

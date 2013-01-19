@@ -17,6 +17,14 @@ Collisterator =
           }
 				});
 		},
+		bindShowAddFieldDialog: function()
+		{
+		  $("#add-field-button").live("click", function()
+		    {
+		      
+		    });
+		},
+
 		bindCreateNewList: function()
 		{
 			$(".new_list").live("click", function() 
@@ -165,6 +173,12 @@ Collisterator =
 		        
 		    }
 
+		},
+		
+		initListTypeForm: function()
+		{
+		  Collisterator.bindShowExampleListItem();
+		  Collisterator.bindShowAddFieldDialog();
 		}
 	
 	}
