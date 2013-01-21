@@ -7,21 +7,44 @@ Collisterator =
 				{			
 					var $container = $(".list-type-example");
 					var node = {};
-          var default_data_string = $("#list_type_default_data").val();
+          var default_data_string = $("#list-type-default-data").val();
           if(default_data_string)
           {
 					  node.data = JSON.parse(default_data_string);
-					  var template = $("#list_type_template").val();
+					  var template = $("#list-type-template-text").val();
 					  $container.empty();
             Collisterator.renderNodeContentWithTemplate(node, $container, template);
           }
 				});
 		},
-		bindShowAddFieldDialog: function()
+		bindAddField: function()
 		{
-		  $("#add-field-button").live("click", function()
+		  var fieldTemplate = 
+		    "{{=[[ ]]=}}" +
+		    "<td data-name='[[name]]' data-type='[[type]]' class='editable'>\n" +
+		    "  {{data.[[name]]}}\n" +
+		    "</td>\n";
+		    
+		  $("#new-field-form-submit").live("click", function()
 		    {
+		      var fieldArray = $("#new-field-form").serializeArray();
+		      var data = {};
+		      for(var i = 0; i < fieldArray.length; i++)
+		      {
+		        var field = fieldArray[i];
+		        data[field.name] = field.value;
+		      }
 		      
+		      var defaultTextArea = $("#list-type-default-data");
+		      var defaultString = defaultTextArea.val();
+		      var defaultData = defaultString ? JSON.parse(defaultString) : {};
+		      defaultData[data['name']] = data['default'];
+		      defaultTextArea.val(JSON.stringify(defaultData));
+		      
+		      var newFieldString = Mustache.render(fieldTemplate, data)
+		      $textArea = $("#list-type-template-text");
+		      $textArea.val($textArea.val() + "\n" + newFieldString);
+		      $textArea.blur();
 		    });
 		},
 
@@ -103,6 +126,28 @@ Collisterator =
 			);
 						
 		},
+		/*bindDefaultValueEditable : function() 
+		{
+		  $("#new-field-form select.name=['type']").live("selectionChange", function()
+		  {
+			  var $element = $("#new-field-form-default");
+			  $element.editable({
+			      ajaxOptions: {
+              type: 'put',
+              dataType: 'json'
+            },
+			      url: urlForJeditable,
+			      send: "always",
+			      params: function(params) {
+              
+              newParams = {};
+              newParams["item[data][" + $element.attr("data-name") + "]"] = params.value; 
+              return newParams;
+            } 
+			  });
+			});
+			
+		},*/
 
 		loadEditable : function($element, node_id) 
 		{
@@ -178,7 +223,7 @@ Collisterator =
 		initListTypeForm: function()
 		{
 		  Collisterator.bindShowExampleListItem();
-		  Collisterator.bindShowAddFieldDialog();
+		  Collisterator.bindAddField();
 		}
 	
 	}

@@ -22,22 +22,13 @@
         %button.btn.btn-primary{:type => "button", :data => {:target => "#add-field-button-dialog", :toggle => "modal"}}
           %i.icon-plus.icon-white
           Add Field For List
-        #add-field-button-dialog.modal.hide.fade{:role => "dialog"}
-          .modal-header
-            %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-            %h3 Modal header
-          .modal-body
-            %p One fine body…
-          .modal-footer
-            %a.btn{:href => "#", "data-dismiss" => "modal"} Close
-            %a.btn.btn-primary{:href => "#"} Save changes
       .field
         = f.label :template 
-        = f.text_area :template, :rows => 10, :class => "example-trigger"
+        = f.text_area :template, :rows => 10, :class => "example-trigger", :id => "list-type-template-text"
          
       .field
         = f.label :default_data
-        = f.text_area :default_data, :rows => 5, :class => "example-trigger"
+        = f.text_area :default_data, :rows => 5, :class => "example-trigger", :id => "list-type-default-data"
         
     .span4
       %label 
@@ -45,6 +36,30 @@
       .list-type-example
       .actions
         = f.submit "Save List Type", :class => "btn btn-primary"
-  :javascript
-    Collisterator.initListTypeForm();
+  #add-field-button-dialog.modal.hide.fade{:role => "dialog"}
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h3 Create field
+    .modal-body
+      %form#new-field-form
+        %fieldset
+          %label Identifier:
+          %input{:type=>"text", :name=>"name"}
+          %label Display Name:
+          %input{:type=>"text", :name=>"display_name"}
+          %label Type:
+          %select{:name=>"type"}
+            %option text
+            %option date
+            %option number
+            %option checklist
+          %label Default value:
+          %input#new-field-form-default{:name=>"default"}
+          
+    .modal-footer
+      %a.btn{:href => "#", "data-dismiss" => "modal"} Close
+      %a#new-field-form-submit.btn.btn-primary{:href => "#", "data-dismiss" => "modal"} Save changes
+
+:javascript
+  Collisterator.initListTypeForm();
 
