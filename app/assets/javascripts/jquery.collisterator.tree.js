@@ -1,8 +1,8 @@
 
 var Collisterator = (function(Collisterator) 
 	{
-		templates : {},
-		bindShowExampleListItem: function()
+		Collisterator.templates = {};
+		Collisterator.bindShowExampleListItem = function()
 		{
 			var $triggerField = $(".example-trigger");
       $triggerField.live("blur", function() 
@@ -18,8 +18,8 @@ var Collisterator = (function(Collisterator)
             Collisterator.renderNodeContentWithTemplate(node, $container, template);
           }
 				});
-		},
-		bindAddField: function()
+		};
+		Collisterator.bindAddField = function()
 		{
 		  var fieldTemplate = 
 		    "{{=[[ ]]=}}" +
@@ -48,9 +48,9 @@ var Collisterator = (function(Collisterator)
 		      $textArea.val($textArea.val() + "\n" + newFieldString);
 		      $textArea.blur();
 		    });
-		},
+		};
 
-		bindCreateNewList: function()
+		Collisterator.bindCreateNewList = function()
 		{
 			$(".new_list").live("click", function() 
 				{			
@@ -61,8 +61,8 @@ var Collisterator = (function(Collisterator)
 							window.location = url;
 					});
 				});
-		},
-		bindNewItem : function()
+		};
+		Collisterator.bindNewItem = function()
 		{
 				$('.add_item').live("click", clickHandler);
 				
@@ -79,8 +79,8 @@ var Collisterator = (function(Collisterator)
 							}
 						return false;
 					}
-		},
-		buildTree: function(id)
+		};
+		Collisterator.buildTree = function(id)
 		{
 			Collisterator.templates = new Array();
 			$.getJSON(Collisterator.createJsonUrl(id), function(data)
@@ -101,8 +101,8 @@ var Collisterator = (function(Collisterator)
 				}			
 			);
 
-		},
-		createJsonUrl: function(itemId)
+		};
+		Collisterator.createJsonUrl= function(itemId)
 		{
 			var jsonUrl;
 			if (itemId == -1) { // using this for "root of all nodes" - better -1 than 0 as 0 can be a legit id
@@ -111,8 +111,8 @@ var Collisterator = (function(Collisterator)
 				jsonUrl = "/items/" + itemId + ".json";
 			}
 			return jsonUrl; // One function exit point is debug friendlier
-		},
-		destroy: function(destroyItem, itemId)
+		};
+		Collisterator.destroy = function(destroyItem, itemId)
 		{
 
 			var itemURL = "/items/" + itemId;
@@ -127,7 +127,7 @@ var Collisterator = (function(Collisterator)
 			"json"
 			);
 						
-		},
+		};
 		/*bindDefaultValueEditable : function() 
 		{
 		  $("#new-field-form select.name=['type']").live("selectionChange", function()
@@ -151,7 +151,7 @@ var Collisterator = (function(Collisterator)
 			
 		},*/
 
-		loadEditable : function($element, node_id) 
+		Collisterator.loadEditable = function($element, node_id) 
 		{
 			var urlForJeditable = '/items/' + node_id;
 			$element.editable({
@@ -169,8 +169,8 @@ var Collisterator = (function(Collisterator)
           } 
 			});
 			
-		},
-		renderNodeContent: function(node, $listItem)
+		};
+		Collisterator.renderNodeContent = function(node, $listItem)
 		{
 			
 			if (Collisterator.templates[node.list_type_id]===undefined) 
@@ -187,9 +187,9 @@ var Collisterator = (function(Collisterator)
 			  var template = Collisterator.templates[node.list_type_id];
 				Collisterator.renderNodeContentWithTemplate(node, $listItem, template);
 			} 
-		},
+		};
 		
-		renderNodeContentWithTemplate: function(node, $listItem, template)
+		Collisterator.renderNodeContentWithTemplate = function(node, $listItem, template)
 		{
 		  $listItem.append(Mustache.render(template, node));
 		  $listItem.find(".editable").each(function()
@@ -197,9 +197,9 @@ var Collisterator = (function(Collisterator)
 	      Collisterator.loadEditable($(this), node.item_id);
 	    });
 	    Collisterator.renderTree($listItem, node.children);
-		},
+		};
 		
-		renderTree: function($parent, nodes)
+		Collisterator.renderTree = function($parent, nodes)
 		{
 		    var $list = $parent.children("ul");
 		    if($list.length == 0){ 
@@ -220,13 +220,13 @@ var Collisterator = (function(Collisterator)
 		        
 		    }
 
-		},
+		};
 		
-		initListTypeForm: function()
+		Collisterator.initListTypeForm= function()
 		{
 		  Collisterator.bindShowExampleListItem();
 		  Collisterator.bindAddField();
-		}
+		};
 	
 	}(Collisterator || {}));
 
