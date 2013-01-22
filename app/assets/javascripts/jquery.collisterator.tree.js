@@ -4,8 +4,8 @@ var Collisterator = (function(Collisterator)
 		Collisterator.templates = {};
 		Collisterator.bindShowExampleListItem = function()
 		{
-			var $triggerField = $(".example-trigger");
-      $triggerField.live("blur", function() 
+			
+      $(document).on("blur", ".example-trigger", function() 
 				{			
 					var $container = $(".list-type-example");
 					var node = {};
@@ -27,7 +27,7 @@ var Collisterator = (function(Collisterator)
 		    "  {{data.[[name]]}}\n" +
 		    "</td>\n";
 		    
-		  $("#new-field-form-submit").live("click", function()
+		  $(document).on("click", "#new-field-form-submit" function()
 		    {
 		      var fieldArray = $("#new-field-form").serializeArray();
 		      var data = {};
@@ -52,7 +52,7 @@ var Collisterator = (function(Collisterator)
 
 		Collisterator.bindCreateNewList = function()
 		{
-			$(".new_list").live("click", function() 
+			$(document).on("click", ".new_list", function() 
 				{			
 					var list_type_id = $(this).attr("id");
 					$.post("/items.json", {'item[list_type_id]': list_type_id},
@@ -64,7 +64,7 @@ var Collisterator = (function(Collisterator)
 		};
 		Collisterator.bindNewItem = function()
 		{
-				$('.add_item').live("click", clickHandler);
+				$(document).on("click", '.add_item', clickHandler);
 				
 				function clickHandler(click) 
 					{
@@ -130,7 +130,7 @@ var Collisterator = (function(Collisterator)
 		};
 		/*bindDefaultValueEditable : function() 
 		{
-		  $("#new-field-form select.name=['type']").live("selectionChange", function()
+		  $(document).on("selectionChange","#new-field-form select.name=['type']", function()
 		  {
 			  var $element = $("#new-field-form-default");
 			  $element.editable({
