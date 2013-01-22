@@ -1,5 +1,5 @@
 
-var Collisterator = 
+var Collisterator = (function(Collisterator) 
 	{
 		templates : {},
 		bindShowExampleListItem: function()
@@ -228,7 +228,7 @@ var Collisterator =
 		  Collisterator.bindAddField();
 		}
 	
-	}
+	}(Collisterator || {}));
 
 
 
