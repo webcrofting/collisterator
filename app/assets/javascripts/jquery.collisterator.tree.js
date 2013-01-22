@@ -227,6 +227,8 @@ var Collisterator = (function(Collisterator)
 		  Collisterator.bindShowExampleListItem();
 		  Collisterator.bindAddField();
 		};
+		
+		return Collisterator;
 	
 	}(Collisterator || {}));
 
