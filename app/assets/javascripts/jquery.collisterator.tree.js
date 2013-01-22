@@ -22,12 +22,12 @@ var Collisterator = (function(Collisterator)
 		Collisterator.bindAddField = function()
 		{
 		  var fieldTemplate = 
-		    "{{=[[ ]]=}}" +
+		    "{{=[[ ]]=}}\n" +
 		    "<td data-name='[[name]]' data-type='[[type]]' class='editable'>\n" +
 		    "  {{data.[[name]]}}\n" +
 		    "</td>\n";
 		    
-		  $(document).on("click", "#new-field-form-submit" function()
+		  $(document).on("click", "#new-field-form-submit", function()
 		    {
 		      var fieldArray = $("#new-field-form").serializeArray();
 		      var data = {};
@@ -45,7 +45,7 @@ var Collisterator = (function(Collisterator)
 		      
 		      var newFieldString = Mustache.render(fieldTemplate, data)
 		      $textArea = $("#list-type-template-text");
-		      $textArea.val($textArea.val() + "\n" + newFieldString);
+		      $textArea.val($textArea.val() + newFieldString);
 		      $textArea.blur();
 		    });
 		};
