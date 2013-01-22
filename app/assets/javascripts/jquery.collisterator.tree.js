@@ -1,10 +1,11 @@
-;
-Collisterator = 
+
+var Collisterator = 
 	{
 		templates : {},
 		bindShowExampleListItem: function()
 		{
-			$(".example-trigger").live("blur", function() 
+			var $triggerField = $(".example-trigger");
+      $triggerField.live("blur", function() 
 				{			
 					var $container = $(".list-type-example");
 					var node = {};
