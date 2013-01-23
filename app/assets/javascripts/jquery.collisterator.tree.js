@@ -95,6 +95,7 @@ var Collisterator = (function(Collisterator)
 						nodes = data;
 					}
 					$parent = $("#collisterator_tree");
+					$parent.append('<table id="tree" />');
 					Collisterator.renderTree($parent, nodes);
 					Collisterator.bindNewItem();
 
