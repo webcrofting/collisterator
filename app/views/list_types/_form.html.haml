@@ -17,6 +17,18 @@
       .field
         =f.label :children_list_type_id
         =f.text_field :children_list_type_id
+      .field
+        = f.label :can_have_children
+        Yes
+        = f.radio_button :can_have_children, true		
+        No
+        = f.radio_button :can_have_children, false
+      .field
+        = f.label :can_be_root
+        Yes
+        = f.radio_button :can_be_root, true
+        No
+        = f.radio_button :can_be_root, false
     .span4
       .field
         %button.btn.btn-primary{:type => "button", :data => {:target => "#add-field-button-dialog", :toggle => "modal"}}
@@ -28,8 +40,7 @@
          
       .field
         = f.label :default_data
-        = f.text_area :default_data, :rows => 5, :class => "example-trigger", :id => "list-type-default-data"
-        
+        = f.text_area :default_data, :rows => 5, :class => "example-trigger", :id => "list-type-default-data"	
     .span4
       %label 
         Example
