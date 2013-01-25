@@ -109,7 +109,7 @@ var Collisterator = (function(Collisterator)
 						nodes = data;
 					}
 					$parent = $("#collisterator_tree");
-					$parent.append('<table id="tree" />');
+					$parent.append('<table id="tree" class="table table-hover" />');
 					Collisterator.renderTree($parent, nodes);
 					Collisterator.bindNewItem();
 
