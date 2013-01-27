@@ -64,34 +64,20 @@ var Collisterator = (function(Collisterator)
 		};
 		Collisterator.bindNewItem = function()
 		{
-				$(document).on("click", '.add_item', function(click) {
-					if (click.handled !== true) 
-						{
 								
-								
-								var $listItem = $(this).closest("tr");
-								var parentId = $listItem.attr("id").slice(-1);
-								
-								//FOR DEBUGGING
-								console.log("$listItem's node-id attribute returns: " + parentId);
-								//DELETE
-								
-								$.post("/items.json", {'item[parent_id]': parentId}, function(data){
-									//DELETE LATER!
-									console.log("INSIDE $POST. That must be good, right?");
-									//DELETE LATER!
-									
-									Collisterator.renderTree($listItem, [data]);
-								});
-								click.handled=true;
-						}
-						
-						return false;
-					});
-					
-						//DELETE LATER
-						console.log("Anon function ends.");
-						//DELETE
+			$(document).on("click", ".add_item", function() 
+			{			
+				var $listItem = $(this).closest("tr");
+				var parentIdString = $listItem.attr("id").slice(-1);
+				var parentId = parseInt(parentIdString);
+											
+				$.post("/items.json", {'item[parent_id]': parentId},
+					function(data) {
+					Collisterator.renderTree($listItem, [data]);
+	
+				});
+			});
+													
 				
 		};
 		Collisterator.buildTree = function(id)
@@ -185,6 +171,28 @@ var Collisterator = (function(Collisterator)
 			});
 			
 		};
+		
+		Collisterator.renderNodeButtons = function(node, $listItem) 
+		{
+
+			var template = Collisterator.templates[node.list_type_id];
+			
+			if (template.can_have_children) {
+				$listItem.append('<td><a href="#" class="add_item"><i class="icon-plus"></i></a></td>');
+			} else {
+				console.log("Cannot have children, how the hell do I add the link to the bottom of the list?");
+			}
+			
+			$listItem.append('<td><a href="#" class="remove_item"><i class="icon-remove"></i></a></td>');
+			/*
+			if (node.children > 0) {
+				console.log("The node has children! Call the nanny.");
+			} else {
+				console.log("No children here. Nooope.");
+			} */
+			
+			
+		};
 		Collisterator.renderNodeContent = function(node, $listItem)
 		{
 			
@@ -192,16 +200,18 @@ var Collisterator = (function(Collisterator)
 			{
 				var template_url = "/list_types/" + node.list_type_id + ".json";
 				var test = $.getJSON(template_url, function(data) {
-					Collisterator.templates[node.list_type_id] = data.template;
+					Collisterator.templates[node.list_type_id] = data;
 					Collisterator.renderNodeContentWithTemplate(node, $listItem, data.template);
 				});
 				
 			}
 			else
 			{
-			  var template = Collisterator.templates[node.list_type_id];
-				Collisterator.renderNodeContentWithTemplate(node, $listItem, template);
+			  var list_type = Collisterator.templates[node.list_type_id];
+				Collisterator.renderNodeContentWithTemplate(node, $listItem, list_type.template);
 			} 
+			Collisterator.renderTree($listItem, node.children);
+
 		};
 		
 		Collisterator.renderNodeContentWithTemplate = function(node, $listItem, template)
@@ -211,17 +221,16 @@ var Collisterator = (function(Collisterator)
 		  {
 	      Collisterator.loadEditable($(this), node.item_id);
 	    });
-	    Collisterator.renderTree($listItem, node.children);
+		Collisterator.renderNodeButtons(node, $listItem);
+		Collisterator.renderTree($listItem, node.children);
 		};
 		
 		Collisterator.renderTree = function($parent, nodes)
 		{
 		    var $list = $parent.children("table");
 		    if($list.length == 0){ 
-				//debug!
-			  console.log("$list.length is zero. nodes.length is undefined/zero");
-			  
-			  
+			
+			console.log("Parent attribute?: " + $parent.attr("id"));
 		      //$list = $('<ul class="list"/>');
 		      $parent.append($list);
 		    } 
@@ -232,14 +241,14 @@ var Collisterator = (function(Collisterator)
 		        {
 		            var node = nodes[i];
 					
-					var $listItem = $('<tr id="node-' + node.item_id + '"/>');
+					var $listItem = $('<tr id="' + node.item_id + '"/>');
 					
-					if (!(node.parent_id == 'null')) {
-						//$listItem = $('<tr id="node-' + node.item_id + '"/>');
-						console.log("item has a parent? well snap.");
-					} 
+					console.log("Node.parent_id = " + node.parent_id);
+					if (node.parent_id) {
+						console.log("Node.parent_id returns true?");
+						$listItem = $('<tr id="' + node.item_id + '" class="child-of-node-' + node.parent_id + '"/>');
+					}
 		            Collisterator.renderNodeContent(node, $listItem);
-					
 		            $list.append($listItem);
 		        }
 		        
