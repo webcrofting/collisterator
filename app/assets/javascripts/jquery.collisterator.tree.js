@@ -73,7 +73,7 @@ var Collisterator = (function(Collisterator)
 											
 				$.post("/items.json", {'item[parent_id]': parentId},
 					function(data) {
-					Collisterator.renderTree([data]);
+					Collisterator.renderTree([data], parentId);
 	
 				});
 			});
@@ -96,7 +96,7 @@ var Collisterator = (function(Collisterator)
 					}
 					$parent = $("#collisterator_tree");
 					$parent.append('<table id="tree" class="table table-hover"><tbody>');
-					Collisterator.renderTree(nodes);
+					Collisterator.renderTree(nodes, id);
 					$parent.append('</tbody></table>');
 					Collisterator.bindNewItem();
 					Collisterator.bindDestroyItem();
@@ -208,8 +208,7 @@ var Collisterator = (function(Collisterator)
 			  var list_type = Collisterator.templates[node.list_type_id];
 				Collisterator.renderNodeContentWithTemplate(node, $listItem, list_type.template);
 			} 
-			//Collisterator.renderTree($listItem, node.children);
-
+		
 		};
 		
 		Collisterator.renderNodeContentWithTemplate = function(node, $listItem, template)
@@ -222,7 +221,7 @@ var Collisterator = (function(Collisterator)
 		Collisterator.renderNodeButtons(node, $listItem);
 		};
 		
-		Collisterator.renderTree = function(nodes)
+		Collisterator.renderTree = function(nodes, parent_id)
 		{
 
 		    if(! (typeof nodes == 'undefined'))
@@ -241,7 +240,7 @@ var Collisterator = (function(Collisterator)
 		            
                 $('#tree > tbody').append($listItem);
                 
-                Collisterator.renderTree(node.children);
+                Collisterator.renderTree(node.children, node.item_id);
             }
 		        
 		    }
