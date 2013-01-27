@@ -67,15 +67,18 @@ var Collisterator = (function(Collisterator)
 								
 			$(document).on("click", ".add_item", function() 
 			{			
-				var $listItem = $(this).closest("tr");
-				var parentIdString = $listItem.attr("id");
-				var parentId = parseInt(parentIdString);
-											
+        var parent = $(this).closest('tr');
+        var parentId = parseInt(parent.attr('data-parent-id'));
+				
+        //console.log("bindNewItems - parentID? : " + parentId);	
+        
 				$.post("/items.json", {'item[parent_id]': parentId},
 					function(data) {
 					Collisterator.renderTree([data], parentId);
 	
 				});
+        
+        
 			});
 													
 				
@@ -180,9 +183,9 @@ var Collisterator = (function(Collisterator)
 			
 			if (template.can_have_children) {
         if (node.children.length===0) {
-          $listItem.append('<td><a href="#" class="add_item"><i class="icon-plus"></i></a></td>');
+          $listItem.append('<td><a href="#" class="add_item" data-parent-id="' + node.item_id + '"><i class="icon-plus"></i></a></td>');
         } else {
-          var dummy ='<tr id="' + node.item_id + ' class="child-of-node-"' + node.parent_id + ' ><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
+          var dummy ='<tr data-parent-id="' + node.item_id + ' class="child-of-node-"' + node.parent_id + ' ><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
             $('#tree > tbody').append(dummy);
         }
 			} 
