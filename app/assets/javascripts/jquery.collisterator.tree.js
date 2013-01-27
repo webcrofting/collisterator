@@ -73,7 +73,7 @@ var Collisterator = (function(Collisterator)
 											
 				$.post("/items.json", {'item[parent_id]': parentId},
 					function(data) {
-					Collisterator.renderTree($listItem, [data]);
+					Collisterator.renderTree([data]);
 	
 				});
 			});
@@ -179,11 +179,13 @@ var Collisterator = (function(Collisterator)
 			var template = Collisterator.templates[node.list_type_id];
 			
 			if (template.can_have_children) {
-				$listItem.append('<td><a href="#" class="add_item"><i class="icon-plus"></i></a></td>');
-			} else {
-				// how can i make sure that the + button is added to the end of the list?
-				//console.log("in renderNodeButtons. this node cannot have children.");
-			}
+        if (node.children.length===0) {
+          $listItem.append('<td><a href="#" class="add_item"><i class="icon-plus"></i></a></td>');
+        } else {
+          var dummy ='<tr id="' + node.item_id + '" ><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
+            $('#tree > tbody').append(dummy);
+        }
+			} 
 			
 			$listItem.append('<td><a href="#" class="remove_item"><i class="icon-remove"></i></a></td>');
 			
@@ -233,10 +235,10 @@ var Collisterator = (function(Collisterator)
 					
 					
                 if (node.parent_id) {
-                  $listItem = $('<tr id="' + node.item_id + '" class="child-of-node-' + node.parent_id + '"/>');
+                  $listItem.addClass('child-of-node-' + node.parent_id);
                 }
 		            Collisterator.renderNodeContent(node, $listItem);
-		            //$list.append($listItem);
+		            
                 $('#tree > tbody').append($listItem);
                 
                 Collisterator.renderTree(node.children);
