@@ -182,7 +182,7 @@ var Collisterator = (function(Collisterator)
         if (node.children.length===0) {
           $listItem.append('<td><a href="#" class="add_item"><i class="icon-plus"></i></a></td>');
         } else {
-          var dummy ='<tr id="' + node.item_id + ' class="new-child-item-button" ><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
+          var dummy ='<tr id="' + node.item_id + ' class="child-of-node-"' + node.parent_id + ' ><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
             $('#tree > tbody').append(dummy);
         }
 			} 
