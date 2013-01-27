@@ -99,6 +99,7 @@ var Collisterator = (function(Collisterator)
 					Collisterator.renderTree($parent, nodes);
 					$parent.append('</tbody></table>');
 					Collisterator.bindNewItem();
+					Collisterator.bindDestroyItem();
 
 				}			
 			);
@@ -117,17 +118,17 @@ var Collisterator = (function(Collisterator)
 		Collisterator.bindDestroyItem = function()
 		{
 			$(document).on("click", ".remove_item", function() {
-			
-				alert("You're trying to delete something?! Inconceivable!");
-				/*
-				console.log("You're trying to delete an item!");
-				console.log($(this).closest('tr').attr('id'));
-				var $item = $(this).closest("tr").attr("id");
-				var itemURL = "/items/" + $item;
-				$.post(itemURL, {_method: "DELETE"}, function(data) {
-					//alert("Data Loaded: " + data);
-				});	*/
-			});
+				var itemID = $(this).closest('tr').attr('id');
+        var itemURL = "/items/" + itemID;
+        $('#' + itemID).remove();
+        alert("Deleting item at : " + itemURL);
+        
+        $.post(itemURL, {_method: "DELETE"},
+          function(data) {
+          //NOTE: THIS FUNCTION DOESNT SEEM TO WORK PROPERLY.
+          console.log("deletes item ok, but then this doesn't show.");
+        });
+       });
 		};
 		/*bindDefaultValueEditable : function() 
 		{
@@ -186,7 +187,6 @@ var Collisterator = (function(Collisterator)
 			
 			$listItem.append('<td><a href="#" class="remove_item"><i class="icon-remove"></i></a></td>');
 			
-			Collisterator.renderTree($listItem, node.children);
 			
 		};
 		Collisterator.renderNodeContent = function(node, $listItem)
@@ -229,19 +229,18 @@ var Collisterator = (function(Collisterator)
 		        {
 		            var node = nodes[i];
 					
-					var $listItem = $('<tr id="' + node.item_id + '"/>');
+                var $listItem = $('<tr id="' + node.item_id + '"/>');
 					
-					//DELETE
-					//console.log("Node.parent_id = " + node.parent_id);
 					
-					if (node.parent_id) {
-						$listItem = $('<tr id="' + node.item_id + '" class="child-of-node-' + node.parent_id + '"/>');
-					}
+                if (node.parent_id) {
+                  $listItem = $('<tr id="' + node.item_id + '" class="child-of-node-' + node.parent_id + '"/>');
+                }
 		            Collisterator.renderNodeContent(node, $listItem);
 		            //$list.append($listItem);
-					$('#tree tbody:last').append($listItem);
-					
-		        }
+                $('#tree > tbody').append($listItem);
+                
+                Collisterator.renderTree(node, node.children);
+            }
 		        
 		    }
 
