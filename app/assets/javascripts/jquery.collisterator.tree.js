@@ -68,7 +68,7 @@ var Collisterator = (function(Collisterator)
 			$(document).on("click", ".add_item", function() 
 			{			
 				var $listItem = $(this).closest("tr");
-				var parentIdString = $listItem.attr("id").slice(-1);
+				var parentIdString = $listItem.attr("id");
 				var parentId = parseInt(parentIdString);
 											
 				$.post("/items.json", {'item[parent_id]': parentId},
@@ -114,21 +114,20 @@ var Collisterator = (function(Collisterator)
 			}
 			return jsonUrl; // One function exit point is debug friendlier
 		};
-		Collisterator.destroy = function(destroyItem, itemId)
+		Collisterator.bindDestroyItem = function()
 		{
-
-			var itemURL = "/items/" + itemId;
-			$.post(itemURL, {_method: "DELETE"}, function(data) {
-				alert("Data Loaded: " + data);
-				if($(destroyItem).closest("ul").parent().is("li")) {
-					$(destroyItem).closest('li').remove();
-				} else {
-					window.location.replace("/items");
-				}
-			},
-			"json"
-			);
-						
+			$(document).on("click", ".remove_item", function() {
+			
+				alert("You're trying to delete something?! Inconceivable!");
+				/*
+				console.log("You're trying to delete an item!");
+				console.log($(this).closest('tr').attr('id'));
+				var $item = $(this).closest("tr").attr("id");
+				var itemURL = "/items/" + $item;
+				$.post(itemURL, {_method: "DELETE"}, function(data) {
+					//alert("Data Loaded: " + data);
+				});	*/
+			});
 		};
 		/*bindDefaultValueEditable : function() 
 		{
@@ -181,7 +180,8 @@ var Collisterator = (function(Collisterator)
 			if (template.can_have_children) {
 				$listItem.append('<td><a href="#" class="add_item"><i class="icon-plus"></i></a></td>');
 			} else {
-				console.log("in renderNodeButtons. this node cannot have children.");
+				// how can i make sure that the + button is added to the end of the list?
+				//console.log("in renderNodeButtons. this node cannot have children.");
 			}
 			
 			$listItem.append('<td><a href="#" class="remove_item"><i class="icon-remove"></i></a></td>');
@@ -232,7 +232,7 @@ var Collisterator = (function(Collisterator)
 					var $listItem = $('<tr id="' + node.item_id + '"/>');
 					
 					//DELETE
-					console.log("Node.parent_id = " + node.parent_id);
+					//console.log("Node.parent_id = " + node.parent_id);
 					
 					if (node.parent_id) {
 						$listItem = $('<tr id="' + node.item_id + '" class="child-of-node-' + node.parent_id + '"/>');
