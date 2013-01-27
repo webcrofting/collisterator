@@ -95,8 +95,9 @@ var Collisterator = (function(Collisterator)
 						nodes = data;
 					}
 					$parent = $("#collisterator_tree");
-					$parent.append('<table id="tree" class="table table-hover" />');
+					$parent.append('<table id="tree" class="table table-hover"><tbody>');
 					Collisterator.renderTree($parent, nodes);
+					$parent.append('</tbody></table>');
 					Collisterator.bindNewItem();
 
 				}			
@@ -180,17 +181,12 @@ var Collisterator = (function(Collisterator)
 			if (template.can_have_children) {
 				$listItem.append('<td><a href="#" class="add_item"><i class="icon-plus"></i></a></td>');
 			} else {
-				console.log("Cannot have children, how the hell do I add the link to the bottom of the list?");
+				console.log("in renderNodeButtons. this node cannot have children.");
 			}
 			
 			$listItem.append('<td><a href="#" class="remove_item"><i class="icon-remove"></i></a></td>');
-			/*
-			if (node.children > 0) {
-				console.log("The node has children! Call the nanny.");
-			} else {
-				console.log("No children here. Nooope.");
-			} */
 			
+			Collisterator.renderTree($listItem, node.children);
 			
 		};
 		Collisterator.renderNodeContent = function(node, $listItem)
@@ -210,7 +206,7 @@ var Collisterator = (function(Collisterator)
 			  var list_type = Collisterator.templates[node.list_type_id];
 				Collisterator.renderNodeContentWithTemplate(node, $listItem, list_type.template);
 			} 
-			Collisterator.renderTree($listItem, node.children);
+			//Collisterator.renderTree($listItem, node.children);
 
 		};
 		
@@ -222,19 +218,11 @@ var Collisterator = (function(Collisterator)
 	      Collisterator.loadEditable($(this), node.item_id);
 	    });
 		Collisterator.renderNodeButtons(node, $listItem);
-		Collisterator.renderTree($listItem, node.children);
 		};
 		
 		Collisterator.renderTree = function($parent, nodes)
 		{
-		    var $list = $parent.children("table");
-		    if($list.length == 0){ 
-			
-			console.log("Parent attribute?: " + $parent.attr("id"));
-		      //$list = $('<ul class="list"/>');
-		      $parent.append($list);
-		    } 
-		    
+
 		    if(! (typeof nodes == 'undefined'))
 		    {
 		        for(var i = 0; i < nodes.length; i++)
@@ -243,13 +231,16 @@ var Collisterator = (function(Collisterator)
 					
 					var $listItem = $('<tr id="' + node.item_id + '"/>');
 					
+					//DELETE
 					console.log("Node.parent_id = " + node.parent_id);
+					
 					if (node.parent_id) {
-						console.log("Node.parent_id returns true?");
 						$listItem = $('<tr id="' + node.item_id + '" class="child-of-node-' + node.parent_id + '"/>');
 					}
 		            Collisterator.renderNodeContent(node, $listItem);
-		            $list.append($listItem);
+		            //$list.append($listItem);
+					$('#tree tbody:last').append($listItem);
+					
 		        }
 		        
 		    }
