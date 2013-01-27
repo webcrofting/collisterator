@@ -96,7 +96,7 @@ var Collisterator = (function(Collisterator)
 					}
 					$parent = $("#collisterator_tree");
 					$parent.append('<table id="tree" class="table table-hover"><tbody>');
-					Collisterator.renderTree($parent, nodes);
+					Collisterator.renderTree(nodes);
 					$parent.append('</tbody></table>');
 					Collisterator.bindNewItem();
 					Collisterator.bindDestroyItem();
@@ -220,7 +220,7 @@ var Collisterator = (function(Collisterator)
 		Collisterator.renderNodeButtons(node, $listItem);
 		};
 		
-		Collisterator.renderTree = function($parent, nodes)
+		Collisterator.renderTree = function(nodes)
 		{
 
 		    if(! (typeof nodes == 'undefined'))
@@ -239,7 +239,7 @@ var Collisterator = (function(Collisterator)
 		            //$list.append($listItem);
                 $('#tree > tbody').append($listItem);
                 
-                Collisterator.renderTree(node, node.children);
+                Collisterator.renderTree(node.children);
             }
 		        
 		    }
