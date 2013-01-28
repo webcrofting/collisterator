@@ -74,7 +74,7 @@ var Collisterator = (function(Collisterator)
         
 				$.post("/items.json", {'item[parent_id]': parentId},
 					function(data) {
-					Collisterator.renderTree([data], parentId);
+					$('#' + parentId).after(Collisterator.renderNodeContent(data, parentId));
 	
 				});
         
@@ -188,6 +188,7 @@ var Collisterator = (function(Collisterator)
           var dummy ='<tr data-parent-id="' + node.item_id + ' class="child-of-node-"' + node.parent_id + ' ><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
             $('#tree > tbody').append(dummy);
         }
+       
 			} 
 			
 			$listItem.append('<td><a href="#" class="remove_item"><i class="icon-remove"></i></a></td>');
@@ -238,12 +239,7 @@ var Collisterator = (function(Collisterator)
 		        {
 		            var node = nodes[i];
 					
-                var $listItem = $('<tr id="' + node.item_id + '"/>');
-					
-					
-                if (node.parent_id) {
-                  $listItem.addClass('child-of-node-' + node.parent_id);
-                }
+               
                 var $listItem = Collisterator.renderNodeContent(node, parent_id);
 		            
                 $('#tree > tbody').append($listItem);
@@ -251,7 +247,11 @@ var Collisterator = (function(Collisterator)
                 Collisterator.renderTree(node.children, node.item_id);
             }
 		        
-		    }
+		    } //else {
+         /* var dummy ='<tr data-parent-id="' + parent_id + ' class="child-of-node-"' + parent_id + ' ><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
+            $('#tree > tbody').append(dummy);
+            // this creates a million links! why???
+        } */
 
 		};
 		
