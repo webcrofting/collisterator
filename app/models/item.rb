@@ -1,7 +1,7 @@
 class Item < ActiveRecord::Base
 	acts_as_tree
 	
-	attr_accessible :data, :list_type_id, :parent_id
+	attr_accessible :data, :list_type_id
 	
 	serialize :data, JSON
 	
@@ -20,7 +20,7 @@ class Item < ActiveRecord::Base
 
 	def item_to_json_hash(item)
 		
-		hash = {:item_id => item.id, :parent_id => item.parent_id, :list_type_id => item.list_type_id, :data => item.data }
+		hash = {:item_id => item.id, :list_type_id => item.list_type_id, :data => item.data }
 		
 		children = []
 		
