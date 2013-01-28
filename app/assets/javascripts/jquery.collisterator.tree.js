@@ -194,9 +194,14 @@ var Collisterator = (function(Collisterator)
 			
 			
 		};
-		Collisterator.renderNodeContent = function(node, $listItem)
+		Collisterator.renderNodeContent = function(node, parent_id)
 		{
-			
+			var $listItem = $('<tr id="' + node.item_id + '"/>');
+					
+      if (node.parent_id) {
+        $listItem.addClass('child-of-node-' + node.parent_id);
+      }
+					
 			if (Collisterator.templates[node.list_type_id]===undefined) 
 			{
 				var template_url = "/list_types/" + node.list_type_id + ".json";
@@ -211,7 +216,7 @@ var Collisterator = (function(Collisterator)
 			  var list_type = Collisterator.templates[node.list_type_id];
 				Collisterator.renderNodeContentWithTemplate(node, $listItem, list_type.template);
 			} 
-		
+      return $listItem;
 		};
 		
 		Collisterator.renderNodeContentWithTemplate = function(node, $listItem, template)
@@ -221,7 +226,7 @@ var Collisterator = (function(Collisterator)
 		  {
 	      Collisterator.loadEditable($(this), node.item_id);
 	    });
-		Collisterator.renderNodeButtons(node, $listItem);
+      Collisterator.renderNodeButtons(node, $listItem);
 		};
 		
 		Collisterator.renderTree = function(nodes, parent_id)
@@ -239,7 +244,7 @@ var Collisterator = (function(Collisterator)
                 if (node.parent_id) {
                   $listItem.addClass('child-of-node-' + node.parent_id);
                 }
-		            Collisterator.renderNodeContent(node, $listItem);
+                var $listItem = Collisterator.renderNodeContent(node, parent_id);
 		            
                 $('#tree > tbody').append($listItem);
                 
