@@ -62,15 +62,29 @@ var Collisterator = (function(Collisterator)
 					});
 				});
 		};
+		Collisterator.bindChangeListTypeType = function()
+		{
+		  $(document).on("change", ".list-type-type-selector", function() 
+				{
+					if($(".list-type-type-selector").val() == "custom")
+					{
+					  $("fieldset.customization-options").slideDown();
+					}
+					else
+					{
+					  $("fieldset.customization-options").slideUp();
+					}
+				});
+		};
+
+		
 		Collisterator.bindNewItem = function()
 		{
 								
 			$(document).on("click", ".add_item", function() 
 			{			
-        var parent = $(this).closest('tr');
-        var parentId = parseInt(parent.attr('data-parent-id'));
-				
-        //console.log("bindNewItems - parentID? : " + parentId);	
+        var $anchor = $(this);
+        var parentId = parseInt($anchor.attr('data-parent-id'));
         
 				$.post("/items.json", {'item[parent_id]': parentId},
 					function(data) {
@@ -181,8 +195,8 @@ var Collisterator = (function(Collisterator)
 
 			var template = Collisterator.templates[node.list_type_id];
 			
-			if (template.can_have_children) {
-        if (node.children.length===0) {
+			if (template && template.can_have_children) {
+        if (!node.children || node.children.length == 0) {
           $listItem.append('<td><a href="#" class="add_item" data-parent-id="' + node.item_id + '"><i class="icon-plus"></i></a></td>');
         } else {
           var dummy ='<tr data-parent-id="' + node.item_id + '><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
@@ -259,6 +273,7 @@ var Collisterator = (function(Collisterator)
 		{
 		  Collisterator.bindShowExampleListItem();
 		  Collisterator.bindAddField();
+		  Collisterator.bindChangeListTypeType();
 		};
 		
 		return Collisterator;
