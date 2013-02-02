@@ -2,7 +2,9 @@ class Item < ActiveRecord::Base
 	acts_as_tree
 	
 	attr_accessible :data, :list_type_id
-	
+  
+  before_create :generate_token
+
 	serialize :data, JSON
 	
 	def as_json(options = nil)
@@ -10,6 +12,13 @@ class Item < ActiveRecord::Base
 		item_to_json_hash(self)
 	
 	end
+  
+  def generate_token
+    begin
+      token = SecureRandom.urlsafe_base64
+    end while Item.where(:token => token).exists?
+    self.token = token
+  end
 	
 	def has_children?
 		if self.children.empty?
@@ -20,7 +29,7 @@ class Item < ActiveRecord::Base
 
 	def item_to_json_hash(item)
 		
-		hash = {:item_id => item.id, :list_type_id => item.list_type_id, :data => item.data }
+		hash = {:item_id => item.id, :token => item.token, :list_type_id => item.list_type_id, :data => item.data }
 		
 		children = []
 		
