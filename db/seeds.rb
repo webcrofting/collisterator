@@ -7,6 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Item.all.each do |item|
-	item.list_type_id = 1
+  begin
+    token = SecureRandom.urlsafe_base64
+  end while Item.where(:token => token).exists?
+  item.token = token;
 	item.save
 end
