@@ -44,7 +44,8 @@ class ItemsController < ApplicationController
   # POST /items
   # POST /items.json
   def create
-    @item = Item.new(params[:item])
+    @item = Item.new
+    @item.parent_id = params[:item][:parent_id]
 	  #logger.debug "item's parent_id is #{@item.parent_id}"
 	
 	  if @item.parent_id

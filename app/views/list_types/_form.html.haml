@@ -11,40 +11,66 @@
             %li= msg
 
     .span4          
-      .field
-        = f.label :name 
-        = f.text_field :name
-      .field
-        =f.label :children_list_type_id
-        =f.text_field :children_list_type_id
-      .field
-        = f.label :can_have_children
-        Yes
-        = f.radio_button :can_have_children, true		
-        No
-        = f.radio_button :can_have_children, false
-      .field
-        = f.label :can_be_root
-        Yes
-        = f.radio_button :can_be_root, true
-        No
-        = f.radio_button :can_be_root, false
+      %fieldset
+        %legend
+          Basic Options
+        .field
+          = f.label :name 
+          = f.text_field :name
+        .field
+          %label 
+            List Type
+          %select.list-type-type-selector{:name => "list_type_type"}
+            %option
+              plain list
+            %option
+              tree
+            %option
+              custom
+      %fieldset.customization-options{:style => "display:none"}
+        %legend
+          Customization options
+        .field
+          = f.label :can_have_children
+          %label.radio
+            Yes
+            = f.radio_button :can_have_children, true		
+          %label.radio
+            No
+            = f.radio_button :can_have_children, false
+        .field
+          = f.label :can_be_root
+          %label.radio
+            Yes
+            = f.radio_button :can_be_root, true
+          %label.radio
+            No
+            = f.radio_button :can_be_root, false
+        .field
+          = f.label :children_list_type_id
+          =f.text_field :children_list_type_id
+
     .span4
-      .field
-        %button.btn.btn-primary{:type => "button", :data => {:target => "#add-field-button-dialog", :toggle => "modal"}}
-          %i.icon-plus.icon-white
-          Add Field For List
-      .field
-        = f.label :template 
-        = f.text_area :template, :rows => 10, :class => "example-trigger", :id => "list-type-template-text"
-         
-      .field
-        = f.label :default_data
-        = f.text_area :default_data, :rows => 5, :class => "example-trigger", :id => "list-type-default-data"	
+      %fieldset
+        %legend
+          Fields
+
+        .field
+          %button.btn.btn-primary{:type => "button", :data => {:target => "#add-field-button-dialog", :toggle => "modal"}}
+            %i.icon-plus.icon-white
+            Add Field For List
+        .field
+          = f.label :template 
+          = f.text_area :template, :rows => 10, :class => "example-trigger", :id => "list-type-template-text"
+           
+        .field
+          = f.label :default_data
+          = f.text_area :default_data, :rows => 5, :class => "example-trigger", :id => "list-type-default-data"	
     .span4
-      %label 
-        Example
-      .list-type-example
+      %fieldset
+        %legend
+          Example
+        .list-type-example
       .actions
         = f.submit "Save List Type", :class => "btn btn-primary"
   #add-field-button-dialog.modal.hide.fade{:role => "dialog"}
