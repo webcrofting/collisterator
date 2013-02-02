@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130125164607) do
+ActiveRecord::Schema.define(:version => 20130202190750) do
 
   create_table "item_hierarchies", :id => false, :force => true do |t|
     t.integer "ancestor_id",   :null => false
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20130125164607) do
     t.datetime "updated_at",   :null => false
     t.integer  "parent_id"
     t.integer  "list_type_id"
+    t.string   "token"
   end
 
   create_table "list_types", :force => true do |t|
