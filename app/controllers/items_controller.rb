@@ -16,8 +16,9 @@ class ItemsController < ApplicationController
   # GET /items/1
   # GET /items/1.json
   def show
-    @item = Item.find(params[:id])
-
+    @item = find_item_by_id_or_token(params[:id])
+    #logger.debug "item's id is #{@item.id}"
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json {render json: @item}
@@ -37,14 +38,13 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
-    @item = Item.find(params[:id])
+    @item = find_by_id_or_token(params[:id])
   end
 
   # POST /items
   # POST /items.json
   def create
     @item = Item.new(params[:item])
-	
 	  #logger.debug "item's parent_id is #{@item.parent_id}"
 	
 	  if @item.parent_id
@@ -83,7 +83,8 @@ class ItemsController < ApplicationController
   # PUT /items/1
   # PUT /items/1.json
   def update
-	@item = Item.find(params[:id])
+  @item = Item.find_by_id_or_token(params[:id])
+
 	@item.data.merge! params[:item][:data]
 	@item.save
 	
@@ -104,8 +105,8 @@ class ItemsController < ApplicationController
   # DELETE /items/1
   # DELETE /items/1.json
   def destroy
-    @item = Item.find(params[:id])
-	
+    @item = Item.find_by_id_or_token(params[:id])
+
     @item.children.each do |child|
         child.parent_id = nil
     end
