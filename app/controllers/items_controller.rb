@@ -59,6 +59,8 @@ class ItemsController < ApplicationController
 		  else
 			  @item.list_type_id = @parent_list_type.children_list_type_id
 		  end
+		else
+		  @item.list_type_id = params[:item][:list_type_id]
 	  end
 	
 	  #logger.debug "item's list_type_id is #{@item.list_type_id}"
