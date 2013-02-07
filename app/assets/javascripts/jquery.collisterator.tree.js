@@ -57,7 +57,7 @@ var Collisterator = (function(Collisterator)
 					var list_type_id = $(this).attr("id");
 					$.post("/items.json", {'item[list_type_id]': list_type_id},
 					function(data) {
-							var url = "/items/" + data.item_id;
+							var url = "/items/" + data.token;
 							window.location = url;
 					});
 				});
@@ -111,6 +111,7 @@ var Collisterator = (function(Collisterator)
 					{
 						nodes = data;
 					}
+                    
 					$parent = $("#collisterator_tree");
 					$parent.append('<table id="tree" class="table table-hover"><tbody>');
 					Collisterator.renderTree(nodes, id);
@@ -124,12 +125,8 @@ var Collisterator = (function(Collisterator)
 		};
 		Collisterator.createJsonUrl= function(itemId)
 		{
-			var jsonUrl;
-			if (itemId == -1) { // using this for "root of all nodes" - better -1 than 0 as 0 can be a legit id
-				jsonUrl = "items.json"; // only works in the index.
-			} else if (itemId > -1) {
-				jsonUrl = "/items/" + itemId + ".json";
-			}
+			var jsonUrl = "/items/" + itemId + ".json";
+			
 			return jsonUrl; // One function exit point is debug friendlier
 		};
 		Collisterator.bindDestroyItem = function()
@@ -197,9 +194,9 @@ var Collisterator = (function(Collisterator)
 			
 			if (template && template.can_have_children) {
         if (!node.children || node.children.length == 0) {
-          $listItem.append('<td><a href="#" class="add_item" data-parent-id="' + node.item_id + '"><i class="icon-plus"></i></a></td>');
+          $listItem.append('<td><a href="#" class="add_item" data-parent-id="' + node.token + '"><i class="icon-plus"></i></a></td>');
         } else {
-          var dummy ='<tr data-parent-id="' + node.item_id + '><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
+          var dummy ='<tr data-parent-id="' + node.token + '><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
             $('#tree > tbody').append(dummy);
         }
        
@@ -211,7 +208,7 @@ var Collisterator = (function(Collisterator)
 		};
 		Collisterator.renderNodeContent = function(node, parent_id)
 		{
-			var $listItem = $('<tr id="' + node.item_id + '"/>');
+			var $listItem = $('<tr id="' + node.token + '"/>');
 					
       if (parent_id) {
         $listItem.addClass('child-of-node-' + parent_id);
@@ -239,7 +236,7 @@ var Collisterator = (function(Collisterator)
 		  $listItem.append(Mustache.render(template, node));
 		  $listItem.find(".editable").each(function()
 		  {
-	      Collisterator.loadEditable($(this), node.item_id);
+	      Collisterator.loadEditable($(this), node.token);
 	    });
       Collisterator.renderNodeButtons(node, $listItem);
 		};
@@ -258,7 +255,7 @@ var Collisterator = (function(Collisterator)
 		            
                 $('#tree > tbody').append($listItem);
                 
-                Collisterator.renderTree(node.children, node.item_id);
+                Collisterator.renderTree(node.children, node.token);
             }
 		        
 		    } //else {
