@@ -42,6 +42,9 @@ gem "bootstrap-x-editable-rails", "~> 1.4.0"
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 
+gem 'devise'
+gem 'cancan'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
