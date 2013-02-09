@@ -1,5 +1,7 @@
 Collisterator::Application.routes.draw do
 
+  devise_for :users
+
   resources :list_types
 
   resources :items
