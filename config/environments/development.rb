@@ -37,4 +37,7 @@ Collisterator::Application.configure do
   
   # Enable the asset pipeline
   #  config.assets.enabled = false
+  
+  # Default url options; suggested as part of Devise installation.
+  config.action_mailer.default_url_options = {:host => 'localhost:3000' }
 end
