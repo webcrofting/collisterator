@@ -65,6 +65,7 @@ GEM
     execjs (1.4.0)
       multi_json (~> 1.0)
     haml (3.1.7)
+    hashie (1.2.0)
     highline (1.6.15)
     hike (1.2.1)
     i18n (0.6.1)
@@ -89,6 +90,17 @@ GEM
     net-ssh (2.6.3)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
+    oauth (0.4.7)
+    omniauth (1.1.2)
+      hashie (~> 1.2)
+      rack
+    omniauth-google (1.0.2)
+      multi_json
+      omniauth (~> 1.0)
+      omniauth-oauth
+    omniauth-oauth (1.0.1)
+      oauth
+      omniauth (~> 1.0)
     orm_adapter (0.4.0)
     pg (0.14.1)
     pg (0.14.1-x86-mingw32)
@@ -156,6 +168,8 @@ DEPENDENCIES
   haml (= 3.1.7)
   jqtree-rails
   jquery-rails
+  omniauth
+  omniauth-google
   pg
   rails (= 3.2.11)
   sass-rails (~> 3.2.3)

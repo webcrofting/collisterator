@@ -45,6 +45,9 @@ gem "bootstrap-x-editable-rails", "~> 1.4.0"
 gem 'devise'
 gem 'cancan'
 
+gem 'omniauth'
+gem 'omniauth-google'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
