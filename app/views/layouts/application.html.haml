@@ -18,6 +18,11 @@
       %nav.navbar-inner
         .container
           = render 'layouts/navigation'
+      %nav.pull-right
+        %ul.nav
+          = render 'devise/menu/login_items'
+          - unless user_signed_in?
+            = render 'devise/menu/registration_items'
     #main{:role => "main"}
       .container
         .content
