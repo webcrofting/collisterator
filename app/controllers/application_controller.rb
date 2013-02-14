@@ -13,4 +13,10 @@ class ApplicationController < ActionController::Base
     #logger.debug "items id is #{item.id}"
     return item
   end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    redirect_to root_url
+  end
+  
 end
