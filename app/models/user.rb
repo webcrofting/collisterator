@@ -10,9 +10,14 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
   
   has_and_belongs_to_many :roles
+  before_create :set_default_role
   
   def role?(role)
     return !!self.roles.find_by_name(role.to_s)
   end
   
+  private
+  def set_default_role
+    self.role ||= Role.find_by_name('players');
+  end
 end
