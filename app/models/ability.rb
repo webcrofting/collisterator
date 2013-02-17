@@ -4,17 +4,22 @@ class Ability
   def initialize(user)
   
     user ||= User.new # guest user (not logged in)
-    if user.role? :paying
-      # this will eventually change:
+    if user.role? :admin
       can :manage, :all
-      # we don't want even the paying kind to delete/update list_types
-      # can [:read, :create, :update, :destroy], Item
-      # can [:read, :derive, :edit_derived], ListType
-      # 2 of the above methods do not exist yet. New controller actions?
-    elseif user.role? :freeloader
-      can [:read, :create, :update, :destroy], Item
+    elseif user.role? :payers
+      can :manage, Item
+      can [:read, :create], List_type
+      # when ready: can edit and destroy their own lists, but not 
+      # any others. 
+      # can [:update, :destroy], List_type do |list_type|
+      #   list_type.try(:owner) == user
+      # end
+    elseif user.role? :players
+      can :manage, Item
+      can :read, List_type
     else
-      can :read, :all
+      can :manage, Item
+      can :read, List_type
     end
     
     # The first argument to `can` is the action you are giving the user 
