@@ -1,7 +1,7 @@
 class Item < ActiveRecord::Base
 	acts_as_tree
 	
-	attr_accessible :data, :list_type_id, :username
+	attr_accessible :data, :list_type_id, :username, :token
   
   before_create :generate_token
 
