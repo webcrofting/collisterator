@@ -11,9 +11,10 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
     = yield(:head)
-  %body
+  .container
     %p#notice
-      = notice
+      = render 'layouts/messages'
+  %body
     %header.navbar.navbar-fixed-top
       %nav.navbar-inner
         .container
@@ -24,9 +25,5 @@
           - unless user_signed_in?
             = render 'devise/menu/registration_items'
     #main{:role => "main"}
-      .container
-        .content
-          .row
-            = render 'layouts/messages'
-          = yield
+      = yield
     %footer
