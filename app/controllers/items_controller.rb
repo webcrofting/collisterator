@@ -1,6 +1,5 @@
 class ItemsController < ApplicationController
-  
- 
+ before_filter :authenticate_user!, :except => [:show]
  # GET /items
  # GET /items.json 
   def index
@@ -17,7 +16,7 @@ class ItemsController < ApplicationController
   # GET /items/1.json
   def show
     @item = find_item_by_id_or_token(params[:id])
-    #logger.debug "item's id is #{@item.id}"
+    logger.debug "item's id is #{@item.id}"
     
     respond_to do |format|
       format.html # show.html.erb
@@ -86,7 +85,7 @@ class ItemsController < ApplicationController
   # PUT /items/1
   # PUT /items/1.json
   def update
-  @item = Item.find_item_by_id_or_token(params[:id])
+  @item = find_item_by_id_or_token(params[:id])
 
 	@item.data.merge! params[:item][:data]
 	@item.save
@@ -108,7 +107,7 @@ class ItemsController < ApplicationController
   # DELETE /items/1
   # DELETE /items/1.json
   def destroy
-    @item = Item.find_item_by_id_or_token(params[:id])
+    @item = find_item_by_id_or_token(params[:id])
 
     @item.children.each do |child|
         child.parent_id = nil
