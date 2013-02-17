@@ -38,7 +38,7 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
-    @item = find_by_id_or_token(params[:id])
+    @item = find_item_by_id_or_token(params[:id])
   end
 
   # POST /items
@@ -86,7 +86,7 @@ class ItemsController < ApplicationController
   # PUT /items/1
   # PUT /items/1.json
   def update
-  @item = Item.find_by_id_or_token(params[:id])
+  @item = Item.find_item_by_id_or_token(params[:id])
 
 	@item.data.merge! params[:item][:data]
 	@item.save
@@ -108,7 +108,7 @@ class ItemsController < ApplicationController
   # DELETE /items/1
   # DELETE /items/1.json
   def destroy
-    @item = Item.find_by_id_or_token(params[:id])
+    @item = Item.find_item_by_id_or_token(params[:id])
 
     @item.children.each do |child|
         child.parent_id = nil
