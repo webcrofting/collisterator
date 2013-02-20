@@ -33,6 +33,7 @@ class UsersController < ApplicationController
   # GET /users/1.json                                     HTML AND AJAX
   #-------------------------------------------------------------------
   def show
+    @user = User.find_by_email(params[:id])
     respond_to do |format|
       format.json { render :json => @user }
       format.xml  { render :xml => @user }
