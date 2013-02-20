@@ -8,7 +8,8 @@ class Ability
       can :manage, :all
     elseif user.role? :payers
       can :manage, Item
-      can [:read, :create], List_type
+      can [:read, :create], ListType
+      can :read, User, :id => user.id
       # when ready: can edit and destroy their own lists, but not 
       # any others. 
       # can [:update, :destroy], List_type do |list_type|
@@ -16,10 +17,11 @@ class Ability
       # end
     elseif user.role? :players
       can :manage, Item
-      can :read, List_type
+      can :read, ListType
+      can :read, User, :id => user.id
     else
       can :manage, Item
-      can :read, List_type
+      can :read, ListType
     end
     
     # The first argument to `can` is the action you are giving the user 
