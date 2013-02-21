@@ -4,3 +4,10 @@
     = link_to 'New Listtype', new_list_type_path
   %li
     = link_to 'New List', list_types_path
+%ul.nav.pull-right
+  - unless user_signed_in?
+    %li
+      = render 'devise/menu/registration_items'
+    %li
+      = render 'devise/menu/login_items'
+  
