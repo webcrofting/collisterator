@@ -6,10 +6,14 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Item.all.each do |item|
-  begin
-    token = SecureRandom.urlsafe_base64
-  end while Item.where(:token => token).exists?
-  item.token = token;
-	item.save
-end
+@r =Role.new
+@r.name = "admin"
+@r.save
+
+@r = Role.new
+@r.name = "payers"
+@r.save
+
+@r = Role.new
+@r.name = "players"
+@r.save
