@@ -46,7 +46,7 @@ gem 'devise'
 gem 'cancan'
 
 gem 'omniauth'
-gem 'omniauth-google'
+gem 'omniauth-google-oauth2'
 
 # Use unicorn as the web server
 # gem 'unicorn'
