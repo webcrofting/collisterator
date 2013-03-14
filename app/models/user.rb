@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [ :google_oauth2]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :roles
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :roles, :username
   
   has_and_belongs_to_many :roles
   accepts_nested_attributes_for :roles
@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
       if registered_user
         return registered_user
       else
-        user = User.create(name: data["name"],
+        user = User.create(username: data["name"],
           provider:access_token.provider,
           email: data["email"],
           uid: access_token.uid ,
@@ -45,6 +45,6 @@ end
   
   private
   def set_default_role
-    self.role ||= Role.find_by_name('players');
+    self.roles ||= Role.find_by_name('players');
   end
 end

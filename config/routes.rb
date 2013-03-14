@@ -1,8 +1,10 @@
 Collisterator::Application.routes.draw do
 
-  devise_for :users, :path_names => {:sign_in => "login", :sign_out => "logout"}, :path => "d"
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-  
+  devise_for :users, 
+             :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" },
+             :path_names => {:sign_in => "login", :sign_out => "logout"}, 
+             :path => "d"
+
   resources :users
   resources :list_types
   resources :items
