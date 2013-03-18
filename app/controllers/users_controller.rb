@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_filter :accessible_roles, :only => [:new, :edit, :show, :update, :create]
   load_and_authorize_resource :only => [:show,:new,:destroy,:edit,:update]
  
-  # GET /users
+ # GET /users
   # GET /users.xml                                                
   # GET /users.json                                       HTML and AJAX
   #-----------------------------------------------------------------------
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   # GET /users/1.json                                     HTML AND AJAX
   #-------------------------------------------------------------------
   def show
-    @user = User.find_by_email(params[:id])
+    @user = User.find(params[:email])
     respond_to do |format|
       format.json { render :json => @user }
       format.xml  { render :xml => @user }
