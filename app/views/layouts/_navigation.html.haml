@@ -9,8 +9,8 @@
     - unless user_signed_in?
       = render 'devise/menu/registration_items'
   - if user_signed_in?
-    - email = current_user.email
     %li
+      - email = current_user.email
       = link_to(email, user_path(email))
     %li
       = link_to('Logout', destroy_user_session_path, :method => :delete)

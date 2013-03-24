@@ -15,6 +15,7 @@ Collisterator::Application.routes.draw do
 
   match '/items/:token' => 'items#show', :as => 'token'
   
+  #match '/users/:id' => 'users#show', :path => '/users/:email', :as => 'email'
   match '/users/:email' => 'users#show'
   
   root :to => "list_types#index" 

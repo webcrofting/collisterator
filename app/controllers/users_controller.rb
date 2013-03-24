@@ -1,20 +1,21 @@
 class UsersController < ApplicationController
 #  before_filter :get_user, :only => [:index,:new,:edit]
-  before_filter :accessible_roles, :only => [:new, :edit, :show, :update, :create]
-  load_and_authorize_resource :only => [:show,:new,:destroy,:edit,:update]
+#  before_filter :accessible_roles, :only => [:new, :edit, :show, :update, :create]
+#  load_and_authorize_resource :only => [:show,:new,:destroy,:edit,:update]
+  #skip_load_and_authorize_resource :only => [:show]
  
  # GET /users
   # GET /users.xml                                                
   # GET /users.json                                       HTML and AJAX
   #-----------------------------------------------------------------------
-  def index
-    @users = User.accessible_by(current_ability, :index).limit(20)
-    respond_to do |format|
-      format.json { render :json => @users }
-      format.xml  { render :xml => @users }
-      format.html
-    end
-  end
+  #def index
+   # @users = User.accessible_by(current_ability, :index).limit(20)
+    #respond_to do |format|
+     # format.json { render :json => @users }
+      #format.xml  { render :xml => @users }
+      #format.html
+    #end
+  #end
  
   # GET /users/new
   # GET /users/new.xml                                            
@@ -33,15 +34,18 @@ class UsersController < ApplicationController
   # GET /users/1.json                                     HTML AND AJAX
   #-------------------------------------------------------------------
   def show
-    @user = User.find(params[:email])
-    respond_to do |format|
-      format.json { render :json => @user }
-      format.xml  { render :xml => @user }
-      format.html      
-    end
+    @user = User.find_by_email(params[:id])
+    logger.debug(@user.email)
+    
+    
+    # respond_to do |format|
+      # format.json { render :json => @user }
+      # format.xml  { render :xml => @user }
+      # format.html      
+    # end
  
-  rescue ActiveRecord::RecordNotFound
-    respond_to_not_found(:json, :xml, :html)
+  #rescue ActiveRecord::RecordNotFound
+   # respond_to_not_found(:json, :xml, :html)
   end
  
   # GET /users/1/edit                                                      
