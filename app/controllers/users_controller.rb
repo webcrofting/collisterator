@@ -34,18 +34,17 @@ class UsersController < ApplicationController
   # GET /users/1.json                                     HTML AND AJAX
   #-------------------------------------------------------------------
   def show
-    @user = User.find_by_email(params[:id])
-    logger.debug(@user.email)
+    @user = User.find(current_user.id)
     
-    
-    # respond_to do |format|
-      # format.json { render :json => @user }
-      # format.xml  { render :xml => @user }
-      # format.html      
-    # end
- 
+    render 'users/show'
+     # respond_to do |format|
+       # format.html { render 'users/show' }     
+       #format.json { render :json => @user }
+     # end
+  
   #rescue ActiveRecord::RecordNotFound
    # respond_to_not_found(:json, :xml, :html)
+   
   end
  
   # GET /users/1/edit                                                      

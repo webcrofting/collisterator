@@ -5,7 +5,7 @@ Collisterator::Application.routes.draw do
              :path_names => {:sign_in => "login", :sign_out => "logout"}, 
              :path => "d"
 
-  resources :users
+  resources :users #, :only => [:show]
   resources :list_types
   resources :items
 	
@@ -15,8 +15,7 @@ Collisterator::Application.routes.draw do
 
   match '/items/:token' => 'items#show', :as => 'token'
   
-  #match '/users/:id' => 'users#show', :path => '/users/:email', :as => 'email'
-  match '/users/:email' => 'users#show'
+  match '/users/:email' => 'users#show', :as => 'profile'
   
   root :to => "list_types#index" 
 

@@ -11,7 +11,7 @@
   - if user_signed_in?
     %li
       - email = current_user.email
-      = link_to(email, user_path(email))
+      = link_to(email, profile_path(email))
     %li
       = link_to('Logout', destroy_user_session_path, :method => :delete)
   - else
