@@ -6,8 +6,8 @@ development:
   adapter: postgresql
   database: postgres
   host: localhost
-  username: collisterator
-  password: bb
+  username: postgres
+  password: guest
   port: 5432
   pool: 5
   timeout: 5000
