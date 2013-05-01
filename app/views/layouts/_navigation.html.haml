@@ -5,9 +5,6 @@
   %li
     = link_to 'New List', list_types_path
 %ul.nav.pull-right
-  %li
-    - unless user_signed_in?
-      = render 'devise/menu/registration_items'
   - if user_signed_in?
     - email = current_user.email
     %li
@@ -15,11 +12,12 @@
     %li
       = link_to('Logout', destroy_user_session_path, :method => :delete)
   - else
-    %li.divider-vertical
     %li
-      = link_to('Login', new_user_session_path)
+      = render 'devise/menu/registration_items'
+    %li.divider-vertical
     %li.dropdown
       %a(class="dropdown-toggle" href="#" data-toggle="dropdown")
         %i.icon-user
+        Login or Register
       %div(class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="padding: 15px; padding-bottom: 0px;")
         = render 'devise/sessions/form'
