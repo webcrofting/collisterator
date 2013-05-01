@@ -1,29 +1,29 @@
-%h1 Collisterator
+.row
+  .span12
+    %table.table.table-striped
+      %tr	
+        %th
+          Name
+        %th
+          Edit
+        %th
+          Create List
 
-%table.table.table-striped
-  %tr	
-    %th
-      Name
-    %th
-      Edit
-    %th
-      Create List
+      - @list_types.each do |list_type|
+        %tr	
+          %td
+            = list_type.name
+            = link_to list_type_path(list_type) do
+              %i.icon-search
+        
+          %td
+            = link_to edit_list_type_path(list_type) do
+              %i.icon-edit
+          %td
+            %a{new_list_html_attrs(list_type.id)} 
+              %i.icon-list
 
-  - @list_types.each do |list_type|
-    %tr	
-      %td
-        = list_type.name
-        = link_to list_type_path(list_type) do
-          %i.icon-search
-          
-      %td
-        = link_to edit_list_type_path(list_type) do
-          %i.icon-edit
-      %td
-        %a{new_list_html_attrs(list_type.id)} 
-          %i.icon-list
+    :javascript
+      Collisterator.bindCreateNewList();
 
-:javascript
-  Collisterator.bindCreateNewList();
-
-= link_to 'New List type', new_list_type_path
+    = link_to 'New List type', new_list_type_path

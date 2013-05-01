@@ -12,9 +12,6 @@
     %li
       = link_to('Logout', destroy_user_session_path, :method => :delete)
   - else
-    %li
-      = render 'devise/menu/registration_items'
-    %li.divider-vertical
     %li.dropdown
       %a(class="dropdown-toggle" href="#" data-toggle="dropdown")
         %i.icon-user
