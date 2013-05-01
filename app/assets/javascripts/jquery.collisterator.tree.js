@@ -7,15 +7,18 @@ var Collisterator = (function(Collisterator)
 			
       $(document).on("blur", ".example-trigger", function() 
 				{			
-					var $container = $(".list-type-example");
+				  var $header_container = $(".list-type-example-header");
+					var $row_container = $(".list-type-example-row");
 					var node = {};
           var default_data_string = $("#list-type-default-data").val();
           if(default_data_string)
           {
 					  node.data = JSON.parse(default_data_string);
 					  var template = $("#list-type-template-text").val();
-					  $container.empty();
-            Collisterator.renderNodeContentWithTemplate(node, $container, template);
+					  $header_container.empty();
+					  Collisterator.renderHeader($header_container, template);
+					  $row_container.empty();
+            Collisterator.renderNodeContentWithTemplate(node, $row_container, template);
           }
 				});
 		};
@@ -36,6 +39,21 @@ var Collisterator = (function(Collisterator)
 		        var field = fieldArray[i];
 		        data[field.name] = field.value;
 		      }
+		      
+		      var fields_array = [];
+		      try
+		      {
+            var fields_definition_string = $("#list-type-fields-text").val();
+            fields_array = JSON.parse(fields_definition_string);
+		      }
+		      catch(e)
+		      {	      
+		        console.log("no data yet");
+		      }
+		      fields_array.push(data);
+		      $("#list-type-fields-text").val(JSON.stringify(fields_array));
+		      
+		      Collisterator.updateFieldsTable()
 		      
 		      var defaultTextArea = $("#list-type-default-data");
 		      var defaultString = defaultTextArea.val();
@@ -206,6 +224,7 @@ var Collisterator = (function(Collisterator)
 			
 			
 		};
+		
 		Collisterator.renderNodeContent = function(node, parent_id)
 		{
 			var $listItem = $('<tr id="' + node.token + '"/>');
@@ -230,6 +249,25 @@ var Collisterator = (function(Collisterator)
 			} 
       return $listItem;
 		};
+
+		Collisterator.renderHeader = function($header_container)
+		{
+		  try
+		  {
+		    var fields_definition_string = $("#list-type-fields-text").val();
+		    var fields_array = JSON.parse(fields_definition_string);
+		    for(var index in fields_array)
+		    {
+		      $header_container.append("<th>" + fields_array[index].display_name + "</th>");
+		    }
+		  }
+		  catch(e)
+		  {
+		    console.log("no valid definition");
+		  }
+
+		};
+
 		
 		Collisterator.renderNodeContentWithTemplate = function(node, $listItem, template)
 		{
@@ -260,10 +298,32 @@ var Collisterator = (function(Collisterator)
 		        
 		    } //else {
          /* var dummy ='<tr data-parent-id="' + parent_id + ' class="child-of-node-"' + parent_id + ' ><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
-            $('#tree > tbody').append(dummy);
+            $('#tree > tbody').append(dummy); 
             // this creates a million links! why???
         } */
 
+		};
+		
+		Collisterator.fields_table_template = "<tr><td>{{display_name}}</td><td>{{type}}</td><td>{{default}}</td></tr>";
+		
+		Collisterator.updateFieldsTable= function()
+		{
+		  try
+		  {
+		    var fields_definition_string = $("#list-type-fields-text").val();
+		    var fields_array = JSON.parse(fields_definition_string);
+		    var $container = $("#fields-table > tbody");
+		    $container.empty();
+		    for(var index in fields_array)
+		    {
+		      var row = Mustache.render(Collisterator.fields_table_template, fields_array[index]);
+		      $container.append(row);
+		    }
+		  }
+		  catch(e)
+		  {
+		    console.log("no valid definition");
+		  }
 		};
 		
 		Collisterator.initListTypeForm= function()
@@ -271,6 +331,7 @@ var Collisterator = (function(Collisterator)
 		  Collisterator.bindShowExampleListItem();
 		  Collisterator.bindAddField();
 		  Collisterator.bindChangeListTypeType();
+		  Collisterator.updateFieldsTable();
 		};
 		
 		return Collisterator;

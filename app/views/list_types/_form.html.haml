@@ -10,7 +10,7 @@
           - @list_type.errors.full_messages.each do |msg|
             %li= msg
 
-    .span4          
+    .span3          
       %fieldset
         %legend
           Basic Options
@@ -48,31 +48,47 @@
             = f.radio_button :can_be_root, false
         .field
           = f.label :children_list_type_id
-          =f.text_field :children_list_type_id
+          = f.text_field :children_list_type_id
 
-    .span4
+    .span3
       %fieldset
         %legend
           Fields
 
-        .field
-          %button.btn.btn-primary{:type => "button", :data => {:target => "#add-field-button-dialog", :toggle => "modal"}}
-            %i.icon-plus.icon-white
-            Add Field For List
-        .field
+        %table#fields-table.table-striped
+          %thead
+            %tr
+              %th
+                Name
+              %th
+                Type
+              %th
+                Default
+          %tbody
+        %hr
+        %button.btn.btn-primary{:type => "button", :data => {:target => "#add-field-button-dialog", :toggle => "modal"}}
+          %i.icon-plus.icon-white
+          Add Field For List
+
+        = f.hidden_field :fields, :id => "list-type-fields-text"
+
+        .field{:style => "display:none"}
           = f.label :template 
           = f.text_area :template, :rows => 10, :class => "example-trigger", :id => "list-type-template-text"
            
-        .field
+        .field{:style => "display:none"}
           = f.label :default_data
           = f.text_area :default_data, :rows => 5, :class => "example-trigger", :id => "list-type-default-data"	
-    .span4
+    .span3
       %fieldset
         %legend
           Example
-        .list-type-example
+        %table.table-striped
+          %tr.list-type-example-header
+          %tr.list-type-example-row
+    .span3
       .actions
-        = f.submit "Save List Type", :class => "btn btn-primary"
+        = f.submit "Save", :class => "btn btn-primary"
   #add-field-button-dialog.modal.hide.fade{:role => "dialog"}
     .modal-header
       %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
