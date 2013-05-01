@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :roles, :username
   
+#  has_many :items, :dependent => destroy
   has_and_belongs_to_many :roles
   accepts_nested_attributes_for :roles
   before_create :set_default_role
