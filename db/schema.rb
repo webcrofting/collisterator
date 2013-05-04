@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130314204009) do
+ActiveRecord::Schema.define(:version => 20130418005117) do
 
   create_table "item_hierarchies", :id => false, :force => true do |t|
     t.integer "ancestor_id",   :null => false
@@ -21,6 +21,14 @@ ActiveRecord::Schema.define(:version => 20130314204009) do
 
   add_index "item_hierarchies", ["ancestor_id", "descendant_id"], :name => "index_item_hierarchies_on_ancestor_id_and_descendant_id", :unique => true
   add_index "item_hierarchies", ["descendant_id"], :name => "index_item_hierarchies_on_descendant_id"
+
+  create_table "item_shares", :force => true do |t|
+    t.integer  "owner_id"
+    t.integer  "item_id"
+    t.string   "shared_user_email"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
 
   create_table "items", :force => true do |t|
     t.string   "name"

@@ -2,9 +2,16 @@
 #   gem install pg
 #
 
+connection: &connection
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: collisterator
+  password: bb
+
 development:
   adapter: postgresql
-  database: postgres
+  database: development
   host: localhost
   username: collisterator
   password: bb
@@ -18,11 +25,15 @@ development:
 test:
   adapter: postgresql
   database: test
+  username: collisterator
+  password: bb
   pool: 5
   timeout: 5000
 
 production:
   adapter: postgresql
-  database: postgres
+  database: production
+  username: collisterator
+  password: bb
   pool: 5
   timeout: 5000
