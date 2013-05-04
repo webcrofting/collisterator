@@ -39,6 +39,7 @@ var Collisterator = (function(Collisterator)
 		        var field = fieldArray[i];
 		        data[field.name] = field.value;
 		      }
+		      data["name"] = data["display_name"].replace(/\W/g, '');
 		      
 		      var fields_array = [];
 		      try
@@ -95,6 +96,14 @@ var Collisterator = (function(Collisterator)
 				});
 		};
 
+		Collisterator.bindCustomizeButton = function()
+		{
+								
+			$(document).on("click", "#toggle-list-type-customization", function() 
+			{
+			  $("#list-type-customizations").slideToggle();			
+			});
+		};
 		
 		Collisterator.bindNewItem = function()
 		{
@@ -331,6 +340,7 @@ var Collisterator = (function(Collisterator)
 		  Collisterator.bindShowExampleListItem();
 		  Collisterator.bindAddField();
 		  Collisterator.bindChangeListTypeType();
+		  Collisterator.bindCustomizeButton();
 		  Collisterator.updateFieldsTable();
 		};
 		

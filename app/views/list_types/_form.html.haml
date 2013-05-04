@@ -16,11 +16,11 @@
           Basic Options
         .field
           = f.label :name 
-          = f.text_field :name
+          = f.text_field :name, :class => "span3"
         .field
           %label 
             List Type
-          %select.list-type-type-selector{:name => "list_type_type"}
+          %select.span3.list-type-type-selector{:name => "list_type_type"}
             %option
               plain list
             %option
@@ -48,37 +48,46 @@
             = f.radio_button :can_be_root, false
         .field
           = f.label :children_list_type_id
-          = f.text_field :children_list_type_id
+          = collection_select(:list_type, :children_list_type_id, ListType.all, :id, :name, {:prompt => true})
 
     .span3
       %fieldset
         %legend
           Fields
-
-        %table#fields-table.table-striped
-          %thead
-            %tr
-              %th
-                Name
-              %th
-                Type
-              %th
-                Default
-          %tbody
+        .row
+          %table#fields-table.span3.table-striped
+            %thead
+              %tr
+                %th
+                  Name
+                %th
+                  Type
+                %th
+                  Default
+            %tbody
         %hr
-        %button.btn.btn-primary{:type => "button", :data => {:target => "#add-field-button-dialog", :toggle => "modal"}}
+        %button.btn.btn-primary{:data => {:target => "#add-field-button-dialog", :toggle => "modal"}}
           %i.icon-plus.icon-white
           Add Field For List
 
-        = f.hidden_field :fields, :id => "list-type-fields-text"
+        %hr
 
-        .field{:style => "display:none"}
-          = f.label :template 
-          = f.text_area :template, :rows => 10, :class => "example-trigger", :id => "list-type-template-text"
-           
-        .field{:style => "display:none"}
-          = f.label :default_data
-          = f.text_area :default_data, :rows => 5, :class => "example-trigger", :id => "list-type-default-data"	
+        %button#toggle-list-type-customization.btn.btn-danger{:type => "button"}
+          %i.icon-edit.icon-white
+          Customize
+
+        #list-type-customizations{:style => "display:none"}
+          .field
+            = f.label :fields
+            = f.text_area :fields, :rows => 5, :class => "example-trigger", :id => "list-type-fields-text"
+
+          .field
+            = f.label :template 
+            = f.text_area :template, :rows => 5, :class => "example-trigger", :id => "list-type-template-text"
+             
+          .field
+            = f.label :default_data
+            = f.text_area :default_data, :rows => 5, :class => "example-trigger", :id => "list-type-default-data"	
     .span3
       %fieldset
         %legend
@@ -96,9 +105,7 @@
     .modal-body
       %form#new-field-form
         %fieldset
-          %label Identifier:
-          %input{:type=>"text", :name=>"name"}
-          %label Display Name:
+          %label Name:
           %input{:type=>"text", :name=>"display_name"}
           %label Type:
           %select{:name=>"type"}
@@ -112,7 +119,7 @@
     .modal-footer
       %a.btn{:href => "#", "data-dismiss" => "modal"} Close
       %a#new-field-form-submit.btn.btn-primary{:href => "#", "data-dismiss" => "modal"} Save changes
-
+%hr
 :javascript
   Collisterator.initListTypeForm();
 
