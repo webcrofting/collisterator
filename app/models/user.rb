@@ -31,7 +31,17 @@ class User < ActiveRecord::Base
         )
       end
    end
-end
+  end
+
+  def shared_items	
+	@item_shares = ItemShares.find_by_sharer_email(self.email)
+	@shared_items = []
+	@item_shares.each do |item_share|
+		@item = Item.find(item_share.item_id)
+		@shared_items << @item
+	end
+	return shared_items
+  end
 
   def role?(role)
     return !!self.roles.find_by_name(role.to_s)

@@ -3,4 +3,34 @@
 
 - email = @user.email
 %h1 Welcome #{email}...
-%p Some random nonsense
+%h2 My Lists:
+- @items = get_users_items(@user)
+%table.table.table-striped
+  %tr
+    %th
+      List name
+  - @items.each do |item|
+    %tr
+      %td
+        = link_to "#{item.data}", item_path(item)
+
+%h2 Shared Lists:
+- @shared_items = get_shared_items(@user)
+%table.table.table-striped
+  %tr
+    %th
+      List name
+  - @shared_items.each do |shared_item|
+    %tr
+      %td
+        = link_to "#{shared_item.data}", item_path(shared_item)
+
+%h2 My Templates:
+- @list_types = get_list_types(@user)
+%table.table.table-striped
+  - @list_types.each do |list_type|
+    %tr
+      %td
+        = link_to "#{list_type.name}", list_type_path(list_type)
+        
+
