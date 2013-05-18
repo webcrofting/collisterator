@@ -10,7 +10,8 @@ class User < ActiveRecord::Base
  # attr_accessor :shared_items
 
   has_many :items
-  has_and_belongs_to_many :roles
+  has_many :list_types
+  has_one :roles
   accepts_nested_attributes_for :roles
   before_create :set_default_role
   
@@ -66,12 +67,12 @@ class User < ActiveRecord::Base
   def assign_role(role_string)
     @role = Role.find_by_name(role_string)
     unless @role.nil?
-      self.roles << @role
+      self.role = @role
     end
   end
   
   private
   def set_default_role
-    self.roles ||= Role.find_by_name('players');
+    self.role ||= Role.find_by_name('players');
   end
 end
