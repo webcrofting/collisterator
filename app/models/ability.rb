@@ -8,7 +8,7 @@ class Ability
       can :manage, :all
     elseif user.role? :payers
       can :manage, Item
-      can [:read, :create], ListType
+      can [:read, :create, :update], ListType
       can :read, User, :id => user.id
       # when ready: can edit and destroy their own lists, but not 
       # any others. 

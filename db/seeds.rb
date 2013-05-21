@@ -17,3 +17,7 @@
 @r = Role.new
 @r.name = "players"
 @r.save
+
+@r = Role.new
+@r.name = "guest"
+@r.save
