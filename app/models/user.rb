@@ -1,3 +1,4 @@
+require 'enumerated_attribute'
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -9,11 +10,9 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :role_id, :username
  # attr_accessor :shared_items
 
+  enum_attr :role, %w(:admin payer player)
   has_many :items
   has_many :list_types
-  # not sure it needs the two options below??
-  #has_one :role
-  #accepts_nested_attributes_for :role
   before_create :set_default_role
   
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
@@ -35,6 +34,7 @@ class User < ActiveRecord::Base
       end
    end
   end
+
   def templates
     @list_types = ListType.find_by_user_id(self.id)
   end
@@ -52,8 +52,7 @@ class User < ActiveRecord::Base
   end
 
   def role?(role_string)
-    @role = Role.find_by_name(role_string)
-	!!(self.role_id == @role.id)
+    self.role_string.to_sym?
   end
 
   
@@ -68,14 +67,13 @@ class User < ActiveRecord::Base
   end
   
   def assign_role(role_string)
-    @role = Role.find_by_name(role_string)
-    unless @role.nil?
-      self.role_id = @role.id
+    unless role_string.blank? || role_string.nil?
+      self.role = role_string.to_sym
     end
   end
   
   private
   def set_default_role
-    self.role ||= Role.find_by_name('players');
+    self.role = :player
   end
 end
