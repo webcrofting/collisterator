@@ -6,16 +6,16 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.role? :admin
       can :manage, :all
-    elseif user.role? :payers
+    elsif user.role? :payers
       can :manage, Item
-      can [:read, :create], ListType
+      can [:read, :create, :update], ListType
       can :read, User, :id => user.id
       # when ready: can edit and destroy their own lists, but not 
       # any others. 
       # can [:update, :destroy], List_type do |list_type|
       #   list_type.try(:owner) == user
       # end
-    elseif user.role? :players
+    elsif user.role? :players
       can :manage, Item
       can :read, ListType
       can :read, User, :id => user.id

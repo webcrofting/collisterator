@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130501174203) do
+ActiveRecord::Schema.define(:version => 20130525133137) do
 
   create_table "item_hierarchies", :id => false, :force => true do |t|
     t.integer "ancestor_id",   :null => false
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20130501174203) do
     t.integer  "list_type_id"
     t.string   "token"
     t.string   "username"
+    t.integer  "user_id"
   end
 
   create_table "list_types", :force => true do |t|
@@ -50,18 +51,7 @@ ActiveRecord::Schema.define(:version => 20130501174203) do
     t.integer  "children_list_type_id"
     t.string   "default_data"
     t.boolean  "can_have_children"
-    t.text     "fields"
-  end
-
-  create_table "roles", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "roles_users", :id => false, :force => true do |t|
-    t.integer "role_id"
-    t.integer "user_id"
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|
@@ -80,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20130501174203) do
     t.string   "provider"
     t.string   "uid"
     t.string   "username"
+    t.string   "role"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

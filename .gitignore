@@ -11,6 +11,9 @@
 console.txt
 todo.txt
 
+# Ignore vim backup files
+*.*~
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
