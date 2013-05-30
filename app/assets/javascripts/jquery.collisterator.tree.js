@@ -111,8 +111,9 @@ var Collisterator = (function(Collisterator)
 			$(document).on("click", ".add_item", function() 
 			{			
         var $anchor = $(this);
+        //var parentId = parseInt($anchor.attr('data-parent-id'));
         var parentId = parseInt($anchor.attr('data-parent-id'));
-        
+		console.log("WTF?? " + $anchor.attr('data-parent-id'));
 				$.post("/items.json", {'item[parent_id]': parentId},
 					function(data) {
 					$('#' + parentId).after(Collisterator.renderNodeContent(data, parentId));

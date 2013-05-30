@@ -5,12 +5,11 @@ Collisterator::Application.routes.draw do
              :path_names => {:sign_in => "login", :sign_out => "logout"}, 
              :path => "d"
 
-  resources :users do
-	  resources :items
-  end
+
+	resources :users
 
   resources :list_types
-  #resources :items
+  resources :items
 	
   get "home/index"
   

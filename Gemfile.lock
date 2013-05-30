@@ -61,8 +61,6 @@ GEM
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
-    enumerated_attribute (0.2.16)
-      meta_programming (>= 0.2.1)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -88,7 +86,6 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    meta_programming (0.2.2)
     mime-types (1.19)
     multi_json (1.5.0)
     multipart-post (1.2.0)
@@ -178,7 +175,6 @@ DEPENDENCIES
   closure_tree
   coffee-rails (~> 3.2.1)
   devise
-  enumerated_attribute
   haml (= 3.1.7)
   jqtree-rails
   jquery-rails
