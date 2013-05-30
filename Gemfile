@@ -32,9 +32,6 @@ gem 'jqtree-rails'
 
 gem 'closure_tree'
 
-# To use enum values for user's roles
-gem 'enumerated_attribute'
-
 # To use haml for the views
 gem 'haml', '3.1.7'
 

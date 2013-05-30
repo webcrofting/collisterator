@@ -1,4 +1,3 @@
-require 'enumerated_attribute'
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -10,7 +9,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :role_id, :username
  # attr_accessor :shared_items
 
-  enum_attr :role, %w(:admin payer player)
+  validates_inclusion_of :role, :in => %w(admin payer player)
   has_many :items
   has_many :list_types
   before_create :set_default_role
@@ -52,7 +51,11 @@ class User < ActiveRecord::Base
   end
 
   def role?(role_string)
-    self.role_string.to_sym?
+    if self.role==role_string
+      return true
+    else
+      return false
+    end
   end
 
   
@@ -67,13 +70,11 @@ class User < ActiveRecord::Base
   end
   
   def assign_role(role_string)
-    unless role_string.blank? || role_string.nil?
-      self.role = role_string.to_sym
-    end
+      self.role = role_string
   end
   
   private
   def set_default_role
-    self.role = :player
+    self.role = player
   end
 end
