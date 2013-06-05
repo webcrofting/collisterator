@@ -7,12 +7,11 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :role_id, :username
- # attr_accessor :shared_items
 
-  validates_inclusion_of :role, :in => %w(admin payer player)
+  before_validation :set_default_role
   has_many :items
   has_many :list_types
-  before_create :set_default_role
+  validates_inclusion_of :role, :in => %w(admin payer player)
   
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     data = access_token.info
@@ -75,6 +74,6 @@ class User < ActiveRecord::Base
   
   private
   def set_default_role
-    self.role = player
+    self.role = "player"
   end
 end

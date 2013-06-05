@@ -35,8 +35,8 @@ gem 'closure_tree'
 # To use haml for the views
 gem 'haml', '3.1.7'
 
-gem "bootstrap-sass", ">= 2.0.4.0"
-gem "bootstrap-x-editable-rails", "~> 1.4.0"
+gem "bootstrap-sass", ">= 2.3.1.3"
+gem "bootstrap-x-editable-rails", "~> 1.4.4"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

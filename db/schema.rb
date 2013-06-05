@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20130525133137) do
     t.integer  "children_list_type_id"
     t.string   "default_data"
     t.boolean  "can_have_children"
+    t.text     "fields"
     t.integer  "user_id"
   end
 

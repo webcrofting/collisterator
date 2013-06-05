@@ -111,9 +111,8 @@ var Collisterator = (function(Collisterator)
 			$(document).on("click", ".add_item", function() 
 			{			
         var $anchor = $(this);
+        var parentId = $anchor.attr('data-parent-id');
         //var parentId = parseInt($anchor.attr('data-parent-id'));
-        var parentId = parseInt($anchor.attr('data-parent-id'));
-		console.log("WTF?? " + $anchor.attr('data-parent-id'));
 				$.post("/items.json", {'item[parent_id]': parentId},
 					function(data) {
 					$('#' + parentId).after(Collisterator.renderNodeContent(data, parentId));
@@ -154,8 +153,7 @@ var Collisterator = (function(Collisterator)
 		Collisterator.createJsonUrl= function(itemId)
 		{
 			var jsonUrl = "/items/" + itemId + ".json";
-			
-			return jsonUrl; // One function exit point is debug friendlier
+			return jsonUrl;
 		};
 		Collisterator.bindDestroyItem = function()
 		{
@@ -215,7 +213,7 @@ var Collisterator = (function(Collisterator)
 			
 		};
 		
-		Collisterator.renderNodeButtons = function(node, $listItem) 
+	Collisterator.renderNodeButtons = function(node, $listItem) 
 		{
 
 			var template = Collisterator.templates[node.list_type_id];

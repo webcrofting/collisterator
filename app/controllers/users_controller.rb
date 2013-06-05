@@ -85,7 +85,7 @@ class UsersController < ApplicationController
   #-----------------------------------------------------------------
   def create
     @user = User.new(params[:user])
- 
+
     if @user.save
       respond_to do |format|
         format.json { render :json => @user.to_json, :status => 200 }
