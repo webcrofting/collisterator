@@ -333,7 +333,24 @@ var Collisterator = (function(Collisterator)
 		    console.log("no valid definition");
 		  }
 		};
-		
+		Collisterator.showFieldsTable= function(fields_text) 
+		{
+		  try
+		  {
+			var fields_array = JSON.parse(fields_text);
+			var $container = $("#fields-table > tbody");
+			for(var index in fields_array) 
+			{
+			  var row = Mustache.render(Collisterator.fields_table_template, fields_array[index]);
+			  $container.append(row);
+			}
+			
+		  }
+		  catch(e)
+		  {
+		    console.log("no valid definition");
+		  }
+		};
 		Collisterator.initListTypeForm= function()
 		{
 		  Collisterator.bindShowExampleListItem();

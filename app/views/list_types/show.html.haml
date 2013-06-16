@@ -1,18 +1,32 @@
 %p#notice 
-	= notice
+  = notice
 
-%p
-	%b Name:
-	= @list_type.name
-  
-%p
-	%b Template:
-	= @list_type.template
-	
-%p
-	%b Default Data:
-	= @list_type.default_data
+%table.table.table-striped
+  %tr
+    %th
+      = @list_type.name
+    %th
+      List Type
 
-	
+- fields = @list_type.fields
+%table.table-striped#fields-table
+  %tr
+    %th
+      Fields
+  %tr
+    %td #{fields}
+
+
+%table.table.table-striped
+  %tr
+    %th Example
+  %tr
+    %td list-type-example-header
+  %tr
+    %td list-type-example-row
+
 = link_to 'Edit', edit_list_type_path(@list_type) 
 = link_to 'Back', list_types_path
+
+:javascript
+  Collisterator.initListTypeForm()

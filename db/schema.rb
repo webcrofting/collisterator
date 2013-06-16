@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130525133137) do
+ActiveRecord::Schema.define(:version => 20130615203519) do
 
   create_table "item_hierarchies", :id => false, :force => true do |t|
     t.integer "ancestor_id",   :null => false
@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(:version => 20130525133137) do
     t.integer  "parent_id"
     t.integer  "list_type_id"
     t.string   "token"
-    t.string   "username"
     t.integer  "user_id"
   end
 
@@ -76,6 +75,5 @@ ActiveRecord::Schema.define(:version => 20130525133137) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
 end
