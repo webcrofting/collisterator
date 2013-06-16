@@ -8,14 +8,17 @@
     %th
       List Type
 
-- fields = @list_type.fields
-%table.table-striped#fields-table
+%table.table.table-striped#fields-table
   %tr
     %th
       Fields
   %tr
-    %td #{fields}
-
+    %td
+      Display name
+    %td
+      Type
+    %td
+      Default data
 
 %table.table.table-striped
   %tr
@@ -29,4 +32,6 @@
 = link_to 'Back', list_types_path
 
 :javascript
-  Collisterator.initListTypeForm()
+  $(document).ready(function() {
+     Collisterator.showFieldsTable('#{@list_type.fields}');
+  });

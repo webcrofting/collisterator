@@ -338,11 +338,11 @@ var Collisterator = (function(Collisterator)
 		  try
 		  {
 			var fields_array = JSON.parse(fields_text);
-			var $container = $("#fields-table > tbody");
+			var template = "<tr><td>{{name}}</td><td>{{type}}</td><td>{{default}}</td></tr>";
 			for(var index in fields_array) 
 			{
-			  var row = Mustache.render(Collisterator.fields_table_template, fields_array[index]);
-			  $container.append(row);
+			  var row = Mustache.render(template, fields_array[index]);
+			  $('#fields-table').append(row);
 			}
 			
 		  }
