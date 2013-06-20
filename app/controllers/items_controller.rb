@@ -28,7 +28,7 @@ class ItemsController < ApplicationController
   # GET /items/new.json
   def new
     @item = Item.new
-
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @item }
@@ -44,11 +44,12 @@ class ItemsController < ApplicationController
   # POST /items.json
   def create
     parent_token = params[:item][:parent_id]
+
     if parent_token
       @parent = Item.find_by_token(parent_token)
       @item = Item.new
       @item.parent_id = @parent.id
-      logger.debug "Something is happening; #{@parent.id}"
+      #logger.debug "Something is happening; #{@parent.id}"
     else
       @item = Item.new
     end
@@ -76,7 +77,9 @@ class ItemsController < ApplicationController
 	
 	  #logger.debug "list_types data is #{@list_type.default_data}"
 	
-	
+	  if current_user
+      current_user.items << @item
+    end
 	
     respond_to do |format|
       if @item.save
