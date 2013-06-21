@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130615203519) do
+ActiveRecord::Schema.define(:version => 20130621153049) do
 
   create_table "item_hierarchies", :id => false, :force => true do |t|
     t.integer "ancestor_id",   :null => false
@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(:version => 20130615203519) do
     t.text     "fields"
     t.integer  "user_id"
   end
+
+  add_index "list_types", ["children_list_type_id"], :name => "index_list_types_on_children_list_type_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
