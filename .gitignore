@@ -13,6 +13,7 @@ todo.txt
 
 # Ignore vim backup files
 *.*~
+*.swp
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
