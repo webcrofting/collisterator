@@ -124,36 +124,45 @@ var Collisterator = (function(Collisterator)
 													
 				
 		};
-		Collisterator.buildTree = function(id)
+		Collisterator.buildListTree = function(id) 
+		{
+			var json_url = "/items/" + id + ".json";
+			Collisterator.buildTree(json_url, id, true);
+		};
+		Collisterator.buildSampleTree = function(id)
+		{
+			var list_type_url = "/list_types/" + id + ".json";
+			Collisterator.buildTree(list_type_url, id, false);
+		};
+		Collisterator.buildTree = function(json_url, id, is_list)
 		{
 			Collisterator.templates = new Array();
-			$.getJSON(Collisterator.createJsonUrl(id), function(data)
+  		var $parent = $("#collisterator_tree");
+	  	$parent.append('<table id="tree" class="table table-hover"><tbody>');
+			$.getJSON(json_url, function(data)
 				{
-					var nodes;
-					if(!$.isArray(data))
-					{
-						nodes = [data];
-					}
-					else
-					{
-						nodes = data;
-					}
-                    
-					$parent = $("#collisterator_tree");
-					$parent.append('<table id="tree" class="table table-hover"><tbody>');
-					Collisterator.renderTree(nodes, id);
-					$parent.append('</tbody></table>');
-					Collisterator.bindNewItem();
-					Collisterator.bindDestroyItem();
+          if (is_list) {
+  					var nodes;
+	  				if(!$.isArray(data))
+		  			{
+			  			nodes = [data];
+				  	}
+					  else
+					  {
+						  nodes = data;
+					  }
+ 
+            Collisterator.renderTree(nodes, id);
+            Collisterator.bindNewItem();
+            Collisterator.bindDestroyItem();
+          } else {
+            Collisterator.renderSample(data);
+          }
 
+          $parent.append('</tbody></table>');
 				}			
-			);
+			); // end JSON
 
-		};
-		Collisterator.createJsonUrl= function(itemId)
-		{
-			var jsonUrl = "/items/" + itemId + ".json";
-			return jsonUrl;
 		};
 		Collisterator.bindDestroyItem = function()
 		{
@@ -170,29 +179,6 @@ var Collisterator = (function(Collisterator)
         });
        });
 		};
-		/*bindDefaultValueEditable : function() 
-		{
-		  $(document).on("selectionChange","#new-field-form select.name=['type']", function()
-		  {
-			  var $element = $("#new-field-form-default");
-			  $element.editable({
-			      ajaxOptions: {
-              type: 'put',
-              dataType: 'json'
-            },
-			      url: urlForJeditable,
-			      send: "always",
-			      params: function(params) {
-              
-              newParams = {};
-              newParams["item[data][" + $element.attr("data-name") + "]"] = params.value; 
-              return newParams;
-            } 
-			  });
-			});
-			
-		},*/
-
 		Collisterator.loadEditable = function($element, node_id) 
 		{
 			var urlForJeditable = '/items/' + node_id;
@@ -212,7 +198,21 @@ var Collisterator = (function(Collisterator)
 			});
 			
 		};
-		
+  Collisterator.renderSample = function(nodes) 
+  {
+    var sample_array = nodes.sample_array;
+    for (var i=0; i<sample_array.length; i++) {
+      var $sample = $('<tr id="' + sample_array[i].list_type + '"/>');
+      $sample.append(Mustache.render(sample_array[i].template, sample_array[i]));
+      $('#tree > tbody').append($sample);
+      $sample.editable({
+        ajaxOptions: {
+          dataType: 'json'
+        }
+      });
+    }
+
+  };  
 	Collisterator.renderNodeButtons = function(node, $listItem) 
 		{
 
@@ -296,7 +296,6 @@ var Collisterator = (function(Collisterator)
 		        {
 		            var node = nodes[i];
 					
-               
                 var $listItem = Collisterator.renderNodeContent(node, parent_id);
 		            
                 $('#tree > tbody').append($listItem);
@@ -304,11 +303,7 @@ var Collisterator = (function(Collisterator)
                 Collisterator.renderTree(node.children, node.token);
             }
 		        
-		    } //else {
-         /* var dummy ='<tr data-parent-id="' + parent_id + ' class="child-of-node-"' + parent_id + ' ><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
-            $('#tree > tbody').append(dummy); 
-            // this creates a million links! why???
-        } */
+		    }
 
 		};
 		

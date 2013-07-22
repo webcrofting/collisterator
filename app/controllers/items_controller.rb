@@ -16,7 +16,7 @@ class ItemsController < ApplicationController
   # GET /items/1.json
   def show
     @item = find_item_by_id_or_token(params[:id])
-    logger.debug "item's id is #{@item.id}"
+    #logger.debug "item's id is #{@item.id}"
     
     respond_to do |format|
       format.html # show.html.erb

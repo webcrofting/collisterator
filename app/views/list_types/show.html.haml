@@ -5,8 +5,6 @@
   %tr
     %th
       = @list_type.name
-    %th
-      List Type
 
 %table.table.table-striped#fields-table
   %tr
@@ -20,18 +18,12 @@
     %td
       Default data
 
-%table.table.table-striped
-  %tr
-    %th Example
-  %tr
-    %td list-type-example-header
-  %tr
-    %td list-type-example-row
+#collisterator_tree
+
 
 = link_to 'Edit', edit_list_type_path(@list_type) 
 = link_to 'Back', list_types_path
 
 :javascript
-  $(document).ready(function() {
-     Collisterator.showFieldsTable('#{@list_type.fields}');
-  });
+  Collisterator.buildSampleTree('#{@list_type.id}');
+  Collisterator.showFieldsTable('#{@list_type.fields}');
