@@ -13,5 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
-//= require bootstrap-editable-inline
+//= require bootstrap-editable
 //= require_tree .
