@@ -168,12 +168,13 @@ var Collisterator = (function(Collisterator)
       console.log(JSON.stringify(data));
     
       $parent.append('<table id="tree" class="table table-hover"><tbody></tbody></table>');
-      Collisterator.renderTree([data], data.token);
+      Collisterator.renderTree([data], null);
       if(!readonly)
       {
         Collisterator.bindNewItem();
         Collisterator.bindDestroyItem();
       }
+      $("#tree").treeTable({initialState: "expanded", expandable: true});
     };
     Collisterator.bindDestroyItem = function()
     {
