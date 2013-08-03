@@ -1,3 +1,4 @@
+!!! 5
 %html
   %head
     %meta{:charset => "utf-8"}
@@ -11,13 +12,15 @@
     = csrf_meta_tags
     = yield(:head)
   .container
-    %p#notice
-      = render 'layouts/messages'
     %body
       %header.navbar.navbar-top
         %nav.navbar-inner
           .container
             = render 'layouts/navigation'
       #main{:role => "main"}
-        = yield
+      .row
+        .span12
+          %p#notice
+            = render 'layouts/messages'
+      = yield
       %footer
