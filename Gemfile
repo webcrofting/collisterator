@@ -1,12 +1,15 @@
 source 'https://rubygems.org'
 
 ruby '1.9.3'
-gem 'rails', '3.2.11'
+gem 'rails', '~> 3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'pg'
+group :production do
+	gem 'pg'
+end
+
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -22,6 +25,7 @@ end
 
 group :development do
 	gem "better_errors"
+	gem 'sqlite3'
 end
 
 # To use Jbuilder templates for JSON
@@ -37,6 +41,8 @@ gem 'haml', '3.1.7'
 
 gem "bootstrap-sass", ">= 2.3.1.3"
 gem "bootstrap-x-editable-rails", "~> 1.4.4"
+gem "font-awesome-rails"
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
