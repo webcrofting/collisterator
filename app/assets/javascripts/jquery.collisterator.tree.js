@@ -121,20 +121,27 @@ var Collisterator = (function(Collisterator)
     {
       $(document).on("click", ".collisterator-expander", function() 
       {
-        var parent_id = $(this).attr("data-tree-id");
-        $("[data-tree-parent-id=" + parent_id + "]").show();
-        $(this).removeClass("collisterator-expander icon-plus-sign");
-        $(this).addClass("collisterator-collapser icon-minus-sign");
+        Collisterator.expand($(this));
       });
       $(document).on("click", ".collisterator-collapser", function() 
       {
-        var parent_id = $(this).attr("data-tree-id");
-        $("[data-tree-parent-id=" + parent_id + "]").hide();
-        $(this).addClass("collisterator-expander icon-plus-sign");
-        $(this).removeClass("collisterator-collapser icon-minus-sign");
+        Collisterator.collapse($(this));
       });
     };
-
+    Collisterator.collapse = function($node)
+    {
+        var parent_id = $node.attr("data-tree-id");
+        $("[data-tree-parent-id=" + parent_id + "]").hide();
+        $node.addClass("collisterator-expander icon-plus-sign");
+        $node.removeClass("collisterator-collapser icon-minus-sign");
+    }
+    Collisterator.expand = function($node)
+    {
+        var parent_id = $node.attr("data-tree-id");
+        $("[data-tree-parent-id=" + parent_id + "]").show();
+        $node.removeClass("collisterator-expander icon-plus-sign");
+        $node.addClass("collisterator-collapser icon-minus-sign");
+    }
     Collisterator.bindCustomizeButton = function()
     {
                 
@@ -151,11 +158,13 @@ var Collisterator = (function(Collisterator)
       {      
         var $anchor = $(this);
         var parentId = $anchor.attr('data-parent-id');
-        //var parentId = parseInt($anchor.attr('data-parent-id'));
+        var depth = parseInt($anchor.attr('data-depth'));
+        
         $.post("/items.json", {'item[parent_id]': parentId},
           function(data) {
-          $('#' + parentId).after(Collisterator.renderNodeContent(data, parentId));
-  
+          $("#" + parentId).add("[data-tree-parent-id=" + parentId +"]").last().after(Collisterator.renderNodeContent(data, parentId, depth + 1));
+          $("#" + parentId).removeClass("leaf");
+          Collisterator.expand($("#" + parentId + " .tree-control"));
         });
       });
     };
@@ -178,8 +187,6 @@ var Collisterator = (function(Collisterator)
     };
     Collisterator.buildTree = function(data, $parent, readonly)
     {
-      console.log(JSON.stringify(data));
-    
       $parent.append('<table id="tree" class="table table-hover"></table>');
       Collisterator.renderTree([data], null, 0);
       if(!readonly)
@@ -193,10 +200,16 @@ var Collisterator = (function(Collisterator)
     Collisterator.bindDestroyItem = function()
     {
       $(document).on("click", ".remove_item", function() {
-        var itemID = $(this).closest('tr').attr('id');
+        var itemID = $(this).closest('tr').attr('id'); //put id in attributes of link
+        var $item = $('#' + itemID);
+        var parent_id = $item.attr("data-tree-parent-id");
         var itemURL = "/items/" + itemID;
-        $('#' + itemID).remove();
         
+        $item.remove();
+        if($("[data-tree-parent-id=" + parent_id + "]").size() == 0)
+        {
+          $("#" + parent_id).addClass("leaf");
+        }
         $.post(itemURL, {_method: "DELETE"},
           function(data) {
           //NOTE: THIS FUNCTION DOESNT SEEM TO WORK PROPERLY.
@@ -230,12 +243,19 @@ var Collisterator = (function(Collisterator)
     {
 
       var template = Collisterator.list_types[node.list_type_id];
+      var indent_string = '';
+      for(var i = 0; i < depth + 1; i++)
+      {
+        indent_string = indent_string + "<span style='width:2em; display: inline-block'>&nbsp;</span>";
+      }
+
       
+      var add_cell_string = '<td>' + indent_string + '<a href="#" class="add_item" data-parent-id="' + node.token + '" data-depth="' + depth + '"><i class="icon-plus"></i></a></td>';
       if (template && template.can_have_children) {
-        if (!node.children || node.children.length == 0) {
-          $listItem.append('<td><a href="#" class="add_item" data-parent-id="' + node.token + '"><i class="icon-plus"></i></a></td>');
+        if (true /*!node.children || node.children.length == 0*/ /*Set default for now until there is logic that moves plus button after adding fisrst child*/) {
+          $listItem.append(add_cell_string);
         } else {
-          var dummy ='<tr data-parent-id="' + node.token + '"><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
+          var dummy ='<tr>' + add_cell_string + '</tr>';
             $('#tree').append(dummy);
         }
        
@@ -302,15 +322,16 @@ var Collisterator = (function(Collisterator)
     {
       $listItem.append(Mustache.render(template, node));
       var $first_column = $listItem.find("td").first();
-      var leaf_indent = 1;
-      if(node.children && node.children.length > 0)
+      $first_column.prepend("<span class='indent-span'><i data-tree-id=" + node.token + " class='tree-control icon-plus-sign collisterator-expander'/>");
+      
+      if(!(node.children && node.children.length > 0))
       {
-        $first_column.prepend("<span style='width:2em; display: inline-block; text-align: right; padding-right:0.5em'><i data-tree-id=" + node.token + " class='icon-plus-sign collisterator-expander'/>");
-        leaf_indent = 0;
+        $listItem.addClass("leaf");
       }
-      for(var i = 0; i < depth + leaf_indent; i++)
+      
+      for(var i = 0; i < depth; i++)
       {
-        $first_column.prepend("<span style='width:2em; display: inline-block'>&nbsp;</span>");
+        $first_column.prepend("<span class='indent-span'/>");
       }
       $listItem.find(".editable").each(function()
       {
