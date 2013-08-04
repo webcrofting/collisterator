@@ -1,8 +1,10 @@
-%p#notice 
-  = notice
+.row
+  .span12
+    %p#notice 
+      = notice
 
-#collisterator_tree
-  - item_id = @item.token
+    #collisterator_tree
+      - item_id = @item.token
 
 :javascript
   Collisterator.buildListTree('#{item_id}');
