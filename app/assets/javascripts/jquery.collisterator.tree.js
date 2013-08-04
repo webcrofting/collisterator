@@ -117,6 +117,23 @@ var Collisterator = (function(Collisterator)
           }
         });
     };
+    Collisterator.bindExpandCollapse = function()
+    {
+      $(document).on("click", ".collisterator-expander", function() 
+      {
+        var parent_id = $(this).attr("data-tree-id");
+        $("[data-tree-parent-id=" + parent_id + "]").show();
+        $(this).removeClass("collisterator-expander icon-plus");
+        $(this).addClass("collisterator-collapser icon-minus");
+      });
+      $(document).on("click", ".collisterator-collapser", function() 
+      {
+        var parent_id = $(this).attr("data-tree-id");
+        $("[data-tree-parent-id=" + parent_id + "]").hide();
+        $(this).addClass("collisterator-expander icon-plus");
+        $(this).removeClass("collisterator-collapser icon-minus");
+      });
+    };
 
     Collisterator.bindCustomizeButton = function()
     {
@@ -140,11 +157,7 @@ var Collisterator = (function(Collisterator)
           $('#' + parentId).after(Collisterator.renderNodeContent(data, parentId));
   
         });
-        
-        
       });
-                          
-        
     };
     Collisterator.buildListTree = function(id) 
     {
@@ -167,14 +180,15 @@ var Collisterator = (function(Collisterator)
     {
       console.log(JSON.stringify(data));
     
-      $parent.append('<table id="tree" class="table table-hover"><tbody></tbody></table>');
-      Collisterator.renderTree([data], null);
+      $parent.append('<table id="tree" class="table table-hover"></table>');
+      Collisterator.renderTree([data], null, 0);
       if(!readonly)
       {
         Collisterator.bindNewItem();
         Collisterator.bindDestroyItem();
       }
-      $("#tree").treeTable({initialState: "expanded", expandable: true});
+      $("[data-tree-parent-id]").hide(); // hides all but the root node
+      Collisterator.bindExpandCollapse();
     };
     Collisterator.bindDestroyItem = function()
     {
@@ -212,36 +226,37 @@ var Collisterator = (function(Collisterator)
       });
       
     };
-    Collisterator.renderNodeButtons = function(node, $listItem) 
+    Collisterator.renderNodeButtons = function(node, $listItem, depth) 
     {
 
       var template = Collisterator.list_types[node.list_type_id];
       
       if (template && template.can_have_children) {
         if (!node.children || node.children.length == 0) {
-          $listItem.append('<td><a href="#" class="add_item" data-parent-id="' + node.token + '"><i class="icon-plus"></i></a></td>');
+          $listItem.append('<td><a href="#" class="add_item" data-parent-id="' + node.token + '"><i class="icon-plus-sign"></i></a></td>');
         } else {
-          var dummy ='<tr data-parent-id="' + node.token + '><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
-            $('#tree > tbody').append(dummy);
+          var dummy ='<tr data-parent-id="' + node.token + '"><td><a href="#" class="add_item"><i class="icon-plus-sign"></i></a></td></tr>';
+            $('#tree').append(dummy);
         }
        
       } 
       
-      $listItem.append('<td><a href="#" class="remove_item"><i class="icon-remove"></i></a></td>');
-      
-      
+      if(depth)
+      {
+        $listItem.append('<td><a href="#" class="remove_item"><i class="icon-remove-sign"></i></a></td>');
+      }
     };
     
-    Collisterator.renderNodeContent = function(node, parent_id)
+    Collisterator.renderNodeContent = function(node, parent_id, depth)
     {
       var $listItem = $('<tr id="' + node.token + '"/>');
-          
+      
       if (parent_id) {
-        $listItem.addClass('child-of-node-' + parent_id);
+        $listItem.attr('data-tree-parent-id', parent_id);
       }
       Collisterator.getListType(node.list_type_id, function(list_type)
       {
-        Collisterator.renderNodeContentWithTemplate(node, $listItem, list_type.template);
+        Collisterator.renderNodeContentWithTemplate(node, $listItem, list_type.template, depth);
       });
       return $listItem;
     };
@@ -264,9 +279,6 @@ var Collisterator = (function(Collisterator)
       } 
     }
 
-
-
-
     Collisterator.renderHeader = function($header_container)
     {
       try
@@ -286,17 +298,28 @@ var Collisterator = (function(Collisterator)
     };
 
     
-    Collisterator.renderNodeContentWithTemplate = function(node, $listItem, template)
+    Collisterator.renderNodeContentWithTemplate = function(node, $listItem, template, depth)
     {
       $listItem.append(Mustache.render(template, node));
+      var $first_column = $listItem.find("td").first();
+      var leaf_indent = 1;
+      if(node.children && node.children.length > 0)
+      {
+        $first_column.prepend("<span style='width:2em; display: inline-block; text-align: right; padding-right:0.5em'><i data-tree-id=" + node.token + " class='icon-plus collisterator-expander'/>");
+        leaf_indent = 0;
+      }
+      for(var i = 0; i < depth + leaf_indent; i++)
+      {
+        $first_column.prepend("<span style='width:2em; display: inline-block'>&nbsp;</span>");
+      }
       $listItem.find(".editable").each(function()
       {
         Collisterator.loadEditable($(this), node.token);
       });
-      Collisterator.renderNodeButtons(node, $listItem);
+      Collisterator.renderNodeButtons(node, $listItem, depth);
     };
     
-    Collisterator.renderTree = function(nodes, parent_id)
+    Collisterator.renderTree = function(nodes, parent_id, depth)
     {
 
         if(! (typeof nodes == 'undefined'))
@@ -305,11 +328,11 @@ var Collisterator = (function(Collisterator)
             {
                 var node = nodes[i];
           
-                var $listItem = Collisterator.renderNodeContent(node, parent_id);
+                var $listItem = Collisterator.renderNodeContent(node, parent_id, depth);
                 
-                $('#tree > tbody').append($listItem);
+                $('#tree').append($listItem);
                 
-                Collisterator.renderTree(node.children, node.token);
+                Collisterator.renderTree(node.children, node.token, depth + 1);
             }
             
         }
