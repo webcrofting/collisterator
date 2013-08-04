@@ -106,7 +106,7 @@
           %tr.list-type-example-row
 #add-field-button-dialog.modal.hide.fade{:role => "dialog"}
   .modal-header
-    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %button.close{"aria-hidden" => "true", :data => {:dismiss => "modal"}, :type => "button"} ×
     %h3 Create field
   .modal-body
     %form#new-field-form
@@ -127,10 +127,10 @@
           %span.span2
             Default value:
           %span#new-field-form-default
-            ---
+            xxx
   .modal-footer
-    %a.btn{:href => "#", "data-dismiss" => "modal"} Close
-    %a#new-field-form-submit.btn.btn-primary{:href => "#", "data-dismiss" => "modal"} Save changes
+    %a.btn{:href => "#", :data => {:dismiss => "modal"}} Close
+    %a#new-field-form-submit.btn.btn-primary{:href => "#", :data => {:dismiss => "modal"}} Save changes
 :javascript
   Collisterator.initListTypeForm();
 

@@ -123,15 +123,15 @@ var Collisterator = (function(Collisterator)
       {
         var parent_id = $(this).attr("data-tree-id");
         $("[data-tree-parent-id=" + parent_id + "]").show();
-        $(this).removeClass("collisterator-expander icon-plus");
-        $(this).addClass("collisterator-collapser icon-minus");
+        $(this).removeClass("collisterator-expander icon-plus-sign");
+        $(this).addClass("collisterator-collapser icon-minus-sign");
       });
       $(document).on("click", ".collisterator-collapser", function() 
       {
         var parent_id = $(this).attr("data-tree-id");
         $("[data-tree-parent-id=" + parent_id + "]").hide();
-        $(this).addClass("collisterator-expander icon-plus");
-        $(this).removeClass("collisterator-collapser icon-minus");
+        $(this).addClass("collisterator-expander icon-plus-sign");
+        $(this).removeClass("collisterator-collapser icon-minus-sign");
       });
     };
 
@@ -233,9 +233,9 @@ var Collisterator = (function(Collisterator)
       
       if (template && template.can_have_children) {
         if (!node.children || node.children.length == 0) {
-          $listItem.append('<td><a href="#" class="add_item" data-parent-id="' + node.token + '"><i class="icon-plus-sign"></i></a></td>');
+          $listItem.append('<td><a href="#" class="add_item" data-parent-id="' + node.token + '"><i class="icon-plus"></i></a></td>');
         } else {
-          var dummy ='<tr data-parent-id="' + node.token + '"><td><a href="#" class="add_item"><i class="icon-plus-sign"></i></a></td></tr>';
+          var dummy ='<tr data-parent-id="' + node.token + '"><td><a href="#" class="add_item"><i class="icon-plus"></i></a></td></tr>';
             $('#tree').append(dummy);
         }
        
@@ -243,7 +243,7 @@ var Collisterator = (function(Collisterator)
       
       if(depth)
       {
-        $listItem.append('<td><a href="#" class="remove_item"><i class="icon-remove-sign"></i></a></td>');
+        $listItem.append('<td><a href="#" class="remove_item"><i class="icon-remove"></i></a></td>');
       }
     };
     
@@ -305,7 +305,7 @@ var Collisterator = (function(Collisterator)
       var leaf_indent = 1;
       if(node.children && node.children.length > 0)
       {
-        $first_column.prepend("<span style='width:2em; display: inline-block; text-align: right; padding-right:0.5em'><i data-tree-id=" + node.token + " class='icon-plus collisterator-expander'/>");
+        $first_column.prepend("<span style='width:2em; display: inline-block; text-align: right; padding-right:0.5em'><i data-tree-id=" + node.token + " class='icon-plus-sign collisterator-expander'/>");
         leaf_indent = 0;
       }
       for(var i = 0; i < depth + leaf_indent; i++)
