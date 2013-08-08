@@ -18,6 +18,9 @@ todo.txt
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
+# Ignore closure tree locks
+*.lock-closuretree-*
+
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp

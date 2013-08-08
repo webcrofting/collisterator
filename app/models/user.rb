@@ -2,16 +2,19 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
+ 
+  ROLES = %w[admin payer player]
+  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [ :google_oauth2]
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :role_id, :username
 
-  before_validation :set_default_role
+  before_create :set_default_role
   has_many :items
   has_many :list_types
-  validates_inclusion_of :role, :in => %w(admin payer player)
+  validates_inclusion_of :role, :in => ROLES
   
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     data = access_token.info
@@ -69,7 +72,11 @@ class User < ActiveRecord::Base
   end
   
   def assign_role(role_string)
-      self.role = role_string
+      if ROLES.include?(role_string)
+        self.role = role_string
+      else
+        puts "#{role_string} is not a role."
+      end
   end
   
   private

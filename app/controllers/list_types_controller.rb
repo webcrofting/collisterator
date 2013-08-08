@@ -1,6 +1,7 @@
 class ListTypesController < ApplicationController
+  load_and_authorize_resource
   # GET /list_types
-  # GET /list_types.json
+  # GET /list_types.json 
   def index
     @list_types = ListType.find_all_by_can_be_root(true) 
 
@@ -41,7 +42,7 @@ class ListTypesController < ApplicationController
   # POST /list_types.json
   def create
     @list_type = ListType.new(params[:list_type])
-    
+
     list_type_type = params[:list_type_type]
     success = @list_type.save
     case list_type_type 

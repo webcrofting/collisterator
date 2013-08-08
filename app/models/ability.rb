@@ -4,9 +4,9 @@ class Ability
   def initialize(user)
   
     user ||= User.new # guest user (not logged in)
-    if user.role? :admin
+    if user.role?("admin")
       can :manage, :all
-    elsif user.role? :payers
+    elsif user.role?("payers")
       can :manage, Item
       can [:read, :create, :update], ListType
       can :read, User, :id => user.id
@@ -15,7 +15,7 @@ class Ability
       # can [:update, :destroy], List_type do |list_type|
       #   list_type.try(:owner) == user
       # end
-    elsif user.role? :players
+    elsif user.role?("players")
       can :manage, Item
       can :read, ListType
       can :read, User, :id => user.id

@@ -11,7 +11,7 @@
   - @items.each do |item|
     %tr
       %td
-        = link_to "#{item.data}", item_path(item)
+        = link_to "#{item.data['title']}", item_path(item)
 
 %h2 Shared Lists:
 - @shared_items = @user.shared_items
