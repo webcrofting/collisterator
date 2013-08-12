@@ -14,10 +14,11 @@ class User < ActiveRecord::Base
   before_create :set_default_role
   has_many :items
   has_many :list_types
-  validates_inclusion_of :role, :in => ROLES
+  #validates_inclusion_of :role, :in => ROLES
   
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     data = access_token.info
+    
     user = User.where(:provider => access_token.provider, :uid => access_token.uid ).first
     if user
       return user
@@ -26,7 +27,7 @@ class User < ActiveRecord::Base
       if registered_user
         return registered_user
       else
-        user = User.create(username: data["name"],
+        user = User.create!(username: data["name"],
           provider:access_token.provider,
           email: data["email"],
           uid: access_token.uid ,
@@ -81,6 +82,8 @@ class User < ActiveRecord::Base
   
   private
   def set_default_role
-    self.role = "player"
+    unless self.role
+      self.role = "player"
+    end
   end
 end
