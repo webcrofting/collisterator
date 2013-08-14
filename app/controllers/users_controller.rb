@@ -87,7 +87,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
 
     if @user.save
-      UserMailer.welcome_email(@user).deliver
+      UserMailer.test(@user).deliver
       respond_to do |format|
         format.json { render :json => @user.to_json, :status => 200 }
         format.xml  { head :ok }

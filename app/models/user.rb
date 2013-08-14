@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   before_create :set_default_role
   has_many :items
   has_many :list_types
-  validates_inclusion_of :role, :in => ROLES
+  #validates_inclusion_of :role, :in => ROLES
   
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     data = access_token.info

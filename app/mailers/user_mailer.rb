@@ -1,9 +1,10 @@
 class UserMailer < ActionMailer::Base
-  default from: "notifications@collisterator.com" #??
-  
+  #have to set up a notifications@collisterator or the like first
+  #default from: "notifications@collisterator.com" #??
+  default from: "mecharaptors@gmail.com"
+
   def welcome_email(user)
     @user = user
-    @url = https://collisterator.heroku.com
     mail(to: @user.email, subject: 'Welcome to Collisterator!')
   end
 
@@ -18,6 +19,13 @@ class UserMailer < ActionMailer::Base
       mail(to: @email, from: @user.email, subject: 'Check out this list I made!')
     end
 
+  end
+
+  def test(user)
+    logger.debug "No seriously. anything here would be nice."
+    @recipients = "annasazi@gmail.com"
+    @subject = "Hey so some guy named #{user.email} signed up for collisterator"
+    @body = "You should probably go celebrate or something."
   end
 
 
