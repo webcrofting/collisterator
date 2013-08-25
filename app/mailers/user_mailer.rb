@@ -1,31 +1,22 @@
 class UserMailer < ActionMailer::Base
-  #have to set up a notifications@collisterator or the like first
-  #default from: "notifications@collisterator.com" #??
   default from: "mecharaptors@gmail.com"
 
-  def welcome_email(user)
+  def welcome(user)
     @user = user
     mail(to: @user.email, subject: 'Welcome to Collisterator!')
   end
 
-  def share_email(user, email, link)
-    @user = user
-    @email = email
-    @link = link
-
-    if @user.username
-      mail(to: @email, subject: '#{@user.username} has shared a list with you.')
-    else
-      mail(to: @email, from: @user.email, subject: 'Check out this list I made!')
-    end
-
+  def shared_list_notification(user, email, item_token)
+    @item_token
+    mail(to: @email, subject: "#{user.email} has shared a list with you on Collisterator!")
   end
 
   def test(user)
-    logger.debug "No seriously. anything here would be nice."
+    @user = user
+    @
     @recipients = "annasazi@gmail.com"
     @subject = "Hey so some guy named #{user.email} signed up for collisterator"
-    @body = "You should probably go celebrate or something."
+    mail(to: @recipients, subject: @subject)
   end
 
 

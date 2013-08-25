@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :role_id, :username
 
   before_create :set_default_role
+  after_create :send_welcome_email
   has_many :items
   has_many :list_types
   #validates_inclusion_of :role, :in => ROLES
@@ -52,6 +53,12 @@ class User < ActiveRecord::Base
 	return @shared_items
   end
 
+
+  def share_list(list_id, email)
+    ItemShares.new({:owner_id => "#{self.id}", :item_id => "#{list_id}", :shared_user_email => "#{email}"})
+    UserMailer.shared_list_notification().deliver
+  end  
+
   def role?(role_string)
     if self.role==role_string
       return true
@@ -82,5 +89,9 @@ class User < ActiveRecord::Base
   private
   def set_default_role
     self.role = "player"
+  end
+
+  def send_welcome_email
+    UserMailer.test(self).deliver
   end
 end
