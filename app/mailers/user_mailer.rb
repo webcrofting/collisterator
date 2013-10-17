@@ -13,7 +13,6 @@ class UserMailer < ActionMailer::Base
 
   def test(user)
     @user = user
-    @
     @recipients = "annasazi@gmail.com"
     @subject = "Hey so some guy named #{user.email} signed up for collisterator"
     mail(to: @recipients, subject: @subject)

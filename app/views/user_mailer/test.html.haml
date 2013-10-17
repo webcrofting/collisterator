@@ -8,5 +8,6 @@
       %h1 Welcome to collisterator.com! #{@user.email}
       %p 
         = "You have successfully signed up for Collisterator, a collaborative list making service."
-        = "Sign in to look at your profile, create new lists and custom list types at:" %a(href="localhost:3000/#{@user.email}") "Collisterator.com/ #{@user.email}"
+        = "Sign in to look at your profile, create new lists and custom list types at:" 
+        / %a(href="localhost:3000\/#{@user.email}") "Collisterator.com\#{@user.email}"
 

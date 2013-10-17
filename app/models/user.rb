@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   end
   
   def shared_items	
-	@item_shares = ItemShares.find_by_shared_user_email(self.email)
+	@item_shares = ItemShare.find_by_shared_user_email(self.email)
 	@shared_items = []
 	unless @item_shares.blank? 
 	  @item_shares.each do |item_share|
@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
 
 
   def share_list(list_id, email)
-    ItemShares.new({:owner_id => "#{self.id}", :item_id => "#{list_id}", :shared_user_email => "#{email}"})
+    ItemShare.new({:owner_id => "#{self.id}", :item_id => "#{list_id}", :shared_user_email => "#{email}"})
     UserMailer.shared_list_notification().deliver
   end  
 

@@ -1,0 +1,9 @@
+#share-list-button-dialog.modal.hide.fade{:role => "dialog"}
+  .modal-dialog
+    .modal-header
+      %h3 Share list
+    .modal-body
+      =form_for(ItemShare.new) do |f|
+        =f.label :shared_user_email, "Your collaborator's email:"
+        =f.text_field :shared_user_email
+        =f.submit "Submit"	

@@ -22,6 +22,7 @@ class UsersController < ApplicationController
   # GET /users/new.json                                    HTML AND AJAX
   #-------------------------------------------------------------------
   def new
+    @item_share = ItemShare.new
     respond_to do |format|
       format.json { render :json => @user }   
       format.xml  { render :xml => @user }
@@ -46,7 +47,21 @@ class UsersController < ApplicationController
    # respond_to_not_found(:json, :xml, :html)
    
   end
- 
+  
+  # PUT /users/1
+  #--------------------------------------------------------------------
+  def update
+		@user = User.find(current_user.id)
+    console.log "something"
+		if params[:user][:password].blank?
+			console.log "something else"
+		end
+		respond_to do |format|
+			format.html { render 'users/show'}
+			format.json { render :json => @user }
+		end
+  end
+
   # GET /users/1/edit                                                      
   # GET /users/1/edit.xml                                                      
   # GET /users/1/edit.json                                HTML AND AJAX
