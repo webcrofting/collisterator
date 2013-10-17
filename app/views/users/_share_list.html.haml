@@ -4,6 +4,8 @@
       %h3 Share list
     .modal-body
       =form_for(ItemShare.new) do |f|
+        =f.hidden_field :owner_id, :value => user.id
+        =f.hidden_field :item_id, :value => item.token
         =f.label :shared_user_email, "Your collaborator's email:"
         =f.text_field :shared_user_email
         =f.submit "Submit"	

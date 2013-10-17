@@ -1,5 +1,4 @@
 %p#notice
-  = notice
 
 %h1 Welcome #{@user.email}...
 %h2 My Lists:
@@ -11,12 +10,10 @@
   - @items.each do |item|
     %tr
       %td
-        = link_to "#{item.data["name"]}", item_path(item)
+        = link_to "#{item.data["title"]}", item_path(item)
       %td
-        %button{'data-toggle' => 'modal', 'href' => "../item_shares/", 'data-target' => '#share-list-button-dialog'}
-          Share
-          =render :partial => "share_list", locals: {item: item, user: @user}
-        /%a{'data-toggle' => 'modal', 'data-target' => '#share-list', 'href' => '#share-list', 'class' => 'btn btn-primary', 'type' => 'button'}
+        = button_to "Share", item_shares_path, "data-toggle" => "modal", "data-target" => "#share-list-button-dialog"
+      =render :partial => "share_list", locals: {item: item, user: @user}
 
 %h2 Shared Lists:
 - @shared_items = @user.shared_items
