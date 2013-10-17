@@ -10,7 +10,8 @@ Collisterator::Application.routes.draw do
 
   resources :list_types
   resources :items
-	
+	resources :item_shares
+
   get "home/index"
   
   match '/jstree', :to => 'items#jstree', :as => 'jstree'
@@ -19,7 +20,7 @@ Collisterator::Application.routes.draw do
   
   match '/users/:email' => 'users#show', :as => 'profile'
   
-  root :to => "list_types#index" 
+	root :to => "list_types#index" 
 
   
   # The priority is based upon order of creation:
