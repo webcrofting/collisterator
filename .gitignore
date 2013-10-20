@@ -8,14 +8,11 @@
 /.bundle
 
 #Ignore config/email.yml
-config/email.yml
+/config/email.yml
 
 #Ignore console.txt and todo.txt
 console.txt
 todo.txt
-
-#Ignore email.yml that contains my credentials
-/config/email.yml
 
 # Ignore vim backup files
 *.*~
@@ -23,6 +20,12 @@ todo.txt
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
+
+# Ignore devise intializer
+/config/initializers/devise.rb
+
+# Ignore secret_token
+secret_token
 
 # Ignore closure tree locks
 *.lock-closuretree-*
