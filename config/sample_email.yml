@@ -1,0 +1,7 @@
+development:
+  :address: smtp.gmail.com
+  :port: 587
+  :authentication: plain
+  :user_name: "username@gmail.com"
+  :password: "password"
+  :enable_starttls_auto: true

@@ -14,6 +14,9 @@ config/email.yml
 console.txt
 todo.txt
 
+#Ignore email.yml that contains my credentials
+/config/email.yml
+
 # Ignore vim backup files
 *.*~
 *.swp

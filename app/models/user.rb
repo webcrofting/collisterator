@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :role_id, :username
 
   before_create :set_default_role
+  after_create :send_welcome_email
   has_many :items
   has_many :list_types
   #validates_inclusion_of :role, :in => ROLES
@@ -42,7 +43,7 @@ class User < ActiveRecord::Base
   end
   
   def shared_items	
-	@item_shares = ItemShares.find_by_shared_user_email(self.email)
+	@item_shares = ItemShare.find_by_shared_user_email(self.email)
 	@shared_items = []
 	unless @item_shares.blank? 
 	  @item_shares.each do |item_share|
@@ -85,5 +86,9 @@ class User < ActiveRecord::Base
     unless self.role
       self.role = "player"
     end
+  end
+
+  def send_welcome_email
+    UserMailer.test(self).deliver
   end
 end
