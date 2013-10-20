@@ -1,0 +1,19 @@
+Sun, 20 Oct 2013 16:15:30 -0400
+doc/README_FOR_APP	Sun, 15 Sep 2013 17:48:52 -0400
+app/controllers/application_controller.rb	Sun, 15 Sep 2013 17:48:52 -0400
+app/controllers/item_shares_controller.rb	Sat, 19 Oct 2013 21:44:29 -0400
+app/controllers/items_controller.rb	Sun, 15 Sep 2013 17:48:52 -0400
+app/controllers/list_types_controller.rb	Sun, 15 Sep 2013 17:48:52 -0400
+app/controllers/users/omniauth_callbacks_controller.rb	Sun, 15 Sep 2013 17:48:52 -0400
+app/controllers/users_controller.rb	Sat, 19 Oct 2013 21:44:29 -0400
+app/helpers/application_helper.rb	Sun, 15 Sep 2013 17:48:52 -0400
+app/helpers/home_helper.rb	Sun, 15 Sep 2013 17:48:52 -0400
+app/helpers/items_helper.rb	Sun, 15 Sep 2013 17:48:52 -0400
+app/helpers/list_types_helper.rb	Sun, 15 Sep 2013 17:48:52 -0400
+app/helpers/users_helper.rb	Sun, 15 Sep 2013 17:48:52 -0400
+app/mailers/user_mailer.rb	Sat, 19 Oct 2013 21:44:29 -0400
+app/models/ability.rb	Sun, 15 Sep 2013 17:48:52 -0400
+app/models/item.rb	Sun, 15 Sep 2013 17:48:52 -0400
+app/models/item_share.rb	Sat, 19 Oct 2013 21:44:29 -0400
+app/models/list_type.rb	Sun, 15 Sep 2013 17:48:52 -0400
+app/models/user.rb	Sat, 19 Oct 2013 21:44:29 -0400
