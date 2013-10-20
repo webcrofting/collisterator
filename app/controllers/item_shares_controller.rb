@@ -7,6 +7,7 @@ class ItemSharesController < ApplicationController
 	def create
     @item_share = ItemShare.new params[:item_share]
     if @item_share.save
+      UserMailer.shared_list_notification(@item_share).deliver
       flash[:notice] = "Item successfully shared."
       redirect_to current_user
     else

@@ -1,8 +1,10 @@
+
 %h2 Hello!
 
-%p Someone has shared a list with you on Collisterator. Go to:
-- link_to "Your shared list", item_path, :id => @item_token
-to see your list now. 
+%p 
+  Someone has shared a list with you on Collisterator. Go to:
+  = link_to "your shared list", item_url(@item)
+  to see your list now. 
 
 %p 
   Cheers! 

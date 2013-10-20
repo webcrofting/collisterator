@@ -53,12 +53,6 @@ class User < ActiveRecord::Base
 	return @shared_items
   end
 
-
-  def share_list(list_id, email)
-    ItemShare.new({:owner_id => "#{self.id}", :item_id => "#{list_id}", :shared_user_email => "#{email}"})
-    UserMailer.shared_list_notification().deliver
-  end  
-
   def role?(role_string)
     if self.role==role_string
       return true
