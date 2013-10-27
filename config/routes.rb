@@ -12,8 +12,6 @@ Collisterator::Application.routes.draw do
   resources :items
 	resources :item_shares
 
-  get "home/index"
-  
   match '/jstree', :to => 'items#jstree', :as => 'jstree'
 
   match '/items/:token' => 'items#show', :as => 'token'
