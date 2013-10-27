@@ -31,7 +31,11 @@ Collisterator::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-  
+ 
+  # Turn off mailer for development mode
+  config.action_mailer.perform_deliveries = false
+  config.action_mailer.raise_delivery_errors = false 
+ 
   # Enable the asset pipeline
   #  config.assets.enabled = false
 end
