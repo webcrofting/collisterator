@@ -1,4 +1,5 @@
 = form_for @list_type do |f|
+  = f.hidden_field :user_id, :value => current_user.id
   .row
     - if (@list_type.errors.any?)
       .error_explanation

@@ -36,7 +36,8 @@ class UsersController < ApplicationController
   #-------------------------------------------------------------------
   def show
     @user = User.find(current_user.id)
-    
+    @list_types = ListType.where("user_id" => @user.id)
+       
     render 'users/show'
      # respond_to do |format|
        # format.html { render 'users/show' }     

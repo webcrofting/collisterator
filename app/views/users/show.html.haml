@@ -2,23 +2,23 @@
 
 %div
   %h3 Welcome, #{@user.email}
-  %h4 My Lists:
+  %h4 Your Lists:
   - @items = @user.root_items
-  %table.table
-    %tr
-      %th
-        List name
-    - @items.each do |item|
-      %tr
-        %td
-          - item_data_keys = item.data.keys
-          = link_to "#{item.data[item_data_keys[0]]}", item_path(item)
-        %td
-          = button_to "Share", item_shares_path, "data-toggle" => "modal", "data-target" => "#share-list-button-dialog"
-          =render :partial => "share_list", locals: {item: item, user: @user}
+  - if @items.empty?
+    %p You don't have any lists! 
+  - else
+    %table.table
+      - @items.each do |item|
+        %tr
+          %td
+            - item_data_keys = item.data.keys
+            = link_to "#{item.data[item_data_keys[0]]}", item_path(item)
+          %td
+            = button_to "Share", item_shares_path, "data-toggle" => "modal", "data-target" => "#share-list-button-dialog"
+            =render :partial => "share_list", locals: {item: item, user: @user}
 
 - @shared_items = @user.shared_items
-- unless @shared_items
+- unless @shared_items.empty?
   %h4 Shared Lists:
   %table.table
     %tr
@@ -28,3 +28,18 @@
       %tr
         %td
           = link_to "#{shared_item.data}", item_path(shared_item)
+
+- unless @list_types.empty?
+  %h4 Templates: 
+  %table.table
+    - @list_types.each do |list_type|
+      %tr
+        %td
+          = link_to "#{list_type.name}", list_type_path(list_type)
+        %td
+          = link_to edit_list_type_path(list_type) do
+            %i.icon-edit
+        %td
+          %a{new_list_html_attrs(list_type.id)}
+            %i.icon-list
+      
