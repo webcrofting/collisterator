@@ -2,13 +2,6 @@
   .span12
     %table.table.table-striped
       %tr	
-        %th
-          Name
-        %th
-          Edit
-        %th
-          Create List
-
       - @list_types.each do |list_type|
         %tr	
           %td
@@ -22,7 +15,11 @@
           %td
             %a{new_list_html_attrs(list_type.id)} 
               %i.icon-list
-
+          -if current_user && current_user.role?("admin")
+            %td
+              =form_for list_type do |f|
+                = f.hidden_field :featured, :value => true   
+                = f.submit "Feature List"
     :javascript
       Collisterator.bindCreateNewList();
 
