@@ -11,7 +11,8 @@
     - @items.each do |item|
       %tr
         %td
-          = link_to "#{item.data["title"]}", item_path(item)
+          - item_data_keys = item.data.keys
+          = link_to "#{item.data[item_data_keys[0]]}", item_path(item)
         %td
           = button_to "Share", item_shares_path, "data-toggle" => "modal", "data-target" => "#share-list-button-dialog"
           =render :partial => "share_list", locals: {item: item, user: @user}
