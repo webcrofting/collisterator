@@ -14,7 +14,7 @@ Collisterator::Application.routes.draw do
 
   match '/jstree', :to => 'items#jstree', :as => 'jstree'
 
-  match '/items/:token' => 'items#show', :as => 'token'
+  match '/items/:token' => 'items#show', :as => 'token', :via => [:options]
   
   match '/users/:email' => 'users#show', :as => 'profile'
   
