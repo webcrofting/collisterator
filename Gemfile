@@ -5,6 +5,8 @@ gem 'rails', '~> 3.2.11'
 
 gem 'therubyracer'
 
+gem 'rack-cors', :require => 'rack/cors'
+
 group :production do
 	gem 'pg'
 end

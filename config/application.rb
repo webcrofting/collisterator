@@ -51,9 +51,12 @@ module Collisterator
     # config.active_record.whitelist_attributes = true
  
     # Enable CORS
-    config.middleware.use "Cors"
-    config.middleware.insert_before Warden::Manager, "Cors"
-   
+    config.middleware.insert_before ActionDispatch::Static, Rack::Cors do
+      allow do
+        origins '*'
+        resource '/items*', :headers => :any, :methods => [:get, :post, :put, :delete, :options]
+      end
+    end
     # Enable the asset pipeline
     config.assets.enabled = true
     config.assets.initialize_on_precompile = false # for heroku
