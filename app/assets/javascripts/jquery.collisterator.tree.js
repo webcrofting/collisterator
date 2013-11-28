@@ -61,8 +61,9 @@ var Collisterator = (function(Collisterator)
             data[field.name] = field.value;
           }
           data["name"] = data["display_name"].replace(/\W/g, '');
-          data["default"] = $("#new-field-form-default").text().trim();
-          
+          //data["default"] = $("#new-field-form-default").text().trim();
+          data["default"] = data["default_data"];
+          //console.log(data["default"]);
           var fields_array = [];
           try
           {

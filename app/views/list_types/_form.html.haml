@@ -127,8 +127,8 @@
         %label
           %span.span2
             Default value:
-          %span#new-field-form-default
-            xxx
+          %input#new-field-form-default{:type=>"text", :name => "default_data"}
+  
   .modal-footer
     %a.btn{:href => "#", :data => {:dismiss => "modal"}} Close
     %a#new-field-form-submit.btn.btn-primary{:href => "#", :data => {:dismiss => "modal"}} Save changes
