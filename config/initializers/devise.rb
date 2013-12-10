@@ -1,4 +1,3 @@
-#Copy file & rename to 'devise.rb' in your working directory. Enter app_id/app_secret (on line 10) or call to environment variables.
 Devise.setup do |config|
 
   # ==> ORM configuration
@@ -7,7 +6,7 @@ Devise.setup do |config|
   # available as additional gems.
   require 'devise/orm/active_record'
   require 'omniauth-google-oauth2'
-  config.omniauth :google_oauth2, "APP_ID", "APP_SECRET", 
+  config.omniauth :google_oauth2, ENV["APP_ID"], ENV["APP_SECRET"], 
     { access_type: 'offline', approval_prompt: ""}
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is

@@ -34,4 +34,5 @@ table#tree th, table#tree td
 {
   display: none;
 }
-@import "bootstrap-responsive"
+//line causing error in Heroku:
+//@import "bootstrap-responsive"

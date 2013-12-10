@@ -7,6 +7,8 @@ gem 'therubyracer'
 
 gem 'rack-cors', :require => 'rack/cors'
 
+gem'figaro'
+
 group :production do
 	gem 'pg'
 end

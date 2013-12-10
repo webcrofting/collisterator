@@ -7,9 +7,6 @@
 # Ignore bundler config
 /.bundle
 
-#Ignore config/email.yml
-/config/email.yml
-
 #Ignore console.txt and todo.txt
 console.txt
 todo.txt
@@ -21,9 +18,6 @@ todo.txt
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
-# Ignore devise intializer
-/config/initializers/devise.rb
-
 # Ignore secret_token
 secret_token
 
@@ -33,3 +27,6 @@ secret_token
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignore application configuration
+/config/application.yml
