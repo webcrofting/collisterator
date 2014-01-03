@@ -13,10 +13,12 @@
     = yield(:head)
   .container
     %body
-      %header.navbar.navbar-top
-        %nav.navbar-inner
-          .container
-            = render 'layouts/navigation'
+      %nav.navbar.navbar-default
+        %div.navbar-header
+          %button.navbar-toggle{"data-toggle" => "collapse", "data-target" => "#app-navbar"}
+            %span.sr-only
+              Toggle Navigation
+        = render 'layouts/navigation'
       #main{:role => "main"}
       .row
         .span12

@@ -1,20 +1,22 @@
-= link_to "Collisterator", root_path, :class => 'brand'
-%ul.nav
-  %li
-    = link_to 'New Listtype', new_list_type_path
-  %li
-    = link_to 'New List', list_types_path
-%ul.nav.pull-right
-  - if user_signed_in?
+%div.collapse.navbar-collapse#app-navbar
+  %ul.nav.navbar-nav
     %li
-      - email = current_user.email
-      = link_to(email, profile_path(email))
+      = link_to "Collisterator", root_path, :class => 'brand'
     %li
-      = link_to('Logout', destroy_user_session_path, :method => :delete)
-  - else
-    %li.dropdown
-      %a(class="dropdown-toggle" href="#" data-toggle="dropdown")
-        %i.icon-user
-        Login or Register
-      %div(class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="padding: 15px; padding-bottom: 0px;")
-        = render 'devise/sessions/form'
+      = link_to 'New Listtype', new_list_type_path
+    %li
+      = link_to 'New List', list_types_path
+ 
+  %ul.nav.navbar-nav.navbar-right
+    -if user_signed_in?
+      %li
+        - email = current_user.email
+        = link_to(email, profile_path(email))
+    -else
+      %li.dropdown
+        %a(href="#" class="dropdown-toggle" data-toggle="dropdown")
+          %i.icon-user 
+          Login or Register
+        %ul.dropdown-menu
+          %li
+            = render 'devise/sessions/form'
