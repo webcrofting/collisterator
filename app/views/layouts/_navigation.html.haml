@@ -12,6 +12,8 @@
       %li
         - email = current_user.email
         = link_to(email, profile_path(email))
+      %li
+        = link_to "Sign Out", destroy_user_session_path, method: :delete
     -else
       %li.dropdown
         %a(href="#" class="dropdown-toggle" data-toggle="dropdown")
