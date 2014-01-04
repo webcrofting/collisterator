@@ -3,12 +3,7 @@ class ListTypesController < ApplicationController
   # GET /list_types
   # GET /list_types.json 
   def index
-    @all_list_types = ListType.find_all_by_can_be_root(true) 
-    @list_types = @all_list_types.select { |list_type| list_type.featured == true }
-
-    if current_user && current_user.role?("admin")
-      @list_types = @all_list_types.select { |list_type| list_type.featured == false }
-    end
+    @list_types = ListType.find_all_by_can_be_root(true) 
 
     respond_to do |format|
       format.html # index.html.erb

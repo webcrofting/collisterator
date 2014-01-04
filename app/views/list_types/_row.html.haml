@@ -1,0 +1,21 @@
+%tr
+  %td
+    = list_type.name
+    = link_to list_type_path(list_type) do
+      %i.icon-search
+  %td
+    = link_to edit_list_type_path(list_type) do
+      %i.icon-edit
+  %td
+    %a{new_list_html_attrs(list_type.id)} 
+      %i.icon-list
+  - if admin
+    %td
+      - if list_type.featured?   
+        = form_for list_type do |f|
+          = f.hidden_field :featured, :value => false
+          = f.submit "Unfeature", :class => "btn btn-primary"
+      - else
+        = form_for list_type do |f|
+          = f.hidden_field :featured, :value => true
+          = f.submit "Feature", :class => "btn btn-primary"
