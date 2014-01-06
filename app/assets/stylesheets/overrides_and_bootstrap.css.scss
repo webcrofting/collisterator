@@ -17,7 +17,10 @@
 {
   display: inline;
 }
-
+.form-inline .form-group input 
+{
+  width: 200px;
+}
 .welcome-header-box
 {
   text-align: center;
@@ -34,6 +37,10 @@
 .panel-heading h2 
 {
   text-align: center;
+}
+.panel-footer .actions
+{
+  text-align: right;
 }
 table#tree th, table#tree td
 {

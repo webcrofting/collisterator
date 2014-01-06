@@ -1,4 +1,4 @@
-= form_for @list_type do |f|
+= form_for @list_type, :html => {:class => "form-inline"} do |f|
   = f.hidden_field :user_id, :value => current_user.id
   .row
     - if (@list_type.errors.any?)
@@ -10,128 +10,32 @@
         %ul
           - @list_type.errors.full_messages.each do |msg|
             %li= msg
+  %div.panel.panel-default
+    %div.panel-heading
+      %div.form-group
+        = f.label :name, :class => "sr-only"
+        = f.text_field :name, :class => "form-control", :placeholder => "List Type Name"
+      %div.form-group
+        %label.sr-only
+          List Type
+        %select.form-control{:name => "List Type"}
+          %option
+            plain list
+          %option
+            tree
+          %option
+            custom
+      %div.form-group.pull-right 
+        %button.btn.btn-primary.add-field
+          %i.icon-plus.icon-white
+          Add Field For List
+    .panel-body
+      #fields
+        =f.hidden_field :fields, :value => @list_type.fields
 
-    .span6          
-      %fieldset
-        %legend
-          Basic Options
-        .field
-          = f.label :name 
-          = f.text_field :name, :class => "span3"
-        .field
-          %label 
-            List Type
-          %select.span3.list-type-type-selector{:name => "list_type_type"}
-            %option
-              plain list
-            %option
-              tree
-            %option
-              custom
-    .span6          
-      %fieldset.customization-options{:style => "display:none"}
-        %legend
-          Customization options
-        .field
-          = f.label :can_have_children
-          %label.radio
-            Yes
-            = f.radio_button :can_have_children, true		
-          %label.radio
-            No
-            = f.radio_button :can_have_children, false
-        .field
-          = f.label :can_be_root
-          %label.radio
-            Yes
-            = f.radio_button :can_be_root, true
-          %label.radio
-            No
-            = f.radio_button :can_be_root, false
-        .field
-          = f.label :children_list_type_id
-          = collection_select(:list_type, :children_list_type_id, ListType.all, :id, :name, {:prompt => true})
-  .row
-    .span6
-      %fieldset
-        %legend
-          Fields
-        .row
-          .span6
-            %table#fields-table.span3.table-striped
-              %thead
-                %tr
-                  %th
-                    Name
-                  %th
-                    Type
-                  %th
-                    Default
-              %tbody
-        .row
-          .span6
-            %button.btn.btn-primary{:data => {:target => "#add-field-button-dialog", :toggle => "modal"}}
-              %i.icon-plus.icon-white
-              Add Field For List
-            %button#toggle-list-type-customization.btn.btn-danger{:type => "button"}
-              %i.icon-edit.icon-white
-              Customize
-    .span6#list-type-customizations{:style => "display:none"}
-      %fieldset
-        %legend
-          Customizations
-        .field
-          = f.label :fields
-          = f.text_area :fields, :rows => 5, :class => "example-trigger", :id => "list-type-fields-text"
-
-        .field
-          = f.label :template 
-          = f.text_area :template, :rows => 5, :class => "example-trigger", :id => "list-type-template-text"
-           
-        .field
-          = f.label :default_data
-          = f.text_area :default_data, :rows => 5, :class => "example-trigger", :id => "list-type-default-data"	
-  .row
-    .span12
-      %hr
+    %div.panel-footer
       .actions
         = f.submit "Save", :class => "btn btn-success"
-  .row
-    .span12
-      %hr
-      %fieldset
-        %legend
-          Example
-        %table.table-striped
-          %tr.list-type-example-header
-          %tr.list-type-example-row
-#add-field-button-dialog.modal.hide.fade{:role => "dialog"}
-  .modal-header
-    %button.close{"aria-hidden" => "true", :data => {:dismiss => "modal"}, :type => "button"} ×
-    %h3 Create field
-  .modal-body
-    %form#new-field-form
-      %fieldset
-        %label
-          %span.span2
-            Name:
-          %input{:type=>"text", :name=>"display_name"}
-        %label
-          %span.span2
-            Type:
-          %select#new-field-type-selector{:name=>"type"}
-            %option text
-            %option date
-            %option number
-            %option select
-        %label
-          %span.span2
-            Default value:
-          %input#new-field-form-default{:type=>"text", :name => "default_data"}
-  
-  .modal-footer
-    %a.btn{:href => "#", :data => {:dismiss => "modal"}} Close
-    %a#new-field-form-submit.btn.btn-primary{:href => "#", :data => {:dismiss => "modal"}} Save changes
+      
 :javascript
   Collisterator.initListTypeForm();
-
