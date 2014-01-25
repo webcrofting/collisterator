@@ -1,97 +1,103 @@
-
 var Collisterator = (function(Collisterator) 
   {
-    Collisterator.list_types = new Array();
+    Collisterator.list_types = [];
     
     Collisterator.statusOptions = "[{value: 0, text: '❓'}, {value: 1, text: '✔'}, {value: 1, text: '✘'}]";
-    
-    Collisterator.bindShowExampleListItem = function()
+    Collisterator.list_type_fields = function() 
     {
-      
-      $(document).on("blur", ".example-trigger", function() 
-        {      
-          var $header_container = $(".list-type-example-header");
-          var $row_container = $(".list-type-example-row");
-          var node = {};
-          var default_data_string = $("#list-type-default-data").val();
-          if(default_data_string)
-          {
-            node.data = JSON.parse(default_data_string);
-            var template = $("#list-type-template-text").val();
-            $header_container.empty();
-            Collisterator.renderHeader($header_container, template);
-            $row_container.empty();
-            Collisterator.renderNodeContentWithTemplate(node, $row_container, template);
-          }
-        });
-    };
-    Collisterator.bindFieldTypeSelector = function()
-    {
-      $(document).on("change", "#new-field-type-selector", function()
+      var fields_text = $('#list_type_fields').attr('value');
+      if (fields_text) 
       {
-        var type = $("#new-field-type-selector").val();
-        var $new_field_form_default = $("#new-field-form-default");
-        console.log(type);
-        $new_field_form_default.editable('destroy');
-        $new_field_form_default.editable({
-          type: type,
-          source: Collisterator.statusOptions,
-          autotext: "always",
-          mode: "inline"
-          });
+        console.log("List Type Fields found. " + fields_text);
+        return JSON.parse(fields_text);
+      }
+      return [];
+    };
+    Collisterator.renderField = function (field, id) 
+    {
+      var fieldFormTemplate = 
+        '<div class="form-group"><div id="group{{field_id}}">' +
+        '<label class= "sr-only" for=field-name{{field_id}}">Field Name: </label>' +
+        '<input class="form-control" id="field-name{{field_id}}" type="text"' +
+        ' value="{{display_name}}" />' +
+        '<label class="sr-only" for="field-data{{field_id}}">Default Data: </label>' +
+        '<input class="form-control" value="{{default}}" id="field-data{{field_id}}"' +
+        ' type="{{field_type}}" />' +
+        '<select onChange="selectChange()" class="field-type form-control"' +
+        'id="field-type{{field_id}}">' +
+        '<option>text</option><option>number</option><option>date</option>' +
+        '</div></div>';
+
+
+      var data = field;
+      data["field_id"] = id;
+      var html = Mustache.render(fieldFormTemplate, data);
+      $("#fields").append(html);
+
+      Collisterator.updateFieldType(id, data["type"]);
+    };
+    Collisterator.renderFieldsForListType = function() 
+    {
+      var fields = Collisterator.list_type_fields();
+      $.each(fields, function(i) {
+        Collisterator.renderField(fields[i], i);
       });
     };
     Collisterator.bindAddField = function()
     {
-      var fieldTemplate = 
-        "{{=[[ ]]=}}\n" +
-        "<td>\n" + 
-        "  <span data-name='[[name]]' data-type='[[type]]' class='editable'>\n" +
-        "    {{data.[[name]]}}\n" +
-        "  </span>\n" +
-        "</td>\n";
+      $(".add-field").click(function() {
+        var fields = Collisterator.list_type_fields();
+        var default_data = {"display_name": "Field Name", "type": "text", "default": "Default Data"};
+        fields.push(default_data);
+      
+        //update hidden field 
+        $("#list_type_fields").val(JSON.stringify(fields));
         
-      $(document).on("click", "#new-field-form-submit", function()
-        {
-          var fieldArray = $("#new-field-form").serializeArray();
-          var data = {};
-          for(var i = 0; i < fieldArray.length; i++)
-          {
-            var field = fieldArray[i];
-            data[field.name] = field.value;
-          }
-          data["name"] = data["display_name"].replace(/\W/g, '');
-          //data["default"] = $("#new-field-form-default").text().trim();
-          data["default"] = data["default_data"];
-          //console.log(data["default"]);
-          var fields_array = [];
-          try
-          {
-            var fields_definition_string = $("#list-type-fields-text").val();
-            fields_array = JSON.parse(fields_definition_string);
-          }
-          catch(e)
-          {        
-            console.log("no data yet");
-          }
-          fields_array.push(data);
-          $("#list-type-fields-text").val(JSON.stringify(fields_array));
-          
-          Collisterator.updateFieldsTable()
-          
-          var defaultTextArea = $("#list-type-default-data");
-          var defaultString = defaultTextArea.val();
-          var defaultData = defaultString ? JSON.parse(defaultString) : {};
-          defaultData[data['name']] = data['default'];
-          defaultTextArea.val(JSON.stringify(defaultData));
-          
-          var newFieldString = Mustache.render(fieldTemplate, data)
-          $textArea = $("#list-type-template-text");
-          $textArea.val($textArea.val() + newFieldString);
-          $textArea.blur();
-        });
+        var newField = Collisterator.renderField(default_data, fields.length-1);  
+        $("#fields").append(newField);
+      });
     };
+    Collisterator.bindChangeField = function() 
+    {
+      $("#fields").on("change", ".form-group", function(event) {
+        var fields = Collisterator.list_type_fields();
+        
+        var new_value = event.target.value;
+        var edited_field = event.target.id.replace(/\d+/g, '');
+        var id = event.target.id.replace(/\D/g, '');
+        
+        console.log("Element changed." + edited_field);
+        var field = fields[id];
+        switch(edited_field) {
+          case "field-data":
+            field["default"] = new_value;
+            break;
+          case "field-name":
+            field["display_name"] = new_value;
+            break;
+          case "field-type":
+            field["default"] = null;
+            field["type"] = new_value;
+            updateFieldType(id, new_value);
+            break;
+          default:
+            console.log("calling default");
+            break;
+        }
+        $("#list_type_fields").val(JSON.stringify(fields));  
+      });
+    };
+    Collisterator.updateFieldType = function(id, type) 
+    {
+      var options = ["text", "number", "date"];
+      $.each(options, function(i) {
+        if (type === options[i]) {
+          $("#field-data-" + id).attr("type", type);
+          $("#field-type-" + id).prop('selectedIndex', i);
+        }
+      });
 
+    };
     Collisterator.bindCreateNewList = function()
     {
       $(document).on("click", ".new_list", function() 
@@ -389,10 +395,9 @@ var Collisterator = (function(Collisterator)
       try
       {
       var fields_array = JSON.parse(fields_text);
-      var template = "<tr><td>{{name}}</td><td>{{type}}</td><td>{{default}}</td></tr>";
       for(var index in fields_array) 
       {
-        var row = Mustache.render(template, fields_array[index]);
+        var row = Mustache.render(Collisterator.fields_table_template, fields_array[index]);
         $('#fields-table').append(row);
       }
       
@@ -433,12 +438,9 @@ var Collisterator = (function(Collisterator)
     };
     Collisterator.initListTypeForm= function()
     {
-      Collisterator.bindShowExampleListItem();
+      Collisterator.renderFieldsForListType();
       Collisterator.bindAddField();
-      Collisterator.bindChangeListTypeType();
-      Collisterator.bindCustomizeButton();
-      Collisterator.bindFieldTypeSelector();
-      Collisterator.updateFieldsTable();
+      Collisterator.bindChangeField();
     };
     
     return Collisterator;

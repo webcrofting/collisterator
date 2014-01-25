@@ -18,7 +18,7 @@
       %div.form-group
         %label.sr-only
           List Type
-        %select.form-control{:name => "List Type"}
+        %select.form-control{:name => "list_type_type"}
           %option
             plain list
           %option
@@ -26,7 +26,7 @@
           %option
             custom
       %div.form-group.pull-right 
-        %button.btn.btn-primary.add-field
+        %button.btn.btn-primary.add-field{:type => 'button'}
           %i.icon-plus.icon-white
           Add Field For List
     .panel-body

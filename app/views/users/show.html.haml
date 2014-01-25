@@ -33,13 +33,14 @@
   %h4 Templates: 
   %table.table
     - @list_types.each do |list_type|
-      %tr
-        %td
-          = link_to "#{list_type.name}", list_type_path(list_type)
-        %td
-          = link_to edit_list_type_path(list_type) do
-            %i.icon-edit
-        %td
-          %a{new_list_html_attrs(list_type.id)}
-            %i.icon-list
-      
+      - if list_type.can_be_root
+        %tr
+          %td
+            = link_to "#{list_type.name}", list_type_path(list_type)
+          %td
+            = link_to edit_list_type_path(list_type) do
+              %i.icon-edit
+          %td
+            %a{new_list_html_attrs(list_type.id)}
+              %i.icon-list
+        
