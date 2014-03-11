@@ -3,12 +3,11 @@
 %div
   %h3 Welcome, #{@user.email}
   %h4 Your Lists:
-  - @items = @user.root_items
-  - if @items.empty?
+  - if @profile.user_lists.empty?
     %p You don't have any lists! 
   - else
     %table.table
-      - @items.each do |item|
+      - @profile.user_lists.each do |item|
         %tr
           %td
             - item_data_keys = item.data.keys
@@ -17,22 +16,21 @@
             = button_to "Share", item_shares_path, "data-toggle" => "modal", "data-target" => "#share-list-button-dialog"
             =render :partial => "share_list", locals: {item: item, user: @user}
 
-- @shared_items = @user.shared_items
-- unless @shared_items.empty?
+- unless @profile.shared_lists.empty?
   %h4 Shared Lists:
   %table.table
     %tr
       %th
         List name
-    - @shared_items.each do |shared_item|
+    - @profile.shared_lists.each do |shared_item|
       %tr
         %td
           = link_to "#{shared_item.data}", item_path(shared_item)
 
-- unless @list_types.empty?
+- unless @profile.user_templates.empty?
   %h4 Templates: 
   %table.table
-    - @list_types.each do |list_type|
+    - @profile.user_templates.each do |list_type|
       - if list_type.can_be_root
         %tr
           %td

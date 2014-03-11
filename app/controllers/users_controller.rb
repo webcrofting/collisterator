@@ -36,13 +36,13 @@ class UsersController < ApplicationController
   #-------------------------------------------------------------------
   def show
     @user = User.find(current_user.id)
-    @list_types = ListType.where("user_id" => @user.id)
-       
+    @profile = UserProfilePresenter.new(@user)
+
     render 'users/show'
-     # respond_to do |format|
-       # format.html { render 'users/show' }     
-       #format.json { render :json => @user }
-     # end
+    #respond_to do |format|
+      #format.html { render 'users/show' }     
+      #format.json { render :json => @user }
+   # end
   
   #rescue ActiveRecord::RecordNotFound
    # respond_to_not_found(:json, :xml, :html)
