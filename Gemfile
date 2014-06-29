@@ -14,15 +14,9 @@ group :production do
 end
 
 
-# Gems used only for assets and not required
-# in production environments by default.
 group :assets do
   gem 'sass-rails',   '>= 3.2'
   gem 'coffee-rails', '~> 3.2.1'
-
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer'
-
   gem 'uglifier', '>= 1.0.3'
 end
 
@@ -31,8 +25,14 @@ group :development do
 	gem 'sqlite3'
 end
 
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
+group :development, :test do
+	gem 'rspec-rails'
+end
+
+group :test do
+	gem 'factory_girl_rails'
+	gem 'capybara'
+end
 
 gem 'jquery-rails'
 gem 'jqtree-rails'
@@ -45,7 +45,6 @@ gem 'haml', '3.1.7'
 gem "bootstrap-sass", "~> 3.0.3.0"
 gem "bootstrap-x-editable-rails", "~> 1.4.4"
 gem "font-awesome-rails"
-
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -62,6 +61,3 @@ gem 'omniauth-google-oauth2'
 
 # Deploy with Capistrano
  gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
