@@ -5,6 +5,7 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
+require_relative 'support/page'
 
 # Until our Javascript stops raising so many errors!!
 Capybara.register_driver :poltergeist do |app|
