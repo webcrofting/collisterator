@@ -11,4 +11,9 @@ class HomePage < Page
 	def has_successful_login?
 		page.has_content? "Signed in successfully."
 	end
+
+	def profile(user)
+		click_link "#{user.email}"	
+		ProfilePage.new
+	end
 end
