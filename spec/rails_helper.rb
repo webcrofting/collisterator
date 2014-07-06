@@ -7,13 +7,7 @@ require 'capybara/rspec'
 require 'capybara/poltergeist'
 require_relative 'support/page'
 
-# Until our Javascript stops raising so many errors!!
-Capybara.register_driver :icky do |app|
-	Capybara::Poltergeist::Driver.new(app, :js_errors => false )
-end
-
-Capybara.javascript_driver = :icky
-#Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :poltergeist
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 

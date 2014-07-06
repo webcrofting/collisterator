@@ -47,7 +47,7 @@ gem 'closure_tree'
 gem 'haml', '3.1.7'
 
 gem "bootstrap-sass", "~> 3.0.3.0"
-gem "bootstrap-x-editable-rails", "~> 1.4.4"
+gem "bootstrap-x-editable-rails"
 gem "font-awesome-rails"
 
 # To use ActiveModel has_secure_password
