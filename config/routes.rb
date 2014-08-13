@@ -11,7 +11,7 @@ Collisterator::Application.routes.draw do
 	resources :users
 
   resources :list_types
-  resources :items
+  resources :items, except: [:index, :new, :edit]
 	resources :item_shares
 
   match '/jstree', :to => 'items#jstree', :as => 'jstree'
