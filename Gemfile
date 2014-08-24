@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 gem 'rails', '~> 3.2.11'
 
-gem 'therubyracer'
+gem 'execjs'
 
 gem 'rack-cors', :require => 'rack/cors'
 
@@ -27,7 +27,7 @@ end
 
 group :development, :test do
 	gem 'rspec-rails'
-	gem 'jasmine-rails'
+	gem 'jasmine'
 end
 
 group :test do
