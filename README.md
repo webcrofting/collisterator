@@ -1,5 +1,7 @@
 #Welcome to Collisterator
 
+[![Build Status](https://travis-ci.org/webcrofting/collisterator.svg)](https://travis-ci.org/webcrofting/collisterator)
+
 A micro data service, specializing in customizable lists.
 
 ##Why?
