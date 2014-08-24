@@ -36,6 +36,7 @@ group :test do
 	gem 'poltergeist'
 	gem 'database_cleaner', '1.0.1'
 	gem 'launchy'
+	gem 'rake'
 end
 
 gem 'jquery-rails'
