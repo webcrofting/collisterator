@@ -1,5 +1,5 @@
-describe("A Sample Test", function() {
-	it("should just run", function() {
-		expect("Ponies").toEqual("Ponies");
+describe("JQuery.Collisterator", function() {
+	it("should be defined", function() {
+		expect(Collisterator).toBeDefined();
 	});
 });
