@@ -1,9 +1,5 @@
 class ItemSharesController < ApplicationController
 	
-	def new
-		@item_share = ItemShare.new
-	end
-	
 	def create
     @item_share = ItemShare.new params[:item_share]
     if @item_share.save
