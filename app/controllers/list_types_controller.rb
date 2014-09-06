@@ -35,7 +35,6 @@ class ListTypesController < ApplicationController
 
   # GET /list_types/1/edit
   def edit
-    @list_type = ListType.find(params[:id])
   end
 
   # POST /list_types

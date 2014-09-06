@@ -11,6 +11,10 @@ Capybara.javascript_driver = :poltergeist
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
+# LOAD SHARED EXAMPLES
+Dir[Rails.root.join("spec/controllers/shared_examples/**/*.rb")].each { |f| require f }
+
+
 RSpec.configure do |config|
 
 	config.include Capybara::DSL
