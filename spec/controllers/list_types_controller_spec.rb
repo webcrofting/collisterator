@@ -181,6 +181,42 @@ describe ListTypesController do
 	end
 
 	describe "DELETE#destroy" do
+    let!(:list_type) { create(:list_type) }
+    
+    context "as an admin" do
+      before { sign_in create(:user, role: 'admin') }
+      
+      it "locates the requested @list_type" do
+        delete :destroy, id: list_type.id
+        expect(assigns(:list_type)).to eq(list_type)
+      end
 
+      it "deletes the list_type" do
+        expect {
+          delete :destroy, id: list_type.id
+        }.to change(ListType, :count).by(-1)
+      end
+
+      it "redirects to /list_types" do
+        delete :destroy, id: list_type.id
+        expect(response).to redirect_to list_types_path
+      end
+    end
+
+    context "as a payer" do
+      #TODO: payers should have the ability to delete their own list_types
+      before { sign_in create(:user, role: 'payer') }
+      it_behaves_like "an unauthorized delete"
+    end
+
+    context "as a player" do
+      before { sign_in create(:user, role: 'player') }
+      it_behaves_like "an unauthorized delete"  
+    end
+
+    context "unauthorized" do
+      before { sign_in create(:user, role: nil) }
+      it_behaves_like "an unauthorized delete"  
+    end
 	end
 end

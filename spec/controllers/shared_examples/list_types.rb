@@ -207,3 +207,22 @@ shared_examples_for "an unauthorized update" do
     expect(flash[:error]).to eq("You are not authorized to access this page.")
   end
 end
+
+shared_examples_for "an unauthorized delete" do
+  it "locates the requested @list_type" do
+    delete :destroy, id: list_type.id
+    expect(assigns(:list_type)).to eq(list_type)
+  end
+
+  it "does not delete the list type" do
+    expect {
+      delete :destroy, id: list_type.id
+    }.to change(ListType, :count).by(0)
+  end
+
+  it "redirects to the root path" do
+    delete :destroy, id: list_type.id
+    expect(response).to redirect_to root_path
+    expect(flash[:error]).to eq("You are not authorized to access this page.")
+  end
+end
