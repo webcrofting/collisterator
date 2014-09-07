@@ -91,37 +91,46 @@ describe ListTypesController do
 
 			context "as a player" do
 				before { sign_in create(:user, role: 'player') }
-				it_behaves_like "an unauthorized creator who sends good params"
+				it_behaves_like "an unauthorized creator"
 			end
 
 			context "unauthorized" do
 				before { sign_in create(:user, role: nil) }
-				it_behaves_like "an unauthorized creator who sends good params"
+				it_behaves_like "an unauthorized creator"
 			end
 		end
 
 		context "with invalid params" do
-			let!(:invalid) { nil }
+			let!(:params) { nil }
 
 			context "as an admin" do
 				before { sign_in create(:user, role: 'admin') }
-
-				it "assigns the @list_type" do
-					post :create, list_type: invalid
-					expect(assigns(:list_type)).to be_a ListType
-				end
-
-				it "should not save" do
-					expect {
-						post :create, list_type: invalid
-					}.to_not change(ListType, :count)
-				end
+        it_behaves_like "an authorized creator who sends bad params"
 			end
+
+      context "as a payer" do
+				before { sign_in create(:user, role: 'payer') }
+        it_behaves_like "an authorized creator who sends bad params"
+      end
+
+      context "as a player" do
+				before { sign_in create(:user, role: 'player') }
+				it_behaves_like "an unauthorized creator"
+      end
+
+      context "unauthorized" do
+				before { sign_in create(:user, role: nil) }
+				it_behaves_like "an unauthorized creator"
+      end
 		end
 	end
 
 	describe "PUT#update" do
-		context "with valid params"
+    let!(:list_type) { create(:list_type) }
+
+		context "with valid params" do
+      
+    end
 		context "with invalid params"
 	end
 

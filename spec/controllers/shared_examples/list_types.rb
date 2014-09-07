@@ -90,7 +90,6 @@ end
 # ListTypesController
 # POST#create
 shared_examples_for "an authorized creator who sends good params" do
-	
   it "assigns a new ListType with the given params" do
 		post :create, params
 		expect(assigns(:list_type)).to be_a ListType
@@ -117,12 +116,7 @@ shared_examples_for "an authorized creator who sends good params" do
 	end
 end
 
-shared_examples_for "an unauthorized creator who sends good params" do
-	it "assigns a new ListTypeCreator with the given params" do
-		post :create, params
-		expect(assigns(:list_type_creator)).to be_a ListTypeCreator
-	end
-
+shared_examples_for "an unauthorized creator" do
 	it "redirects to the home page" do
 		post :create, params
 		expect(response).to redirect_to root_path
@@ -133,4 +127,27 @@ shared_examples_for "an unauthorized creator who sends good params" do
 			post :create, params
 		}.to_not change(ListType, :count)
 	end
+end
+
+shared_examples_for "an authorized creator who sends bad params" do
+  it "assigns the @list_type" do
+    post :create, list_type: params
+    expect(assigns(:list_type)).to be_a ListType
+  end
+
+  it "should not save" do
+    expect {
+      post :create, list_type: params
+    }.to_not change(ListType, :count)
+  end
+  
+  it "should render action :new" do
+    post :create, list_type: params
+    expect(response).to render_template("new")
+  end
+
+  it "should respond with unprocessable entity" do
+    post :create, list_type: params, format: :json
+    expect(response.status).to eq(422)
+  end
 end
