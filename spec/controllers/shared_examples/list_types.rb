@@ -151,3 +151,59 @@ shared_examples_for "an authorized creator who sends bad params" do
     expect(response.status).to eq(422)
   end
 end
+
+shared_examples_for "an authorized update with valid params" do
+  it "located the requested @list_type" do
+    put :update, id: list_type.id, list_type: params  
+    expect(assigns(:list_type)).to eq(list_type) 
+  end 
+
+  it "updated the @list_type" do
+    put :update, id: list_type.id, list_type: params 
+    expect(assigns(:list_type).name).to eq('Bogus') 
+  end
+
+  it "redirects to the @list_type" do
+    put :update, id: list_type.id, list_type: params 
+    expect(response).to redirect_to(list_type)
+    expect(flash[:notice]).to eq('List type was successfully updated.')
+  end
+
+  it "responds with :no_content for json" do
+    put :update, id: list_type.id, list_type: params, format: :json
+    expect(response.status).to eq(204) # :no_content
+  end
+end
+
+shared_examples_for "an authorized update with invalid params" do
+  it "assigns the requested @list_type" do
+    put :update, id: list_type.id, list_type: attributes_for(:list_type, name: nil)
+    expect(assigns(:list_type)).to eq(list_type)
+  end
+
+  it "renders the edit view" do
+    put :update, id: list_type.id, list_type: attributes_for(:list_type, name: nil)
+    expect(response).to render_template("edit")
+  end
+
+  it "responds with :unprocessable_entity for json requests" do
+    put :update, id: list_type.id, list_type: attributes_for(:list_type, name: nil), format: :json
+    expect(response.status).to eq(422)
+  end
+end
+
+shared_examples_for "an unauthorized update" do
+  before(:each) { put :update, id: list_type.id, list_type: params }
+  it "finds the requested @list_type" do
+    expect(assigns(:list_type)).to eq(list_type) 
+  end 
+
+  it "does not update the @list_type" do
+    expect(assigns(:list_type).name).to_not eq('Bogus') 
+  end
+
+  it "redirects to the home page" do
+    expect(response).to redirect_to root_path
+    expect(flash[:error]).to eq("You are not authorized to access this page.")
+  end
+end

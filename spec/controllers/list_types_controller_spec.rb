@@ -129,9 +129,55 @@ describe ListTypesController do
     let!(:list_type) { create(:list_type) }
 
 		context "with valid params" do
-      
+      let(:params) { attributes_for(:list_type, name: 'Bogus') }
+
+      context "as an admin" do
+        before { sign_in create(:user, role: 'admin') }
+        it_behaves_like "an authorized update with valid params"        
+      end 
+
+      context "as a payer" do
+        before { sign_in create(:user, role: 'admin') }
+        it_behaves_like "an authorized update with valid params"        
+      end
+
+      context "as a player" do
+        before { sign_in create(:user, role: 'player') }
+        it_behaves_like "an unauthorized update"
+      end
+
+      context "unauthorized" do
+        before { sign_in create(:user, role: nil) }
+        it_behaves_like "an unauthorized update"
+      end
     end
-		context "with invalid params"
+		
+    context "with invalid params" do
+      let!(:list_type) { create(:list_type) }
+      let(:params) { attributes_for(:list_type, name: nil) }
+       
+      context "as an admin" do
+        before { sign_in create(:user, role: 'admin') }
+        it_behaves_like "an authorized update with invalid params"
+      end
+
+      context "as a payer" do
+        before { sign_in create(:user, role: 'payer') }
+        #TODO: payers should have this ability *for their own list_types*, but currently do not
+        #it_behaves_like "an authorized update with invalid params"
+        it_behaves_like "an unauthorized update" 
+      end
+
+      context "as a player" do
+        before { sign_in create(:user, role: 'player') }
+        it_behaves_like "an unauthorized update"
+      end
+
+      context "unauthorized" do
+        before { sign_in create(:user, role: nil) }
+        it_behaves_like "an unauthorized update"
+      end
+    end
 	end
 
 	describe "DELETE#destroy" do
