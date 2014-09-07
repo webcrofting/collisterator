@@ -1,5 +1,5 @@
 class ListTypesController < ApplicationController
-  load_and_authorize_resource :except => [:create]
+  load_and_authorize_resource
   # GET /list_types
   # GET /list_types.json 
   def index
@@ -41,7 +41,6 @@ class ListTypesController < ApplicationController
   # POST /list_types.json
   def create
    @list_type_creator = ListTypeCreator.new(params)
-   authorize! :create, @list_type_creator.list_type
    success = @list_type_creator.save
    @list_type = @list_type_creator.list_type
 
