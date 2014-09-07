@@ -2,27 +2,28 @@ class ListTypeCreator
 	
 	def initialize(params)
 		@params = params
+    some_kind_of = valid_params? ? 'valid' : 'invalid'
 	end
 
 	def save
 		@list_type = ListType.new
 		if valid_params?
 			ListType.transaction do
-				@list_type.update_attributes!(@params[:list_type])
-				add_list_type_settings
+				@list_type.update_attributes(@params[:list_type])
+				add_list_type_settings if @list_type.valid?
 			end
 		end
 		@list_type.persisted?
 	end
 
 	def list_type
-		@list_type
+		(@list_type && @list_type.valid?) ? @list_type : ListType.new # in case list_type is called before save
 	end
 
 private
 
 	def valid_params?
-		@params && @params[:list_type_type]
+		@params && @params[:list_type_type] && @params[:list_type]
 	end
 
 	def add_list_type_settings

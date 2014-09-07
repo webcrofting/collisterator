@@ -111,20 +111,22 @@ describe ListTypeCreator do
 	end
 
 	describe "#list_type" do
-		context "when list_type_type is 'plain list'" do
+    let(:list_type_creator) { ListTypeCreator.new(params) }
+    
+    context "when params are valid" do
+      let!(:params) { { list_type: { name: 'Movies' }, list_type_type: 'tree' } }
 
-		end
+      it "gets the list type" do
+        expect(list_type_creator.list_type).to be_a ListType
+      end
+    end
 
-		context "when list_type_type is 'tree'" do
-
-		end
-
-		context "when there is no list_type_type" do
-
-		end
-
-		context "when list_type_type is something else" do
-
-		end
+    context "when params are invalid" do
+      let!(:params) { nil }
+      
+      it "does not get the list type" do
+        expect(list_type_creator.list_type).to be_a ListType
+      end
+    end
 	end
 end

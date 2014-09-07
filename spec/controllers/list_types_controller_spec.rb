@@ -77,7 +77,7 @@ describe ListTypesController do
 	describe "POST#create" do
 		
 		context "with valid params" do	
-			let!(:params) { attributes_for(:list_type, name: 'Movies') }
+			let(:params) { { :list_type_type => 'plain list', :list_type => attributes_for(:list_type, name: 'Movies') } }
 			
 			context "as an admin" do
 				before { sign_in create(:user, role: 'admin') }
@@ -111,9 +111,6 @@ describe ListTypesController do
 					expect(assigns(:list_type)).to be_a ListType
 				end
 
-				# TODO : Failing SPEC
-				# Should list types save if params are invalid??	
-				# what consistutes valid params
 				it "should not save" do
 					expect {
 						post :create, list_type: invalid

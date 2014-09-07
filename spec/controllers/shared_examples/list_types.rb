@@ -90,45 +90,47 @@ end
 # ListTypesController
 # POST#create
 shared_examples_for "an authorized creator who sends good params" do
-	it "assigns a new ListType with the given params" do
-		post :create, list_type: params
+	
+  it "assigns a new ListType with the given params" do
+		post :create, params
 		expect(assigns(:list_type)).to be_a ListType
 		expect(assigns(:list_type).name).to eq('Movies')
 	end
 
 	it "redirects to the new @list_type" do
-		post :create, list_type: params
+		post :create, params
 		list_type = assigns(:list_type)
 		expect(response).to redirect_to(list_type)
 		expect(flash[:notice]).to eq('List type was successfully created.')
 	end
 
 	it "responds to json" do
-		post :create, list_type: params, format: :json
+    params[:format] = :json
+		post :create, params
 		expect(response.content_type).to eq('application/json')
 	end
 
 	it "responds with created" do
-		post :create, list_type: params, format: :json
+    params[:format] = :json
+		post :create, params
 		expect(response.status).to eq(201)
 	end
 end
 
 shared_examples_for "an unauthorized creator who sends good params" do
-	it "assigns a new ListType with the given params" do
-		post :create, list_type: params
-		expect(assigns(:list_type)).to be_a ListType
-		expect(assigns(:list_type).name).to eq('Movies')
+	it "assigns a new ListTypeCreator with the given params" do
+		post :create, params
+		expect(assigns(:list_type_creator)).to be_a ListTypeCreator
 	end
 
 	it "redirects to the home page" do
-		post :create, list_type: params
+		post :create, params
 		expect(response).to redirect_to root_path
 	end
 
 	it "does not save the list_type" do
 		expect {
-			post :create, list_type: params
+			post :create, params
 		}.to_not change(ListType, :count)
 	end
 end

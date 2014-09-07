@@ -1,5 +1,5 @@
 class ListTypesController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => [:create]
   # GET /list_types
   # GET /list_types.json 
   def index
@@ -40,33 +40,10 @@ class ListTypesController < ApplicationController
   # POST /list_types
   # POST /list_types.json
   def create
-    @list_type = ListType.new(params[:list_type])
-
-    list_type_type = params[:list_type_type]
-    success = @list_type.save
-    case list_type_type 
-    when 'plain list'
-      @list_type.can_have_children = false
-      @list_type.can_be_root = false
-      success &= @list_type.save
-      parent_list_type = ListType.new
-      parent_list_type.name = @list_type.name
-      parent_list_type.fields = '[{"name":"title", "type":"text", "default":"Title"}]'
-      parent_list_type.template = "<td  data-name='title' data-type='text' class='editable'>{{data.title}}</td>"
-      parent_list_type.default_data = "{\"title\":\"#{@list_type.name}\"}"
-      parent_list_type.can_have_children = true
-      parent_list_type.can_be_root = true
-      parent_list_type.children_list_type_id = @list_type.id
-      success &= parent_list_type.save
-      
-    when 'tree'
-      @list_type.can_have_children = true
-      @list_type.can_be_root = true
-      @list_type.children_list_type_id = @list_type.id
-      success &= @list_type.save
-    else
-      # nothing to do at the moment
-    end 
+   @list_type_creator = ListTypeCreator.new(params)
+   authorize! :create, @list_type_creator.list_type
+   success = @list_type_creator.save
+   @list_type = @list_type_creator.list_type
 
     respond_to do |format|
       if success
