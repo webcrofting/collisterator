@@ -1,4 +1,4 @@
-#Welcome to Collisterator
+#Welcome to Collisterator [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/webcrofting/collisterator/tree/master)
 
 [![Build Status](https://travis-ci.org/webcrofting/collisterator.svg)](https://travis-ci.org/webcrofting/collisterator)
 
