@@ -1,9 +1,11 @@
 before_script:
+  - cp config/database.yml.travis config/database.yml
+  - cp config/secrets.yml.travis config/secrets.yml
   - psql -c 'create database travis_ci_test;' -U postgres
 language: ruby
 rvm: 2.0.0
 script:
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:migrate --trace
   - bundle exec rake db:test:prepare
   - bundle exec rspec spec/
   - bundle exec rake jasmine:ci

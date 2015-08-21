@@ -3,9 +3,9 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
-  database: rails_db
-  username: rails_db
-  password: rails_db
+  database: <%= ENV["rails_db"] %>
+  username: <%= ENV["rails_user"] %>
+  password: <%= ENV["rails_db"] %>
 
 
 development:
