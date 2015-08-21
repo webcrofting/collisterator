@@ -1,10 +1,10 @@
-Collisterator::Application.routes.draw do
+Rails.application.routes.draw do
 
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
 
-  devise_for :users, 
+  devise_for :users,
              :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" },
-             :path_names => {:sign_in => "login", :sign_out => "logout"}, 
+             :path_names => {:sign_in => "login", :sign_out => "logout"},
              :path => "d"
 
 
@@ -14,11 +14,11 @@ Collisterator::Application.routes.draw do
   resources :items, except: [:index, :new, :edit]
 	resources :item_shares
 
-  match '/jstree', :to => 'items#jstree', :as => 'jstree'
+  get '/jstree', to: 'items#jstree', as: 'jstree'
 
-  match '/items/:token' => 'items#show', :as => 'token', :via => [:options]
-  
-  match '/users/:email' => 'users#show', :as => 'profile'
-  
-	root :to => "list_types#index" 
+  get '/items/:token', to: 'items#show', as: 'token', via: [:options]
+
+  get '/users/:email' => 'users#show', :as => 'profile'
+
+	root :to => "list_types#index"
 end

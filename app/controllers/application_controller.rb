@@ -1,22 +1,17 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
-  
-  def find_item_by_id_or_token(id_or_token)
+  include Pundit # authorization gem
 
-  
-    if (Item.find_by_token(id_or_token).blank?)
-      logger.debug "in application controller if clause, id_or_token is: #{id_or_token}"
-      item = Item.find_by_id(id_or_token)
-    else
-      item = Item.find_by_token(id_or_token)
-    end 
-    #logger.debug "items id is #{item.id}"
-    return item
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  protect_from_forgery with: :exception
+
+
+  private
+
+  def user_not_authorized
+    redirect_to(root_path)
+    flash[:alert] = "You are not authorized to access this page."
   end
-  
-  rescue_from CanCan::AccessDenied do |exception|
-    flash[:error] = exception.message
-    redirect_to root_url
-  end
-  
 end

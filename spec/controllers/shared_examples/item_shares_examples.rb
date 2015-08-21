@@ -1,6 +1,6 @@
 shared_examples_for "an authorized ItemShares creator" do
-  before(:each) { sign_in owner } 
-  
+  before(:each) { sign_in owner }
+
   it "assigns a new @item_share" do
     post :create, item_share: params
     expect(assigns(:item_share)).to be_a ItemShare
@@ -28,8 +28,8 @@ end
 shared_examples_for "an invalid ItemShares creation" do
   #TODO: this should handle failure more gracefully
   it "throws an error" do
-    expect {
+    expect(
       post :create, item_share: params
-    }.to raise_error
+    ).to redirect_to(new_item_share_url)
   end
 end

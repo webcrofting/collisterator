@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
   def show
     @item = find_item_by_id_or_token(params[:id])
     #logger.debug "item's id is #{@item.id}"
-    
+
     respond_to do |format|
       format.html # show.html.erb
       format.json {render json: @item}
@@ -17,7 +17,7 @@ class ItemsController < ApplicationController
   # POST /items.json
   def create
 		@item = ItemCreator.new(params, current_user).result
-	
+
     respond_to do |format|
       if @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
@@ -36,9 +36,9 @@ class ItemsController < ApplicationController
 
 	@item.data.merge! params[:item][:data] if params[:item][:data]
 	@item.save
-	
+
 	logger.debug "Item data is #{@item.data}"
-	
+
      respond_to do |format|
 	     format.html {
          if request.xhr?
@@ -61,6 +61,10 @@ class ItemsController < ApplicationController
     end
 
     @item.destroy
-		head :ok	
+		head :ok
+  end
+
+  def find_item_by_id_or_token(id)
+    Item.find_by(id: id) || Item.find_by(token: id)
   end
 end

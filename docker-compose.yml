@@ -1,0 +1,22 @@
+postgres:
+  image: postgres
+  volumes:
+    - "/srv/docker/rde/postgres-data/home/lrrr/hacking/collisterator:/var/lib/postgresql/data"
+  environment:
+    POSTGRES_PASSWORD: ENV['RAILS_DB_PASS']
+    POSTGRES_USER: ENV['RAILS_DB_USER']
+
+rails:
+  build: .
+  working_dir: /usr/src/app
+  user: "1000:1000"
+  volumes:
+    - ".:/usr/src/app"
+  environment:
+    DB_HOST: postgres
+  env_file:
+    - .env
+  links:
+    - postgres
+  ports:
+    - "3000:3000"

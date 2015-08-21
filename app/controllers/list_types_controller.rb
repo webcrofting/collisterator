@@ -1,9 +1,8 @@
 class ListTypesController < ApplicationController
-  load_and_authorize_resource
   # GET /list_types
-  # GET /list_types.json 
+  # GET /list_types.json
   def index
-    @list_types = ListType.find_all_by_can_be_root(true) 
+    @list_types = ListType.where(can_be_root: true)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -35,14 +34,18 @@ class ListTypesController < ApplicationController
 
   # GET /list_types/1/edit
   def edit
+    @list_type = ListType.find(params[:id])
+    authorize @list_type
   end
 
   # POST /list_types
   # POST /list_types.json
   def create
-   @list_type_creator = ListTypeCreator.new(params)
-   success = @list_type_creator.save
-   @list_type = @list_type_creator.list_type
+   #@list_type_creator = ListTypeCreator.new(params)
+   @list_type = ListType.new(list_type_params)
+   authorize @list_type
+
+   success = @list_type.save
 
     respond_to do |format|
       if success
@@ -61,7 +64,7 @@ class ListTypesController < ApplicationController
     @list_type = ListType.find(params[:id])
 
     respond_to do |format|
-      if @list_type.update_attributes(params[:list_type])
+      if @list_type.update_attributes(list_type_params)
         format.html { redirect_to @list_type, notice: 'List type was successfully updated.' }
         format.json { head :no_content }
       else
@@ -81,5 +84,11 @@ class ListTypesController < ApplicationController
       format.html { redirect_to list_types_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def list_type_params
+    params.require(:list_type).permit(:name, :user_id)
   end
 end

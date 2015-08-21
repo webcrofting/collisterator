@@ -18,8 +18,10 @@ todo.txt
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
-# Ignore secret_token
+# Ignore secrets
 secret_token
+config/secrets.yml
+.env
 
 # Ignore closure tree locks
 *.lock-closuretree-*
