@@ -1,3 +1,4 @@
+sudo: false
 before_script:
   - cp config/database.yml.travis config/database.yml
   - cp config/secrets.yml.travis config/secrets.yml
