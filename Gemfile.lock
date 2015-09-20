@@ -41,6 +41,10 @@ GEM
     autoprefixer-rails (5.2.1.1)
       execjs
       json
+    babel-source (5.8.26)
+    babel-transpiler (0.7.0)
+      babel-source (>= 4.0, < 6)
+      execjs (~> 2.0)
     bcrypt (3.1.10)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -67,6 +71,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
+    colored (1.2)
     columnize (0.9.0)
     database_cleaner (1.4.1)
     debug_inspector (0.0.2)
@@ -210,6 +215,10 @@ GEM
     spring (1.3.6)
     sprockets (3.3.0)
       rack (~> 1.0)
+    sprockets-es6 (0.8.0)
+      babel-source (>= 5.8.11)
+      babel-transpiler
+      sprockets (>= 3.0.0)
     sprockets-rails (2.3.2)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
@@ -248,7 +257,7 @@ DEPENDENCIES
   byebug
   capybara
   closure_tree
-  coffee-rails (~> 4.1.0)
+  colored
   database_cleaner
   devise
   factory_girl_rails
@@ -268,6 +277,8 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spring
+  sprockets (>= 3.0.0)
+  sprockets-es6
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
