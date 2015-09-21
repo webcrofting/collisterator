@@ -1,8 +1,5 @@
 class User < ActiveRecord::Base
-
-  #TODO : would be better as an enum!
-  # SHOULD ALSO VALIDATE THIS
-  ROLES = %w[host invitee]
+  extend ActiveHash::Associations::ActiveRecordExtensions
 
   devise :database_authenticatable,
          :omniauthable,
@@ -13,9 +10,9 @@ class User < ActiveRecord::Base
          :validatable,
          :omniauth_providers => [ :google_oauth2]
 
+  belongs_to_active_hash :role
   has_many :items
   has_many :list_types
-  #validates_inclusion_of :role, :in => ROLES
 
   # TODO: phase out google_omniauth support
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
@@ -56,11 +53,7 @@ class User < ActiveRecord::Base
   end
 
   def role?(role_string)
-    if self.role==role_string
-      return true
-    else
-      return false
-    end
+    role.try(:name) == role_string
   end
 
 
@@ -72,15 +65,5 @@ class User < ActiveRecord::Base
       end
     end
     roots
-  end
-
-  private
-
-  def assign_role(role_string)
-    if ROLES.include?(role_string)
-      self.role = role_string
-    else
-      puts "#{role_string} is not a role."
-    end
   end
 end
