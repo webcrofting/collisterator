@@ -2,11 +2,10 @@
   %ul.nav.navbar-nav
     %li
       = link_to "Collisterator", root_path, :class => 'brand'
-    %li
-      = link_to 'New List Type', new_list_type_path
-    %li
-      = link_to 'New List', list_types_path
- 
+    - if current_user
+      %li
+        = link_to 'New List', list_types_path
+
   %ul.nav.navbar-nav.navbar-right
     -if user_signed_in?
       %li
@@ -17,7 +16,7 @@
     -else
       %li.dropdown
         %a(href="#" class="dropdown-toggle" data-toggle="dropdown")
-          %i.icon-user 
+          %i.icon-user
           Login or Register
         %ul.dropdown-menu
           %li

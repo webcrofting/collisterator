@@ -7,7 +7,7 @@ gem 'pg'
 
 # For 'acts_as_tree' in models.
 gem 'closure_tree'
-
+gem 'active_hash'
 
 # Authorization & Authentication
 gem 'devise'
@@ -63,4 +63,5 @@ group :test do
   gem 'poltergeist'
   gem 'database_cleaner'
   gem 'launchy'
+  gem 'shoulda-matchers'
 end
