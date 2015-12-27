@@ -6,4 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-
+lt = ListType.create(name: 'Normal',
+                can_be_root: true,
+                featured: true,
+                template: "<td>{{name}}</td>"
+               )
+ListTypeField.create(name: 'name', field_type: 'text', default_data: 'Name here', list_type: lt)
