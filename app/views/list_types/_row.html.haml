@@ -1,17 +1,18 @@
-%tr
-  %td
-    = list_type.name
+%div.row
+  %div.col-md-4.pull-left
     = link_to list_type_path(list_type) do
-      %i.icon-search
-  %td
+      = list_type.name
+  %div.col-md-4.pull-right
+    = link_to new_list_type_item_path(list_type)  do
+      %span.glyphicon.glyphicon-th-list
+      New List
+  %div.col-md-1.pull-right
     = link_to edit_list_type_path(list_type) do
-      %i.icon-edit
-  %td
-    %a{new_list_html_attrs(list_type.id)} 
-      %i.icon-list
+      %span.glyphicon.glyphicon-pencil
+
   - if admin
     %td
-      - if list_type.featured?   
+      - if list_type.featured?
         = form_for list_type do |f|
           = f.hidden_field :featured, :value => false
           = f.submit "Unfeature", :class => "btn btn-primary"

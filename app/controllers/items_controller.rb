@@ -1,6 +1,13 @@
 class ItemsController < ApplicationController
  #before_filter :authenticate_user!, :except => [:show]
 
+  # GET /list_types/:id/items/new
+  def new
+    @list_type = ListType.find(params[:list_type_id])
+    @item = Item.create(list_type: @list_type)
+    redirect_to @item
+  end
+
   # GET /items/1
   # GET /items/1.json
   def show
@@ -20,7 +27,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.save
-        format.html { redirect_to @item, notice: 'Item was successfully created.' }
+        format.html { redirect_to @item, notice: 'New list was successfully created.' }
         format.json { render json: @item, status: :created, location: @item }
       else
         format.html { render action: "new" }

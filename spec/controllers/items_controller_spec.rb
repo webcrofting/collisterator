@@ -2,8 +2,17 @@ require 'rails_helper'
 
 describe ItemsController do
 
+  describe "GET#new" do
+    let(:list_type) { create(:list_type) }
+    before { get :new, list_type_id: list_type.id }
+
+    it { is_expected.to redirect_to item_path(assigns(:item))}
+
+    it { expect(assigns(:item).list_type).to eq(list_type) }
+  end
+
 	describe "GET#show" do
-		let!(:item) { create(:item) }	
+		let!(:item) { create(:item) }
 		it "finds an item by id" do
 			get :show, id: item.id
 			expect(assigns(:item)).to eq(item)
@@ -67,7 +76,7 @@ describe ItemsController do
 				expect(response).to redirect_to (assigns(:item))
 			end
 
-			it "renders json for @item" do 
+			it "renders json for @item" do
 				post :create, item: item, format: :json
 				expect(response.header['Content-Type']).to include('application/json')
 			end
@@ -79,11 +88,11 @@ describe ItemsController do
 				post :create, item: item, format: :json
 				expect(response).to have_http_status(:created)
 			end
-		end	
+		end
 	end
-	
+
 	describe "PUT#update" do
-		let!(:item) { create(:item) }	
+		let!(:item) { create(:item) }
 		let!(:params) { attributes_for(:item, name: 'Boo' ) }
 
 		it "finds the item by id" do
@@ -106,10 +115,10 @@ describe ItemsController do
 			expect(response).to have_http_status(:no_content)
 		end
 	end
-	
+
 	describe "DELETE#destroy" do
 		let!(:item) { create(:item) }
-		
+
 		it "finds the item by id" do
 			delete :destroy, id: item.id
 			expect(assigns(:item)).to eq(item)
@@ -121,8 +130,8 @@ describe ItemsController do
 		end
 
 		it "destroys the item" do
-			expect { 
-				delete :destroy, id: item.id	
+			expect {
+				delete :destroy, id: item.id
 			}.to change(Item, :count).by(-1)
 		end
 

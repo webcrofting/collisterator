@@ -10,7 +10,10 @@ Rails.application.routes.draw do
 
 	resources :users
 
-  resources :list_types
+  resources :list_types do
+    resources :items, only: [:new]
+  end
+
   resources :items, except: [:index, :new, :edit]
 	resources :item_shares
 

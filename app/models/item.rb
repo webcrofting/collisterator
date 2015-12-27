@@ -1,15 +1,15 @@
 class Item < ActiveRecord::Base
 	acts_as_tree
 
+  belongs_to :list_type
+
   before_create :generate_token
 
-	serialize :data, JSON
+  serialize :data, JSON
 
-	def as_json(options = nil)
-
-		item_to_json_hash(self)
-
-	end
+  def as_json(options = nil)
+    item_to_json_hash(self)
+  end
 
   def generate_token
     begin

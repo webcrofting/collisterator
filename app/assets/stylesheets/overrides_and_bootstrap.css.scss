@@ -1,6 +1,11 @@
-
+@import "bootstrap-sprockets";
 @import "bootstrap";
 @import "font-awesome";
+
+@font-face {
+  font-family: 'Glyphicons Haflings';
+  src: font-url('glyphicons-halflings-regular.eot');
+}
 
 .hero-unit
 {
@@ -9,7 +14,7 @@
 .btns {
   text-align: center;
 }
-.dropdown-menu 
+.dropdown-menu
 {
   padding: 10px;
 }
@@ -17,7 +22,7 @@
 {
   display: inline;
 }
-.form-inline .form-group input 
+.form-inline .form-group input
 {
   width: 200px;
 }
@@ -29,12 +34,12 @@
 {
   margin-bottom: 0px;
 }
-.sign_in_centered 
+.sign_in_centered
 {
   width: 75%;
   margin: 0 auto;
 }
-.panel-heading h2 
+.panel-heading h2
 {
   text-align: center;
 }
@@ -49,9 +54,9 @@ table#tree th, table#tree td
 
 .indent-span
 {
-  width:1.5em; 
-  display: inline-block; 
-  text-align: right; 
+  width:1.5em;
+  display: inline-block;
+  text-align: right;
   padding-right:0.5em;
 }
 
