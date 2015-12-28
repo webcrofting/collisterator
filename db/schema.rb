@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150921112911) do
+ActiveRecord::Schema.define(version: 20151228035917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,16 @@ ActiveRecord::Schema.define(version: 20150921112911) do
     t.integer  "list_type_id"
     t.string   "token"
     t.integer  "user_id"
+  end
+
+  create_table "list_type_fields", force: :cascade do |t|
+    t.integer  "list_type_id"
+    t.string   "name"
+    t.string   "default_data"
+    t.integer  "field_type"
+    t.integer  "order"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "list_types", force: :cascade do |t|

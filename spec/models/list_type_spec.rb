@@ -1,10 +1,7 @@
 require 'rails_helper'
-describe "List Type" do
-  it "produces a valid factory" do
-    expect(build(:list_type)).to be_valid	
-  end
 
-  it "is not valid without a name" do
-    expect(build(:list_type, name: nil)).to_not be_valid
-  end
+describe ListType do
+  it { is_expected.to validate_presence_of(:name) }
+  it { is_expected.to belong_to(:user) }
+  it { is_expected.to have_many(:list_type_fields) }
 end
