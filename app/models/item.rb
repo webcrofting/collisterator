@@ -1,7 +1,10 @@
 class Item < ActiveRecord::Base
-	acts_as_tree
-
   belongs_to :list_type
+  belongs_to :user
+  belongs_to :parent, class_name: "Item"
+  has_many :children, class_name: "Item", foreign_key: "parent_id", dependent: :nullify
+
+  validates :list_type, presence: true
 
   before_create :generate_token
 
