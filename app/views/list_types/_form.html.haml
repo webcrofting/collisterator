@@ -1,12 +1,12 @@
 = form_for @list_type, :html => {:class => "form-inline"} do |f|
-  = f.hidden_field :user_id, :value => current_user.id
+  =# f.hidden_field :user_id, :value => current_user.id
   .row
     - if (@list_type.errors.any?)
       .error_explanation
-        %h2 
+        %h2
           - pluralize(@list_type.errors.count, "error")
           prohibited this list_type from being saved:
-      
+
         %ul
           - @list_type.errors.full_messages.each do |msg|
             %li= msg
@@ -25,7 +25,7 @@
             tree
           %option
             custom
-      %div.form-group.pull-right 
+      %div.form-group.pull-right
         %button.btn.btn-primary.add-field{:type => 'button'}
           %i.icon-plus.icon-white
           Add Field For List
@@ -36,8 +36,8 @@
     %div.panel-footer
       .actions
         = f.submit "Save", :class => "btn btn-success"
-      
+
 :javascript
-  $(document).ready(function() { 
+  $(document).ready(function() {
     Collisterator.initListTypeForm();
   });

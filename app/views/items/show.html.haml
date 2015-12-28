@@ -1,10 +1,19 @@
 .row
   .span12
-    %p#notice 
+    %p#notice
       = notice
 
-    #collisterator_tree
-      - item_id = @item.token
+    #collisterator_tree{data: { item: @item.to_json } }
+      %table.table.table-hover#tree
+        - @list_presenter.items.each do |item|
+          %tr.col-md-8{id: item[:token]}
+            =raw(item[:template])
+            %td.add-item
+              %span.glyphicon.glyphicon-plus
+            %td.delete-item
+              %span.glyphicon.glyphicon-remove
 
 :javascript
-  Collisterator.buildListTree('#{item_id}');
+  $(document).ready(function() {
+    console.log('havent bound anything yet');
+  });

@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
   def new
     @list_type = ListType.find(params[:list_type_id])
     @item = Item.create(list_type: @list_type)
+
     redirect_to @item
   end
 
@@ -12,7 +13,7 @@ class ItemsController < ApplicationController
   # GET /items/1.json
   def show
     @item = find_item_by_id_or_token(params[:id])
-    #logger.debug "item's id is #{@item.id}"
+    @list_presenter = ListPresenter.new(@item)
 
     respond_to do |format|
       format.html # show.html.erb
